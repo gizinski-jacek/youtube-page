@@ -1,9 +1,13 @@
+import { NavLink } from 'react-router-dom';
+
 const Content = ({ content, trending }) => {
 	return (
 		<div id='content-container'>
 			<div id='category-filter'>
 				<ul>
-					<li>All</li>
+					<NavLink activeClassName='active' exact to='/'>
+						<li>All</li>
+					</NavLink>
 					<li>Playlists</li>
 					<li>Music</li>
 					<li>Jazz</li>

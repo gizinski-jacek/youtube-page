@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Video = ({ data, related, link }) => {
 	const relatedContentDisplay = related.map((vid, index) => {
@@ -57,12 +57,11 @@ const Video = ({ data, related, link }) => {
 				<div className='video-details'>title etc</div>
 			</div>
 			<div id='related-videos'>
-				<div
-					id='related-filter'
-					// style={{ display: 'none' }}
-				>
+				<div id='related-filter'>
 					<ul>
-						<li>All</li>
+						<NavLink activeClassName='active' to='/'>
+							<li>All</li>
+						</NavLink>
 						<li>Playlists</li>
 						<li>Music</li>
 						<li>Live</li>
