@@ -29,7 +29,7 @@ const Content = ({ content, trending }) => {
 			<div className='content-display'>
 				{content}
 				<div className='trending-content-display'>
-					<h2>Trending</h2>
+					<h2 className='trending-tag'>Trending</h2>
 					{trending}
 				</div>
 			</div>
