@@ -58,49 +58,49 @@ const Menu = ({ isThin }) => {
 					<li>
 						<img
 							alt=''
-							src='https://yt3.ggpht.com/ZRcNz4K-ZKo-D6foYRZg2cfl2w5E_Q4NgMsuMTepMTnuNWUAV_vP5PzX7wD7JZplWDqPxuUmWo0=s88-c-k-c0x00ffffff-no-rj'
+							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-music.jpg?alt=media&token=7beb340a-11df-4582-95be-2d00cc0d5b54'
 						/>
 						Music
 					</li>
 					<li>
 						<img
 							alt=''
-							src='https://yt3.ggpht.com/rjvUh0poOMaYQjpabBhwzCpwDMOBhckbtGGpJphX-JcKsztHll7M4sVLafSQLUeSvhrlviNL6FU=s88-c-k-c0x00ffffff-no-rj'
+							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-sport.jpg?alt=media&token=a990479b-1b03-4c31-b2a8-e7309211f3ba'
 						/>
 						Sport
 					</li>
 					<li>
 						<img
 							alt=''
-							src='https://yt3.ggpht.com/I6T-3Y9nwi7-OjxguYimJ_lp_fgi_oXPkhip_MfYgQIeXQANXPcGwZvz-pud2x5pjzPy7YKKEA=s88-c-k-c0x00ffffff-no-rj'
+							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-360-videos.jpg?alt=media&token=8c1f9e6f-ae8d-422f-81de-e1c103575876'
 						/>
 						Gaming
 					</li>
 					<li>
 						<img
 							alt=''
-							src='https://yt3.ggpht.com/6lo97rUTO7xhIBXZqLiaW2kA_eMBIEmqc27EqlKLyE4nAY-yzcKBG0Hs0YdUka3gJ629HcwgyzQ=s88-c-k-c0x00ffffff-no-rj'
+							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-movies.jpg?alt=media&token=6745bc3b-33e5-44c6-9826-9c39be61d134'
 						/>
 						Movies
 					</li>
 					<li>
 						<img
 							alt=''
-							src='https://yt3.ggpht.com/xY-iZkAGrcD6-pO6g1GSIGemh0U1lr2ZuZDj6t87YExIP6G0lUWOgIEJ6NyJuAy7lefGLgCGwg=s88-c-k-c0x00ffffff-no-rj'
+							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-news.jpg?alt=media&token=0661b49f-1428-4464-bbf2-69caa89548a4'
 						/>
 						News
 					</li>
 					<li>
 						<img
 							alt=''
-							src='https://yt3.ggpht.com/8D6JlsnvwDZFMdcbjqVji82kggP3aXXbO-yBD0RFrKlp4G1zNt9wcqcVTSPnAI8GuUAbDYQwsg=s88-c-k-c0x00ffffff-no-rj'
+							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-live.jpg?alt=media&token=618c7c03-f4a4-472b-85c5-e40016ca5167'
 						/>
 						Live
 					</li>
 					<li>
 						<img
 							alt=''
-							src='https://yt3.ggpht.com/h-SaGavj8wM1FSnm5MnQq2fKSGnfDFrm5Ok9_FZC5TcE6jsOnJ96QM9Mkyi1T_cUrSie_AUvXg=s88-c-k-c0x00ffffff-no-rj'
+							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-360-videos.jpg?alt=media&token=8c1f9e6f-ae8d-422f-81de-e1c103575876'
 						/>
 						360&#176; Video
 					</li>
