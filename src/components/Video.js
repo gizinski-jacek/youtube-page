@@ -5,6 +5,7 @@ import countFormatter from './utils/countFormatter';
 
 const Video = ({ loadedData, loadVideo }) => {
 	const myYTKey = 'AIzaSyD-zyj2Y5Uk1v2ZtpZfeeJXXh-3gFWkBWc';
+	const [showLoadBox, setShowLoadBox] = useState(true);
 	const [channelStats, setChannelStats] = useState();
 	const [comment, setComment] = useState();
 	const [relatedVideoDatabase, setRelatedVideoDatabase] = useState();
@@ -27,9 +28,6 @@ const Video = ({ loadedData, loadVideo }) => {
 	};
 
 	const getChannelData = (chanId) => {
-		console.log(
-			`https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${chanId}&key=${myYTKey}`
-		);
 		return fetch(
 			`https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${chanId}&key=${myYTKey}`
 		)
@@ -51,24 +49,24 @@ const Video = ({ loadedData, loadVideo }) => {
 			});
 	}, []);
 
-	// useEffect(() => {
-	// 	fetch(
-	// 		`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&order=relevance&relatedToVideoId=${loadedData.video.videoData.id.videoId}&type=video&key=${myYTKey}`
-	// 	)
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			const trendingArray = data.items.map((item) => {
-	// 				return { videoData: item };
-	// 			});
-	// 			setRelatedVideoDatabase(trendingArray);
-	// 			createRelatedDisplayContent(trendingArray);
-	// 		});
-	// }, []);
+	const getRelatedDatabase = () => {
+		// setShowLoadBox(false);
+		// fetch(
+		// 	`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&order=relevance&relatedToVideoId=${loadedData.video.videoData.id.videoId}&type=video&key=${myYTKey}`
+		// )
+		// 	.then((response) => response.json())
+		// 	.then((data) => {
+		// 		const trendingArray = data.items.map((item) => {
+		// 			return { videoData: item };
+		// 		});
+		// 		setRelatedVideoDatabase(trendingArray);
+		// 		createRelatedDisplayContent(trendingArray);
+		// 	});
+	};
 
 	const createRelatedDisplayContent = (database) => {
 		const relatedPromise = Promise.all(
 			database.map(async (video, index) => {
-				console.log(video);
 				const videoStats = await getVideoStats(
 					video.videoData.id.videoId
 				);
@@ -233,7 +231,6 @@ const Video = ({ loadedData, loadVideo }) => {
 					<div>
 						<div className='video-channel-data'>
 							<div className='video-channel-details'>
-								{/* {console.log(loadedData.channel)} */}
 								<Link
 									to={`https://www.youtube.com/channel/${loadedData.video.videoData.snippet.channelId}`}
 								>
@@ -264,9 +261,9 @@ const Video = ({ loadedData, loadVideo }) => {
 									</h4>
 								</div>
 							</div>
-							<div className='video-channel-subscribe'>
-								<h3>Subscribe</h3>
-							</div>
+							<button id='video-channel-subscribe'>
+								Subscribe
+							</button>
 						</div>
 						<p className='video-description'>
 							{loadedData.video.videoData.snippet.description}
@@ -310,6 +307,26 @@ const Video = ({ loadedData, loadVideo }) => {
 				</div>
 			</div>
 			<div id='related-videos'>
+				<div
+					className='relative-container'
+					style={{ display: showLoadBox ? 'block' : 'none' }}
+				>
+					<div className='load-related-videos'>
+						<h3>
+							Press button below to load related videos. This
+							action uses a lot of API tokens and after few uses
+							will reach the daily quota which will result in no
+							videos being loaded anymore.
+						</h3>
+						<button
+							id='load-related-videos-btn'
+							onClick={getRelatedDatabase}
+						>
+							Load Videos
+						</button>
+					</div>
+				</div>
+
 				<div id='related-filter'>
 					<ul>
 						<NavLink activeClassName='active' to='/'>
