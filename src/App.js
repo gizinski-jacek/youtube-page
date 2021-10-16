@@ -1,14 +1,7 @@
-import {
-	getFirestore,
-	collection,
-	addDoc,
-	getDocs,
-	serverTimestamp,
-} from 'firebase/firestore';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { DateTime } from 'luxon';
 import './App.css';
 import Nav from './components/Nav';
 import Menu from './components/Menu';
@@ -109,7 +102,7 @@ const App = () => {
 					mainArray.push(allArray[random]);
 				}
 				setMainVideoDatabase(mainArray);
-				// createMainDisplayContent(mainArray);
+				createMainDisplayContent(mainArray);
 			})
 			.then(() => {
 				fetch(
@@ -157,6 +150,7 @@ const App = () => {
 		const mainPromise = Promise.all(
 			database.map(async (video, index) => {
 				const videoStats = await getVideoStats(
+					// Sometimes throws undefined error, need to find out why.
 					video.videoData.id.videoId
 				);
 				const channelData = await getChannelData(
@@ -323,7 +317,6 @@ const App = () => {
 					<Video
 						loadedData={loadedVideoData}
 						data={trendingVideoDatabase}
-						loadVideo={loadVideo}
 					/>
 				</Route>
 			</Switch>
