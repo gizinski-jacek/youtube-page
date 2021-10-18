@@ -3,16 +3,18 @@ import { Link, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import dateFormatter from './utils/dateFormatter';
 import countFormatter from './utils/countFormatter';
+import getVideoCommentsData from './utils/getVideoCommentsData';
+import getYTRelatedVideos from './utils/getYTRelatedVideos';
 import getYTVideoData from './utils/getYTVideoData';
 import getYTVideoStatistics from './utils/getYTChannelData';
 import getYTChannelData from './utils/getYTVideoStatistics';
-import getYTRelatedVideos from './utils/getYTRelatedVideos';
+import getYTChannelStatistics from './utils/getYTChannelStatistics';
 
 const Video = ({ loadedData }) => {
 	const [showLoadBox, setShowLoadBox] = useState(true);
 	const [currentVideoData, setCurrentVideoData] = useState(loadedData);
 	const [channelStats, setChannelStats] = useState();
-	const [videoComments, setVideoComments] = useState();
+	const [videoCommentsData, setVideoCommentsData] = useState();
 	const [newCommentContent, setNewCommentContent] = useState();
 	const [relatedContent, setRelatedContent] = useState();
 
@@ -38,22 +40,20 @@ const Video = ({ loadedData }) => {
 
 	useEffect(() => {
 		if (currentVideoData) {
-			fetch(
-				`https://youtube.googleapis.com/youtube/v3/channels?part=statistics&id=${currentVideoData.video.videoData.snippet.channelId}&key=${myAPIKey}`
-			)
-				.then((response) => response.json())
-				.then((data) => setChannelStats(data.items[0].statistics))
-				.catch((error) => {
-					console.log(`Channel data fetch error: ${error}`);
-				});
-			fetch(
-				`https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&order=relevance&videoId=${currentVideoData.video.videoData.id.videoId}&key=${myAPIKey}`
-			)
-				.then((response) => response.json())
-				.then((data) => setVideoComments(data.items))
-				.catch((error) => {
-					console.log(`Comments data fetch error: ${error}`);
-				});
+			(async () => {
+				setChannelStats(
+					await getYTChannelStatistics(
+						currentVideoData.video.videoData.snippet.channelId,
+						myAPIKey
+					)
+				);
+				setVideoCommentsData(
+					await getVideoCommentsData(
+						currentVideoData.video.videoData.id.videoId,
+						myAPIKey
+					)
+				);
+			})();
 		} else {
 			// Looking for a way to fetch all video data on refresh/on direct link load so the
 			// video page doesn't crash. Right now throws below error. Looking for a solution.
@@ -78,18 +78,6 @@ const Video = ({ loadedData }) => {
 			})();
 		}
 	}, []);
-
-	// const getYTRelatedVideos = () => {
-	// 	fetch(
-	// 		`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&order=relevance&relatedToVideoId=${currentVideoData.video.videoData.id.videoId}&type=video&key=${myAPIKey}`
-	// 	)
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			const trendingArray = data.items.map((item) => {
-	// 				return { videoData: item };
-	// 			});
-	// 		});
-	// };
 
 	const createRelatedDisplayContent = (database) => {
 		const relatedPromise = Promise.all(
@@ -339,7 +327,7 @@ const Video = ({ loadedData }) => {
 		</div>
 	) : null;
 
-	const currentVideoComments = videoComments?.map((comment) => {
+	const currentVideoComments = videoCommentsData?.map((comment) => {
 		return (
 			<div key={comment.id} className='comment-main'>
 				<img
