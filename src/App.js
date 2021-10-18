@@ -1,5 +1,4 @@
 import { app, myAPIKey } from './firebase';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './App.css';
@@ -12,13 +11,14 @@ import dateFormatter from './components/utils/dateFormatter';
 import countFormatter from './components/utils/countFormatter';
 import getYTVideoStatistics from './components/utils/getYTChannelData';
 import getYTChannelData from './components/utils/getYTVideoStatistics';
+import getYTTrendingVideos from './components/utils/getYTTrendingVideos';
+import getRandomVideosFromFirestore from './components/utils/getRandomVideosFromFirestore';
 
 const App = () => {
 	const [menuIsThin, setMenuIsThin] = useState(false);
 	const [menuIsCollapsed, setMenuIsCollapsed] = useState(true);
 	const [searchInput, setSearchInput] = useState();
 	const [loadedVideoData, setLoadedVideoData] = useState();
-	const [trendingVideoDatabase, setTrendingVideoDatabase] = useState();
 	const [mainContentDisplay, setMainContentDisplay] = useState();
 	const [trendingContentDisplay, setTrendingContentDisplay] = useState();
 
@@ -45,41 +45,13 @@ const App = () => {
 	};
 
 	useEffect(() => {
-		getDocs(collection(getFirestore(), 'mainVideosDatabase'))
-			.then((data) => {
-				const mainArray = [];
-				const allArray = [];
-				data.forEach((doc) => {
-					allArray.push(doc.data());
-				});
-				for (let i = 0; i < 24; i++) {
-					const used = [];
-					let random = Math.trunc(Math.random() * allArray.length);
-					while (used.includes(random)) {
-						random = Math.trunc(Math.random() * allArray.length);
-					}
-					used.push(random);
-					mainArray.push(allArray[random]);
-				}
-				createMainDisplayContent(mainArray);
+		getRandomVideosFromFirestore(24)
+			.then((randomData) => {
+				createMainDisplayContent(randomData);
 			})
-			.then(() => {
-				fetch(
-					`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=12&key=${myAPIKey}`
-				)
-					.then((response) => response.json())
-					.then((data) => {
-						const trendingArray = data.items.map((item) => {
-							return {
-								videoData: {
-									...item,
-									id: { videoId: item.id },
-								},
-							};
-						});
-						setTrendingVideoDatabase(trendingArray);
-						createTrendingDisplayContent(trendingArray);
-					});
+			.then(async () => {
+				const trending = await getYTTrendingVideos(12, myAPIKey);
+				createTrendingDisplayContent(trending);
 			});
 	}, []);
 
@@ -261,10 +233,7 @@ const App = () => {
 						isCollapsed={menuIsCollapsed}
 						collapse={collapseMenu}
 					/>
-					<Video
-						loadedData={loadedVideoData}
-						data={trendingVideoDatabase}
-					/>
+					<Video loadedData={loadedVideoData} />
 				</Route>
 			</Switch>
 		</BrowserRouter>
