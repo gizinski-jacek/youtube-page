@@ -15,8 +15,8 @@ const getRandomVideosFromFirestore = (number) => {
 					random = Math.trunc(Math.random() * allDataArray.length);
 				}
 				used.push(random);
-				const item = allDataArray.splice(random, 1);
-				mainArray.push(item);
+				mainArray.push(allDataArray[random]);
+				allDataArray.splice(random, 1);
 			}
 			return mainArray;
 		}
