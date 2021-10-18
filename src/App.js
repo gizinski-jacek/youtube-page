@@ -55,9 +55,9 @@ const App = () => {
 			});
 	}, []);
 
-	const createMainDisplayContent = (database) => {
+	const createMainDisplayContent = (data) => {
 		const mainPromise = Promise.all(
-			database.map(async (video, index) => {
+			data.map(async (video, index) => {
 				const videoStats = await getYTVideoStatistics(
 					// Sometimes throws undefined error, need to find out why.
 					video.videoData.id.videoId,
@@ -132,9 +132,9 @@ const App = () => {
 		mainPromise.then((content) => setMainContentDisplay(content));
 	};
 
-	const createTrendingDisplayContent = (database) => {
+	const createTrendingDisplayContent = (data) => {
 		const trendingPromise = Promise.all(
-			database.map(async (video, index) => {
+			data.map(async (video, index) => {
 				const videoStats = await getYTVideoStatistics(
 					video.videoData.id.videoId,
 					myAPIKey
