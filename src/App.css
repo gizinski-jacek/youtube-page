@@ -1016,7 +1016,8 @@ iframe {
 
 .related-metadata h5 {
 	width: fit-content;
-	padding: 2px 4px;
+	padding: 0 4px;
+	line-height: 1.5rem;
 	font-weight: 600;
 	color: var(--dark-gray-footer);
 	background-color: var(--gray-med-transp-border);
