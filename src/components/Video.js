@@ -1,43 +1,24 @@
+import { myAPIKey } from '../firebase';
 import { Link, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import dateFormatter from './utils/dateFormatter';
 import countFormatter from './utils/countFormatter';
+import getYTVideoData from './utils/getYTVideoData';
+import getYTVideoStatistics from './utils/getYTChannelData';
+import getYTChannelData from './utils/getYTVideoStatistics';
+import getYTRelatedVideos from './utils/getYTRelatedVideos';
 
 const Video = ({ loadedData }) => {
-	const myYTKey = 'AIzaSyD-zyj2Y5Uk1v2ZtpZfeeJXXh-3gFWkBWc';
 	const [showLoadBox, setShowLoadBox] = useState(true);
 	const [currentVideoData, setCurrentVideoData] = useState(loadedData);
 	const [channelStats, setChannelStats] = useState();
 	const [videoComments, setVideoComments] = useState();
 	const [newCommentContent, setNewCommentContent] = useState();
-	const [relatedVideoDatabase, setRelatedVideoDatabase] = useState();
 	const [relatedContent, setRelatedContent] = useState();
 
 	const handleInput = (e) => {
 		const { value } = e.target;
 		setNewCommentContent(value);
-	};
-
-	const getVideoStats = (vidId) => {
-		return fetch(
-			`https://youtube.googleapis.com/youtube/v3/videos?part=statistics&id=${vidId}&key=${myYTKey}`
-		)
-			.then((response) => response.json())
-			.then((data) => data.items[0].statistics)
-			.catch((error) => {
-				console.log('Video stats fetch error: ' + error);
-			});
-	};
-
-	const getChannelData = (chanId) => {
-		return fetch(
-			`https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${chanId}&key=${myYTKey}`
-		)
-			.then((response) => response.json())
-			.then((data) => data.items[0].snippet)
-			.catch((error) => {
-				console.log('Channel data fetch error: ' + error);
-			});
 	};
 
 	const changeVideo = (vidData) => {
@@ -46,34 +27,32 @@ const Video = ({ loadedData }) => {
 		setCurrentVideoData(vidData);
 	};
 
-	const getVideoData = (vidId) => {
-		return fetch(
-			`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=${vidId}&key=${myYTKey}`
-		)
-			.then((response) => response.json())
-			.then((data) => data.items)
-			.catch((error) => {
-				console.log('Video stats fetch error: ' + error);
-			});
+	const handleLoad = async () => {
+		setShowLoadBox(false);
+		const relatedData = await getYTRelatedVideos(
+			currentVideoData.video.videoData.id.videoId,
+			myAPIKey
+		);
+		createRelatedDisplayContent(relatedData);
 	};
 
 	useEffect(() => {
 		if (currentVideoData) {
 			fetch(
-				`https://youtube.googleapis.com/youtube/v3/channels?part=statistics&id=${currentVideoData.video.videoData.snippet.channelId}&key=${myYTKey}`
+				`https://youtube.googleapis.com/youtube/v3/channels?part=statistics&id=${currentVideoData.video.videoData.snippet.channelId}&key=${myAPIKey}`
 			)
 				.then((response) => response.json())
 				.then((data) => setChannelStats(data.items[0].statistics))
 				.catch((error) => {
-					console.log('Channel data fetch error: ' + error);
+					console.log(`Channel data fetch error: ${error}`);
 				});
 			fetch(
-				`https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&order=relevance&videoId=${currentVideoData.video.videoData.id.videoId}&key=${myYTKey}`
+				`https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&order=relevance&videoId=${currentVideoData.video.videoData.id.videoId}&key=${myAPIKey}`
 			)
 				.then((response) => response.json())
 				.then((data) => setVideoComments(data.items))
 				.catch((error) => {
-					console.log('Channel data fetch error: ' + error);
+					console.log(`Comments data fetch error: ${error}`);
 				});
 		} else {
 			// Looking for a way to fetch all video data on refresh/on direct link load so the
@@ -85,9 +64,9 @@ const Video = ({ loadedData }) => {
 			//
 			(async () => {
 				const vidId = window.location.pathname.slice(7);
-				const vidData = await getVideoData(vidId);
-				const vidStats = await getVideoStats(vidId);
-				const chanData = await getChannelData(
+				const vidData = await getYTVideoData(vidId, myAPIKey);
+				const vidStats = await getYTVideoStatistics(vidId);
+				const chanData = await getYTChannelData(
 					vidData[0].snippet.channelId
 				);
 				setCurrentVideoData({
@@ -100,31 +79,32 @@ const Video = ({ loadedData }) => {
 		}
 	}, []);
 
-	const getRelatedDatabase = () => {
-		setShowLoadBox(false);
-		fetch(
-			`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&order=relevance&relatedToVideoId=${currentVideoData.video.videoData.id.videoId}&type=video&key=${myYTKey}`
-		)
-			.then((response) => response.json())
-			.then((data) => {
-				const trendingArray = data.items.map((item) => {
-					return { videoData: item };
-				});
-				setRelatedVideoDatabase(trendingArray);
-				createRelatedDisplayContent(trendingArray);
-			});
-	};
+	// const getYTRelatedVideos = () => {
+	// 	fetch(
+	// 		`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&order=relevance&relatedToVideoId=${currentVideoData.video.videoData.id.videoId}&type=video&key=${myAPIKey}`
+	// 	)
+	// 		.then((response) => response.json())
+	// 		.then((data) => {
+	// 			const trendingArray = data.items.map((item) => {
+	// 				return { videoData: item };
+	// 			});
+	// 		});
+	// };
 
 	const createRelatedDisplayContent = (database) => {
 		const relatedPromise = Promise.all(
 			database.map(async (video, index) => {
-				const videoStats = await getVideoStats(
+				const videoStats = await getYTVideoStatistics(
 					// Sometimes throws undefined error, need to find out why.
-					video.videoData.id.videoId
+					video.videoData.id.videoId,
+					myAPIKey
 				);
-				const channelData = await getChannelData(
-					video.videoData.snippet.channelId
+				const channelData = await getYTChannelData(
+					video.videoData.snippet.channelId,
+					myAPIKey
 				);
+				console.log(channelData);
+				console.log(video.videoData.snippet.channelId);
 				return Promise.all([videoStats, channelData]).then(
 					([stats, channel]) => {
 						return (
@@ -299,7 +279,8 @@ const Video = ({ loadedData }) => {
 									className='video-channel-picture'
 									src={
 										currentVideoData.video.videoData.snippet
-											.thumbnails.medium.url
+											.thumbnails.medium.url ||
+										`https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fprofile_placeholder.png?alt=media&token=d1bc2f1c-9c82-4f41-b255-1bf9413fa641`
 									}
 									alt=''
 								/>
@@ -344,7 +325,7 @@ const Video = ({ loadedData }) => {
 				<div className='add-comment'>
 					<img
 						className='add-comment-user-picture'
-						src='images/profile_placeholder.png'
+						src={`https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fprofile_placeholder.png?alt=media&token=d1bc2f1c-9c82-4f41-b255-1bf9413fa641`}
 						alt=''
 					/>
 					<input
@@ -361,14 +342,14 @@ const Video = ({ loadedData }) => {
 	) : null;
 
 	const currentVideoComments = videoComments?.map((comment) => {
-		console.log(comment);
 		return (
 			<div key={comment.id} className='comment-main'>
 				<img
 					className='comment-user-picture'
 					src={
 						comment.snippet.topLevelComment.snippet
-							.authorProfileImageUrl
+							.authorProfileImageUrl ||
+						`https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fprofile_placeholder.png?alt=media&token=d1bc2f1c-9c82-4f41-b255-1bf9413fa641`
 					}
 					alt='Video thumbnail'
 				/>
@@ -435,7 +416,7 @@ const Video = ({ loadedData }) => {
 						</h3>
 						<button
 							id='load-related-videos-btn'
-							onClick={getRelatedDatabase}
+							onClick={handleLoad}
 						>
 							Load Videos
 						</button>

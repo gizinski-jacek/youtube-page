@@ -1,5 +1,5 @@
+import { app, myAPIKey } from './firebase';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
-
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './App.css';
@@ -10,38 +10,17 @@ import Content from './components/Content';
 import Video from './components/Video';
 import dateFormatter from './components/utils/dateFormatter';
 import countFormatter from './components/utils/countFormatter';
-
-// Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-	apiKey: 'AIzaSyAdnvug1Oyy1XOUxGHVKVGfp55ndCeVd1k',
-	authDomain: 'clone-328013.firebaseapp.com',
-	projectId: 'youtube-clone-328013',
-	storageBucket: 'youtube-clone-328013.appspot.com',
-	messagingSenderId: '374259457026',
-	appId: '1:374259457026:web:80d5874bc952a461619b1b',
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const myYTKey = 'AIzaSyD-zyj2Y5Uk1v2ZtpZfeeJXXh-3gFWkBWc';
+import getYTVideoStatistics from './components/utils/getYTChannelData';
+import getYTChannelData from './components/utils/getYTVideoStatistics';
 
 const App = () => {
 	const [menuIsThin, setMenuIsThin] = useState(false);
 	const [menuIsCollapsed, setMenuIsCollapsed] = useState(true);
 	const [searchInput, setSearchInput] = useState();
 	const [loadedVideoData, setLoadedVideoData] = useState();
-	const [mainVideoDatabase, setMainVideoDatabase] = useState();
 	const [trendingVideoDatabase, setTrendingVideoDatabase] = useState();
 	const [mainContentDisplay, setMainContentDisplay] = useState();
 	const [trendingContentDisplay, setTrendingContentDisplay] = useState();
-
-	const profile_placeholder =
-		'https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fprofile_placeholder.png?alt=media&token=d1bc2f1c-9c82-4f41-b255-1bf9413fa641';
 
 	const toggleMenuWidth = () => {
 		setMenuIsThin((prevState) => !prevState);
@@ -65,25 +44,6 @@ const App = () => {
 		setMenuIsCollapsed((prevState) => !prevState);
 	};
 
-	// const queryRandomVideosAndAddToDB = async () => {
-	// 	await fetch(
-	// 		`https://youtube.googleapis.com/youtube/v3/search?part=snippet&order=relevance&maxResults=50&q=technology%20gadgets%20programming%20computer%20music%20video%20movie%20gaming%20sport&key=${myYTKey}`
-	// 		// `https://youtube.googleapis.com/youtube/v3/search?part=snippet&order=relevance&maxResults=50&q=computer%20music%20video%20movie%20gaming%20sport%20technology%20gadgets%20programming&key=${myYTKey}`
-	// 	)
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			data.items.forEach((videoData) => {
-	// 				addDoc(collection(getFirestore(), 'mainVideosDatabase'), {
-	// 					videoData,
-	// 					timestamp: serverTimestamp(),
-	// 				});
-	// 			});
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log('Random video data fetch error: ' + error);
-	// 		});
-	// };
-
 	useEffect(() => {
 		getDocs(collection(getFirestore(), 'mainVideosDatabase'))
 			.then((data) => {
@@ -101,12 +61,11 @@ const App = () => {
 					used.push(random);
 					mainArray.push(allArray[random]);
 				}
-				setMainVideoDatabase(mainArray);
 				createMainDisplayContent(mainArray);
 			})
 			.then(() => {
 				fetch(
-					`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=12&key=${myYTKey}`
+					`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=12&key=${myAPIKey}`
 				)
 					.then((response) => response.json())
 					.then((data) => {
@@ -124,37 +83,17 @@ const App = () => {
 			});
 	}, []);
 
-	const getVideoStats = (vidId) => {
-		return fetch(
-			`https://youtube.googleapis.com/youtube/v3/videos?part=statistics&id=${vidId}&key=${myYTKey}`
-		)
-			.then((response) => response.json())
-			.then((data) => data.items[0].statistics)
-			.catch((error) => {
-				console.log('Video stats fetch error: ' + error);
-			});
-	};
-
-	const getChannelData = (chanId) => {
-		return fetch(
-			`https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${chanId}&key=${myYTKey}`
-		)
-			.then((response) => response.json())
-			.then((data) => data.items[0].snippet)
-			.catch((error) => {
-				console.log('Channel data fetch error: ' + error);
-			});
-	};
-
 	const createMainDisplayContent = (database) => {
 		const mainPromise = Promise.all(
 			database.map(async (video, index) => {
-				const videoStats = await getVideoStats(
+				const videoStats = await getYTVideoStatistics(
 					// Sometimes throws undefined error, need to find out why.
-					video.videoData.id.videoId
+					video.videoData.id.videoId,
+					myAPIKey
 				);
-				const channelData = await getChannelData(
-					video.videoData.snippet.channelId
+				const channelData = await getYTChannelData(
+					video.videoData.snippet.channelId,
+					myAPIKey
 				);
 				return Promise.all([videoStats, channelData]).then(
 					([stats, channel]) => {
@@ -178,7 +117,10 @@ const App = () => {
 								<div className='card-details'>
 									<img
 										className='channel-picture'
-										src={channel.thumbnails.default.url}
+										src={
+											channel.thumbnails.default.url ||
+											`https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fprofile_placeholder.png?alt=media&token=d1bc2f1c-9c82-4f41-b255-1bf9413fa641`
+										}
 										alt=''
 									/>
 									<div className='metadata'>
@@ -221,11 +163,13 @@ const App = () => {
 	const createTrendingDisplayContent = (database) => {
 		const trendingPromise = Promise.all(
 			database.map(async (video, index) => {
-				const videoStats = await getVideoStats(
-					video.videoData.id.videoId
+				const videoStats = await getYTVideoStatistics(
+					video.videoData.id.videoId,
+					myAPIKey
 				);
-				const channelData = await getChannelData(
-					video.videoData.snippet.channelId
+				const channelData = await getYTChannelData(
+					video.videoData.snippet.channelId,
+					myAPIKey
 				);
 				return Promise.all([videoStats, channelData]).then(
 					([stats, channel]) => {
@@ -249,7 +193,10 @@ const App = () => {
 								<div className='card-details'>
 									<img
 										className='channel-picture'
-										src={channel.thumbnails.default.url}
+										src={
+											channel.thumbnails.default.url ||
+											`https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fprofile_placeholder.png?alt=media&token=d1bc2f1c-9c82-4f41-b255-1bf9413fa641`
+										}
 										alt=''
 									/>
 									<div className='metadata'>
