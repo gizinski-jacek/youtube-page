@@ -103,8 +103,6 @@ const Video = ({ loadedData }) => {
 					video.videoData.snippet.channelId,
 					myAPIKey
 				);
-				console.log(channelData);
-				console.log(video.videoData.snippet.channelId);
 				return Promise.all([videoStats, channelData]).then(
 					([stats, channel]) => {
 						return (
