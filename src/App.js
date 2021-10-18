@@ -9,10 +9,10 @@ import Content from './components/Content';
 import Video from './components/Video';
 import dateFormatter from './components/utils/dateFormatter';
 import countFormatter from './components/utils/countFormatter';
-import getYTVideoStatistics from './components/utils/getYTChannelData';
-import getYTChannelData from './components/utils/getYTVideoStatistics';
-import getYTTrendingVideos from './components/utils/getYTTrendingVideos';
 import getRandomVideosFromFirestore from './components/utils/getRandomVideosFromFirestore';
+import getYTTrendingVideos from './components/utils/getYTTrendingVideos';
+import getYTVideoStatistics from './components/utils/getYTVideoStatistics';
+import getYTChannelData from './components/utils/getYTChannelData';
 
 const App = () => {
 	const [menuIsThin, setMenuIsThin] = useState(false);
