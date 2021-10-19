@@ -1,11 +1,15 @@
 import { Link, NavLink } from 'react-router-dom';
 import SignInBtn from './utils/SignInBtn';
 
-const MenuVideo = ({ isCollapsed, collapse }) => {
+const MenuVideo = ({ isCollapsed, toggleMenu }) => {
 	return (
 		<>
+			<div
+				className={`cover-fade ${isCollapsed ? 'isCollapsed' : ''}`}
+				onClick={toggleMenu}
+			></div>
 			<div className={`menu-top ${isCollapsed ? 'isCollapsed' : ''}`}>
-				<div className='ham-menu' onClick={collapse}>
+				<div className='ham-menu' onClick={toggleMenu}>
 					<svg focusable='false'>
 						<path d='M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z'></path>
 					</svg>
@@ -203,9 +207,6 @@ const MenuVideo = ({ isCollapsed, collapse }) => {
 					</div>
 				</section>
 			</div>
-			<div
-				className={`cover-fade ${isCollapsed ? 'isCollapsed' : ''}`}
-			></div>
 		</>
 	);
 };
