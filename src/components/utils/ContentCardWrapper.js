@@ -2,11 +2,10 @@ import { Link } from 'react-router-dom';
 import countFormatter from './countFormatter';
 import dateFormatter from './dateFormatter';
 
-const ContentCardWrapper = (video, index, loadVideo, stats, channel) => {
+const ContentCardWrapper = ({ video, index, loadVideo, stats, channel }) => {
 	return (
 		<Link
 			to={`watch=${video.videoData.id.videoId}`}
-			key={index}
 			className='content-card'
 			onClick={() => loadVideo({ video, stats, channel })}
 		>
