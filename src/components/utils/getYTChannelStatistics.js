@@ -5,7 +5,7 @@ const getYTChannelStatistics = (channelId, APIKey) => {
 		.then((response) => response.json())
 		.then((data) => data.items[0].statistics)
 		.catch((error) => {
-			console.log(`Channel data fetch error: ${error}`);
+			console.log(`Channel statistics fetch error: ${error}`);
 		});
 };
 
