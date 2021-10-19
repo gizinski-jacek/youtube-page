@@ -424,7 +424,7 @@ h6 {
 }
 
 .trending-tag {
-	margin: 28px 0 8px 8px;
+	margin: 24px 0 8px 8px;
 	font-weight: 600;
 	grid-column: 1/-1;
 }
@@ -434,6 +434,48 @@ h6 {
 	flex-direction: column;
 	font-size: 1.5rem;
 	margin: 0 0px 48px 0px;
+}
+
+.relative-trending-container {
+	display: block;
+	position: relative;
+	grid-column: 1/-1;
+	grid-row: 2/3;
+}
+
+.load-trending-videos {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin: 24px;
+	margin-top: 0;
+	padding: 24px;
+	font-weight: 600;
+	border: 2px solid rgb(0, 0, 0);
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	box-sizing: border-box;
+	z-index: 50;
+}
+
+.load-trending-videos h3 {
+	margin: 12px;
+	line-height: 2rem;
+	text-align: justify;
+	width: 40%;
+}
+
+#load-trending-videos-btn {
+	margin: 12px;
+	padding: 8px 12px;
+	background-color: var(--blue-sign-in-color);
+	border: 1px solid rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+	font-weight: 600;
+	font-size: 1.5rem;
+	cursor: pointer;
+	text-transform: uppercase;
 }
 
 .card-thumbnail {
@@ -576,6 +618,7 @@ h6 {
 	justify-content: center;
 	margin-top: var(--navbar-height);
 	background-color: var(--gray-very-high-transp-border);
+	min-height: calc(100vh - var(--navbar-height));
 }
 
 #video-column-container {
@@ -905,7 +948,7 @@ iframe {
 	height: fit-content;
 }
 
-.relative-container {
+.relative-related-container {
 	display: block;
 	position: relative;
 }
@@ -918,13 +961,12 @@ iframe {
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: fit-content;
 	width: 100%;
 	padding: 24px;
 	font-weight: 600;
 	border: 2px solid rgb(0, 0, 0);
-	border-radius: 2px;
-	background-color: rgb(175, 175, 175);
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
 	box-sizing: border-box;
 	z-index: 50;
 }
@@ -932,7 +974,7 @@ iframe {
 .load-related-videos h3 {
 	margin: 12px;
 	line-height: 2rem;
-	text-align: center;
+	text-align: justify;
 }
 
 #load-related-videos-btn {
