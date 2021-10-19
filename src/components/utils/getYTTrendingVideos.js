@@ -13,6 +13,9 @@ const getYTTrendingVideos = (number, APIKey) => {
 				};
 			});
 			return array;
+		})
+		.catch((error) => {
+			console.log(`Trending videos data fetch error: ${error}`);
 		});
 };
 

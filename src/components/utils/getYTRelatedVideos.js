@@ -8,6 +8,9 @@ const getYTRelatedVideos = (videoId, APIKey) => {
 				return { videoData: item };
 			});
 			return array;
+		})
+		.catch((error) => {
+			console.log(`Related videos data fetch error: ${error}`);
 		});
 };
 
