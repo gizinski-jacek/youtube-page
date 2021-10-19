@@ -390,15 +390,15 @@ const Video = ({ loadedData }) => {
 			</div>
 			<div id='related-videos'>
 				<div
-					className='relative-container'
+					className='relative-related-container'
 					style={{ display: showLoadBox ? 'block' : 'none' }}
 				>
 					<div className='load-related-videos'>
 						<h3>
-							Press button below to load related videos. This
-							action uses a lot of API tokens and after few uses
-							will reach the daily quota which will result in no
-							videos being loaded anymore.
+							Press the button to load related videos. This action
+							uses a lot of API tokens and after few uses will
+							reach the daily quota which will result in no videos
+							being loaded anymore.
 						</h3>
 						<button
 							id='load-related-videos-btn'
@@ -408,7 +408,10 @@ const Video = ({ loadedData }) => {
 						</button>
 					</div>
 				</div>
-				<div id='related-filter'>
+				<div
+					id='related-filter'
+					style={{ visibility: showLoadBox ? 'hidden' : 'visible' }}
+				>
 					<ul>
 						<NavLink activeClassName='active' to='/'>
 							<li>All</li>
@@ -421,7 +424,10 @@ const Video = ({ loadedData }) => {
 						<li>Recently uploaded</li>
 					</ul>
 				</div>
-				<div className='related-links'>
+				<div
+					className='related-links'
+					style={{ visibility: showLoadBox ? 'hidden' : 'visible' }}
+				>
 					{relatedContent ? relatedContent : null}
 				</div>
 			</div>
