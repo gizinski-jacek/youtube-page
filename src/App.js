@@ -15,12 +15,12 @@ const App = () => {
 	const [loadedVideoData, setLoadedVideoData] = useState();
 
 	const toggleMenuWidth = () => {
-		setMenuIsThin((prevState) => !prevState);
 		if (menuIsThin) {
 			document.documentElement.style.setProperty('--menu-width', '240px');
 		} else {
 			document.documentElement.style.setProperty('--menu-width', '70px');
 		}
+		setMenuIsThin((prevState) => !prevState);
 	};
 
 	const handleInput = (e) => {
@@ -28,7 +28,7 @@ const App = () => {
 		setSearchInput(value);
 	};
 
-	const collapseMenu = () => {
+	const toggleMenuVisibility = () => {
 		setMenuIsCollapsed((prevState) => !prevState);
 	};
 
@@ -50,13 +50,13 @@ const App = () => {
 				</Route>
 				<Route exact path='/watch=([\w-]{11,})'>
 					<Nav
-						hamAction={collapseMenu}
+						hamAction={toggleMenuVisibility}
 						input={searchInput}
 						handle={handleInput}
 					/>
 					<MenuVideo
 						isCollapsed={menuIsCollapsed}
-						collapse={collapseMenu}
+						toggleMenu={toggleMenuVisibility}
 					/>
 					<Video loadedData={loadedVideoData} />
 				</Route>
