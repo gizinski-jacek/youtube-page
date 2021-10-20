@@ -13,87 +13,98 @@ const Content = ({ loadVideo }) => {
 	const [trendingContentDisplay, setTrendingContentDisplay] = useState();
 
 	const handleLoad = async () => {
+		const trendingVideos = await getYTTrendingVideos(12, myAPIKey);
+		createTrendingDisplayContent(trendingVideos);
 		setShowLoadBox(false);
-		const relatedData = await getYTTrendingVideos(12, myAPIKey);
-		createTrendingDisplayContent(relatedData);
 	};
 
 	useEffect(() => {
-		getRandomVideosFromFirestore(24).then((randomData) => {
-			createMainDisplayContent(randomData);
-		});
+		(async () => {
+			const randomVideos = await getRandomVideosFromFirestore(24);
+			createMainDisplayContent(randomVideos);
+		})();
 	}, []);
 
-	const createMainDisplayContent = (data) => {
-		Promise.all(
-			data.map((video, index) => {
-				const videoStats = getYTVideoStatistics(
-					video.videoData.id.videoId,
-					myAPIKey
-				);
-				const channelData = getYTChannelData(
-					video.videoData.snippet.channelId,
-					myAPIKey
-				);
-				return Promise.all([videoStats, channelData])
-					.then(([stats, channel]) => {
-						return (
-							<ContentCardWrapper
-								key={index}
-								video={video}
-								loadVideo={loadVideo}
-								stats={stats}
-								channel={channel}
-							/>
-						);
-					})
-					.catch((error) => {
+	const createMainDisplayContent = async (data) => {
+		try {
+			const content = await Promise.all(
+				data.map(async (video, index) => {
+					const videoStats = getYTVideoStatistics(
+						video.videoData.id.videoId,
+						myAPIKey
+					);
+					const channelData = getYTChannelData(
+						video.videoData.snippet.channelId,
+						myAPIKey
+					);
+					try {
+						const [stats, channel] = await Promise.all([
+							videoStats,
+							channelData,
+						]);
+						if (stats && channel) {
+							return (
+								<ContentCardWrapper
+									key={index}
+									video={video}
+									loadVideo={loadVideo}
+									stats={stats}
+									channel={channel}
+								/>
+							);
+						}
+					} catch (error) {
 						console.log(
 							`Promise all for main video statistics and channel data error: ${error}`
 						);
-					});
-			})
-		)
-			.then((content) => setMainContentDisplay(content))
-			.catch((error) => {
-				console.log(`Promise all for main content error: ${error}`);
-			});
+					}
+				})
+			);
+			setMainContentDisplay(content);
+		} catch (error) {
+			console.log(`Promise all for main content error: ${error}`);
+		}
 	};
 
-	const createTrendingDisplayContent = (data) => {
-		Promise.all(
-			data.map((video, index) => {
-				const videoStats = getYTVideoStatistics(
-					video.videoData.id.videoId,
-					myAPIKey
-				);
-				const channelData = getYTChannelData(
-					video.videoData.snippet.channelId,
-					myAPIKey
-				);
-				return Promise.all([videoStats, channelData])
-					.then(([stats, channel]) => {
-						return (
-							<ContentCardWrapper
-								key={index}
-								video={video}
-								loadVideo={loadVideo}
-								stats={stats}
-								channel={channel}
-							/>
-						);
-					})
-					.catch((error) => {
+	const createTrendingDisplayContent = async (data) => {
+		try {
+			const content = await Promise.all(
+				data.map(async (video, index) => {
+					const videoStats = getYTVideoStatistics(
+						video.videoData.id.videoId,
+						myAPIKey
+					);
+					const channelData = getYTChannelData(
+						video.videoData.snippet.channelId,
+						myAPIKey
+					);
+					try {
+						const [stats, channel] = await Promise.all([
+							videoStats,
+							channelData,
+						]);
+						if (stats && channel) {
+							return (
+								<ContentCardWrapper
+									key={index}
+									video={video}
+									loadVideo={loadVideo}
+									stats={stats}
+									channel={channel}
+								/>
+							);
+						}
+					} catch (error) {
 						console.log(
 							`Promise all for trending video statistics and channel data error: ${error}`
 						);
-					});
-			})
-		)
-			.then((content) => setTrendingContentDisplay(content))
-			.catch((error) => {
-				console.log(`Promise all for trending content error: ${error}`);
-			});
+					}
+				})
+			);
+			setTrendingContentDisplay(content);
+		} catch (error) {
+			console.log(`Promise all for trending content error: ${error}`);
+		}
 	};
 
 	return (
@@ -126,23 +137,21 @@ const Content = ({ loadVideo }) => {
 				<div className='trending-content-display'>
 					<h2 className='trending-tag'>Trending</h2>
 					<div
-						className='relative-trending-container'
-						style={{ display: showLoadBox ? 'block' : 'none' }}
+						className='load-trending-videos'
+						style={{ display: showLoadBox ? 'flex' : 'none' }}
 					>
-						<div className='load-trending-videos'>
-							<h3>
-								Press the button to load trending videos. This
-								action uses a lot of API tokens and after few
-								uses will reach the daily quota which will
-								result in no videos being loaded anymore.
-							</h3>
-							<button
-								id='load-trending-videos-btn'
-								onClick={handleLoad}
-							>
-								Load Videos
-							</button>
-						</div>
+						<h3>
+							Press the button to load trending videos. This
+							action uses a lot of API tokens and after few uses
+							will reach the daily quota which will result in no
+							videos being loaded anymore.
+						</h3>
+						<button
+							id='load-trending-videos-btn'
+							onClick={handleLoad}
+						>
+							Load Videos
+						</button>
 					</div>
 					{trendingContentDisplay}
 				</div>
