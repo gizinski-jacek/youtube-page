@@ -6,8 +6,8 @@ import countFormatter from './utils/countFormatter';
 import getVideoCommentsData from './utils/getVideoCommentsData';
 import getYTRelatedVideos from './utils/getYTRelatedVideos';
 import getYTVideoData from './utils/getYTVideoData';
-import getYTVideoStatistics from './utils/getYTChannelData';
-import getYTChannelData from './utils/getYTVideoStatistics';
+import getYTVideoStatistics from './utils/getYTVideoStatistics';
+import getYTChannelData from './utils/getYTChannelData';
 import getYTChannelStatistics from './utils/getYTChannelStatistics';
 
 const Video = ({ loadedData }) => {
@@ -79,79 +79,91 @@ const Video = ({ loadedData }) => {
 		}
 	}, []);
 
-	const createRelatedDisplayContent = (database) => {
-		const relatedPromise = Promise.all(
-			database.map(async (video, index) => {
-				const videoStats = await getYTVideoStatistics(
-					// Sometimes throws undefined error, need to find out why.
-					video.videoData.id.videoId,
-					myAPIKey
-				);
-				const channelData = await getYTChannelData(
-					video.videoData.snippet.channelId,
-					myAPIKey
-				);
-				return Promise.all([videoStats, channelData]).then(
-					([stats, channel]) => {
-						return (
-							<Link
-								to={`watch=${video.videoData.id.videoId}`}
-								key={index}
-								className='related-card'
-								onClick={() =>
-									changeVideo({ video, stats, channel })
-								}
-							>
-								<img
-									className='related-card-thumbnail'
-									src={
-										video.videoData.snippet.thumbnails
-											.medium.url
+	const createRelatedDisplayContent = async (data) => {
+		try {
+			const content = await Promise.all(
+				data.map(async (video, index) => {
+					const videoStats = getYTVideoStatistics(
+						video.videoData.id.videoId,
+						myAPIKey
+					);
+					const channelData = getYTChannelData(
+						video.videoData.snippet.channelId,
+						myAPIKey
+					);
+					try {
+						const [stats, channel] = await Promise.all([
+							videoStats,
+							channelData,
+						]);
+						if (stats && channel) {
+							return (
+								<Link
+									to={`watch=${video.videoData.id.videoId}`}
+									key={index}
+									className='related-card'
+									onClick={() =>
+										changeVideo({ video, stats, channel })
 									}
-									alt='Video thumbnail'
-								/>
-								<div className='related-card-details'>
-									<div className='related-metadata'>
-										<h3 className='related-video-title'>
-											{video.videoData.snippet.title}
-										</h3>
-										<div>
-											<h3 className='related-channel-name'>
-												{
-													video.videoData.snippet
-														.channelTitle
-												}
+								>
+									<img
+										className='related-card-thumbnail'
+										src={
+											video.videoData.snippet.thumbnails
+												.medium.url
+										}
+										alt='Video thumbnail'
+									/>
+									<div className='related-card-details'>
+										<div className='related-metadata'>
+											<h3 className='related-video-title'>
+												{video.videoData.snippet.title}
 											</h3>
-											<span>
-												<h4 className='related-total-views'>
-													{countFormatter(
-														stats.viewCount,
-														1
-													)}
-												</h4>
-												<h4 className='related-upload-date'>
-													{dateFormatter(
+											<div>
+												<h3 className='related-channel-name'>
+													{
 														video.videoData.snippet
-															.publishedAt
-													)}
-												</h4>
-											</span>
-											<h5>New</h5>
+															.channelTitle
+													}
+												</h3>
+												<span>
+													<h4 className='related-total-views'>
+														{countFormatter(
+															stats.viewCount,
+															1
+														)}
+													</h4>
+													<h4 className='related-upload-date'>
+														{dateFormatter(
+															video.videoData
+																.snippet
+																.publishedAt
+														)}
+													</h4>
+												</span>
+												<h5>New</h5>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div className='related-card-more'>
-									<svg focusable='false'>
-										<path d='M12,16.5c0.83,0,1.5,0.67,1.5,1.5s-0.67,1.5-1.5,1.5s-1.5-0.67-1.5-1.5S11.17,16.5,12,16.5z M10.5,12 c0,0.83,0.67,1.5,1.5,1.5s1.5-0.67,1.5-1.5s-0.67-1.5-1.5-1.5S10.5,11.17,10.5,12z M10.5,6c0,0.83,0.67,1.5,1.5,1.5 s1.5-0.67,1.5-1.5S12.83,4.5,12,4.5S10.5,5.17,10.5,6z'></path>
-									</svg>
-								</div>
-							</Link>
+									<div className='related-card-more'>
+										<svg focusable='false'>
+											<path d='M12,16.5c0.83,0,1.5,0.67,1.5,1.5s-0.67,1.5-1.5,1.5s-1.5-0.67-1.5-1.5S11.17,16.5,12,16.5z M10.5,12 c0,0.83,0.67,1.5,1.5,1.5s1.5-0.67,1.5-1.5s-0.67-1.5-1.5-1.5S10.5,11.17,10.5,12z M10.5,6c0,0.83,0.67,1.5,1.5,1.5 s1.5-0.67,1.5-1.5S12.83,4.5,12,4.5S10.5,5.17,10.5,6z'></path>
+										</svg>
+									</div>
+								</Link>
+							);
+						}
+					} catch (error) {
+						console.log(
+							`Promise all for related video statistics and channel data error: ${error}`
 						);
 					}
-				);
-			})
-		);
-		relatedPromise.then((content) => setRelatedContent(content));
+				})
+			);
+			setRelatedContent(content);
+		} catch (error) {
+			console.log(`Promise all for related content error: ${error}`);
+		}
 	};
 
 	const currentVideoContent = currentVideoData ? (
@@ -390,23 +402,18 @@ const Video = ({ loadedData }) => {
 			</div>
 			<div id='related-videos'>
 				<div
-					className='relative-related-container'
-					style={{ display: showLoadBox ? 'block' : 'none' }}
+					className='load-related-videos'
+					style={{ display: showLoadBox ? 'flex' : 'none' }}
 				>
-					<div className='load-related-videos'>
-						<h3>
-							Press the button to load related videos. This action
-							uses a lot of API tokens and after few uses will
-							reach the daily quota which will result in no videos
-							being loaded anymore.
-						</h3>
-						<button
-							id='load-related-videos-btn'
-							onClick={handleLoad}
-						>
-							Load Videos
-						</button>
-					</div>
+					<h3>
+						Press the button to load related videos. This action
+						uses a lot of API tokens and after few uses will reach
+						the daily quota which will result in no videos being
+						loaded anymore.
+					</h3>
+					<button id='load-related-videos-btn' onClick={handleLoad}>
+						Load Videos
+					</button>
 				</div>
 				<div
 					id='related-filter'
