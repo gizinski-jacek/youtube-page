@@ -10,7 +10,7 @@ import getYTVideoStatistics from './utils/getYTVideoStatistics';
 import getYTChannelData from './utils/getYTChannelData';
 import getYTChannelStatistics from './utils/getYTChannelStatistics';
 
-const Video = ({ loadedData }) => {
+const Video = ({ isFaded, toggleMenu, loadedData }) => {
 	const [showLoadBox, setShowLoadBox] = useState(true);
 	const [currentVideoData, setCurrentVideoData] = useState(loadedData);
 	const [channelStats, setChannelStats] = useState();
@@ -123,18 +123,18 @@ const Video = ({ loadedData }) => {
 											alt='Video thumbnail'
 										/>
 									</Link>
-									<Link
-										to={`watch=${video.videoData.id.videoId}`}
-										className='related-card-details-link'
-										onClick={() =>
-											changeVideo({
-												video,
-												stats,
-												channel,
-											})
-										}
-									>
-										<div className='related-card-details'>
+									<div className='related-card-details'>
+										<Link
+											to={`watch=${video.videoData.id.videoId}`}
+											className='related-metadata-link'
+											onClick={() =>
+												changeVideo({
+													video,
+													stats,
+													channel,
+												})
+											}
+										>
 											<div className='related-metadata'>
 												<h3 className='related-video-title'>
 													{
@@ -165,8 +165,8 @@ const Video = ({ loadedData }) => {
 												</span>
 												<h5>New</h5>
 											</div>
-										</div>
-									</Link>
+										</Link>
+									</div>
 									<div
 										className='related-card-more'
 										onClick={moreMenu}
@@ -297,6 +297,7 @@ const Video = ({ loadedData }) => {
 						<div className='video-channel-details'>
 							<Link
 								to={`https://www.youtube.com/channel/${currentVideoData.video.videoData.snippet.channelId}`}
+								className='video-channel-picture-link'
 							>
 								<img
 									className='video-channel-picture'
@@ -311,6 +312,7 @@ const Video = ({ loadedData }) => {
 							<div>
 								<Link
 									to={`https://www.youtube.com/channel/${currentVideoData.video.videoData.snippet.channelId}`}
+									className='video-channel-name-link'
 								>
 									<h3 className='video-channel-name'>
 										{currentVideoData.channel.title}
@@ -318,10 +320,10 @@ const Video = ({ loadedData }) => {
 								</Link>
 								<h4 className='video-channel-subscribers-count'>
 									{channelStats
-										? countFormatter(
+										? `${countFormatter(
 												channelStats.subscriberCount,
 												2
-										  )
+										  )} subscribers`
 										: null}
 								</h4>
 							</div>
@@ -421,6 +423,10 @@ const Video = ({ loadedData }) => {
 
 	return (
 		<div id='video-page'>
+			<div
+				className={`cover-fade ${isFaded ? 'isCollapsed' : ''}`}
+				onClick={toggleMenu}
+			></div>
 			<div id='video-column-container'>
 				{currentVideoContent}
 				<div className='comments-container'>{currentVideoComments}</div>
