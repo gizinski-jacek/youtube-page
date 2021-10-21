@@ -398,8 +398,9 @@ a #menu.isThin {
 	grid-row: 3/4;
 	border-top: 4px solid var(--gray-med-transp-border);
 	border-bottom: 4px solid var(--gray-med-transp-border);
-	/* height: 350px;
-	overflow-y: scroll; */
+	overflow: hidden;
+	max-height: fit-content;
+	box-sizing: border-box;
 }
 
 h2 {
@@ -484,6 +485,21 @@ h6 {
 	font-size: 1.5rem;
 	cursor: pointer;
 	text-transform: uppercase;
+}
+
+.expand-trending-btn {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.expand-trending-btn svg {
+	height: 24px;
+	width: 24px;
+	margin: 4px;
+	cursor: pointer;
 }
 
 .card-thumbnail {
