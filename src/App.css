@@ -103,6 +103,7 @@ svg,
 	font-size: 1.5rem;
 	height: 100%;
 	width: 100%;
+	min-width: 80px;
 	border: 1px solid var(--gray-low-transp-border);
 }
 
@@ -151,6 +152,7 @@ svg,
 	box-sizing: border-box;
 	text-transform: uppercase;
 	width: fit-content;
+	white-space: nowrap;
 }
 
 .sign-in svg {
@@ -346,7 +348,7 @@ a #menu.isThin {
 	white-space: nowrap;
 	display: flex;
 	align-items: center;
-	z-index: 1;
+	z-index: 5;
 }
 
 #category-filter ul li {
@@ -646,12 +648,14 @@ h6 {
 }
 
 #video-page {
+	position: relative;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	margin-top: var(--navbar-height);
 	background-color: var(--gray-very-high-transp-border);
 	min-height: calc(100vh - var(--navbar-height));
+	min-width: fit-content;
 }
 
 #video-column-container {
@@ -659,7 +663,7 @@ h6 {
 	flex-direction: column;
 	margin: 24px 12px 24px 24px;
 	height: 100%;
-	width: 100%;
+	flex: 1;
 	min-width: 212px;
 	max-width: 1060px;
 }
@@ -668,8 +672,8 @@ h6 {
 }
 
 .video {
-	min-height: 360px;
-	min-width: 640px;
+	min-height: 240px;
+	min-width: 426;
 }
 
 .video-wrapper {
@@ -723,14 +727,25 @@ iframe {
 	align-items: center;
 }
 
+.video-engagement h4 {
+	width: fit-content;
+	white-space: nowrap;
+}
+
 .video-engagement > span {
 	color: var(--dark-gray-footer);
 }
 
-.video-engagement > div > * {
+.video-likes,
+.video-dislikes {
 	cursor: pointer;
-	user-select: none;
-	padding-left: 24px;
+}
+
+.video-share,
+.video-save,
+.video-more {
+	cursor: pointer;
+	margin-left: 24px;
 	text-transform: uppercase;
 }
 
@@ -766,7 +781,7 @@ iframe {
 }
 
 .video-likes {
-	padding-right: 24px;
+	margin-right: 24px;
 }
 
 .video-votes-bars {
@@ -802,6 +817,18 @@ iframe {
 .video-channel-details {
 	display: flex;
 	flex-direction: row;
+}
+
+.video-channel-picture,
+.video-channel-name {
+	cursor: pointer;
+}
+
+.video-channel-name,
+.video-channel-subscribers-count {
+	margin-right: 12px;
+	width: fit-content;
+	white-space: nowrap;
 }
 
 .video-channel-picture {
@@ -927,6 +954,7 @@ iframe {
 .comment-user-display-name,
 .comment-post-date {
 	padding: 0 4px 12px 0;
+	white-space: nowrap;
 }
 
 .comment-user-display-name {
@@ -1083,7 +1111,7 @@ iframe {
 	width: 100%;
 }
 
-.related-card-details-link {
+.related-metadata-link {
 	cursor: pointer;
 }
 
@@ -1160,5 +1188,20 @@ iframe {
 @media (max-width: 1125px) {
 	#video-page {
 		flex-direction: column;
+	}
+
+	#video-column-container {
+		margin: 24px;
+		margin-bottom: 0;
+	}
+
+	#related-videos {
+		max-width: 100%;
+		flex: 1;
+		margin: 24px;
+		margin-top: 0;
+	}
+
+	.related-card {
 	}
 }
