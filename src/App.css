@@ -685,6 +685,7 @@ h6 {
 }
 
 #video-main-container {
+	width: 100%;
 }
 
 .video {
@@ -1216,8 +1217,5 @@ iframe {
 		flex: 1;
 		margin: 24px;
 		margin-top: 0;
-	}
-
-	.related-card {
 	}
 }
