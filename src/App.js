@@ -58,7 +58,11 @@ const App = () => {
 						isCollapsed={menuIsCollapsed}
 						toggleMenu={toggleMenuVisibility}
 					/>
-					<Video loadedData={loadedVideoData} />
+					<Video
+						isFaded={menuIsCollapsed}
+						toggleMenu={toggleMenuVisibility}
+						loadedData={loadedVideoData}
+					/>
 				</Route>
 			</Switch>
 		</BrowserRouter>
