@@ -11,11 +11,19 @@ const Content = ({ loadVideo }) => {
 	const [showLoadBox, setShowLoadBox] = useState(true);
 	const [mainContentDisplay, setMainContentDisplay] = useState();
 	const [trendingContentDisplay, setTrendingContentDisplay] = useState();
+	const [visible, setVisible] = useState(false);
+	const [expanded, setExpanded] = useState(false);
 
 	const handleLoad = async () => {
 		const trendingVideos = await getYTTrendingVideos(12, myAPIKey);
 		createTrendingDisplayContent(trendingVideos);
 		setShowLoadBox(false);
+		setVisible(true);
+	};
+
+	const expandDisplay = () => {
+		setExpanded(true);
+		setVisible(false);
 	};
 
 	useEffect(() => {
@@ -134,7 +142,11 @@ const Content = ({ loadVideo }) => {
 			</div>
 			<div className='content-display'>
 				{mainContentDisplay}
-				<div className='trending-content-display'>
+				<div
+					className='trending-content-display'
+					// 'fit-content' doesn't work here (?)
+					style={{ maxHeight: expanded ? '' : '380px' }}
+				>
 					<h2 className='trending-tag'>Trending</h2>
 					<div
 						className='load-trending-videos'
@@ -154,6 +166,14 @@ const Content = ({ loadVideo }) => {
 						</button>
 					</div>
 					{trendingContentDisplay}
+					<div
+						className='expand-trending-btn'
+						style={{ visibility: visible ? 'visible' : 'hidden' }}
+					>
+						<svg focusable='false' onClick={expandDisplay}>
+							<path d='M12,15.7L5.6,9.4l0.7-0.7l5.6,5.6l5.6-5.6l0.7,0.7L12,15.7z'></path>
+						</svg>
+					</div>
 				</div>
 			</div>
 		</div>
