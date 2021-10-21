@@ -4,10 +4,6 @@ import SignInBtn from './utils/SignInBtn';
 const MenuVideo = ({ isCollapsed, toggleMenu }) => {
 	return (
 		<>
-			<div
-				className={`cover-fade ${isCollapsed ? 'isCollapsed' : ''}`}
-				onClick={toggleMenu}
-			></div>
 			<div className={`menu-top ${isCollapsed ? 'isCollapsed' : ''}`}>
 				<div className='ham-menu' onClick={toggleMenu}>
 					<svg focusable='false'>
