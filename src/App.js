@@ -9,6 +9,7 @@ import Content from './components/Content';
 import Video from './components/Video';
 
 const App = () => {
+	const [menuSetByUser, setMenuSetByUser] = useState(false);
 	const [menuIsThin, setMenuIsThin] = useState(false);
 	const [menuIsCollapsed, setMenuIsCollapsed] = useState(true);
 	const [searchInput, setSearchInput] = useState();
@@ -21,41 +22,42 @@ const App = () => {
 			document.documentElement.style.setProperty('--menu-width', '70px');
 		}
 		setMenuIsThin((prevState) => !prevState);
+		setMenuSetByUser(true);
 	};
 
 	useEffect(() => {
-		if (document.getElementById('content-display').offsetWidth <= 1140) {
+		const contentWidth =
+			document.getElementById('content-display').offsetWidth;
+		if (contentWidth <= 1150) {
 			document.documentElement.style.setProperty('--menu-width', '70px');
 			setMenuIsThin(true);
 		}
-		window.addEventListener('resize', () => {
-			console.log(document.getElementById('content-display').offsetWidth);
-			if (
-				document.getElementById('content-display').offsetWidth <=
-					1140 &&
-				!menuIsThin
-			) {
+	}, []);
+
+	useEffect(() => {
+		const handleMenuResize = () => {
+			const contentWidth =
+				document.getElementById('content-display').offsetWidth;
+			if (contentWidth <= 1150 && !menuIsThin) {
 				document.documentElement.style.setProperty(
 					'--menu-width',
 					'70px'
 				);
 				setMenuIsThin(true);
 			}
-			if (
-				document.getElementById('content-display').offsetWidth >=
-					1320 &&
-				menuIsThin
-			) {
+			if (contentWidth >= 1321 && menuIsThin && !menuSetByUser) {
 				document.documentElement.style.setProperty(
 					'--menu-width',
 					'240px'
 				);
 				setMenuIsThin(false);
 			}
-		});
+		};
 
-		return () => window.removeEventListener('resize');
-	}, []);
+		window.addEventListener('resize', handleMenuResize);
+
+		return () => window.removeEventListener('resize', handleMenuResize);
+	}, [menuIsThin]);
 
 	const handleInput = (e) => {
 		const { value } = e.target;
@@ -75,7 +77,7 @@ const App = () => {
 			<Switch>
 				<Route exact path='/'>
 					<Nav
-						hamAction={toggleMenuWidth}
+						toggleWidth={toggleMenuWidth}
 						input={searchInput}
 						handle={handleInput}
 					/>
@@ -85,17 +87,17 @@ const App = () => {
 				</Route>
 				<Route exact path='/watch=([\w-]{11,})'>
 					<Nav
-						hamAction={toggleMenuVisibility}
+						toggleVisibility={toggleMenuVisibility}
 						input={searchInput}
 						handle={handleInput}
 					/>
 					<MenuVideo
 						isCollapsed={menuIsCollapsed}
-						toggleMenu={toggleMenuVisibility}
+						toggleVisibility={toggleMenuVisibility}
 					/>
 					<Video
 						isFaded={menuIsCollapsed}
-						toggleMenu={toggleMenuVisibility}
+						toggleVisibility={toggleMenuVisibility}
 						loadedData={loadedVideoData}
 					/>
 				</Route>
