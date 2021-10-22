@@ -140,10 +140,10 @@ const Content = ({ loadVideo }) => {
 					<li>New to you</li>
 				</ul>
 			</div>
-			<div className='content-display'>
+			<div id='content-display'>
 				{mainContentDisplay}
 				<div
-					className='trending-content-display'
+					id='trending-content-display'
 					// 'fit-content' doesn't work here (?)
 					style={{ maxHeight: expanded ? '' : '380px' }}
 				>
