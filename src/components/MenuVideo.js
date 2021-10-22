@@ -1,11 +1,11 @@
 import { Link, NavLink } from 'react-router-dom';
 import SignInBtn from './utils/SignInBtn';
 
-const MenuVideo = ({ isCollapsed, toggleMenu }) => {
+const MenuVideo = ({ isCollapsed, toggleVisibility }) => {
 	return (
 		<>
 			<div className={`menu-top ${isCollapsed ? 'isCollapsed' : ''}`}>
-				<div className='ham-menu' onClick={toggleMenu}>
+				<div className='ham-menu' onClick={toggleVisibility}>
 					<svg focusable='false'>
 						<path d='M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z'></path>
 					</svg>
