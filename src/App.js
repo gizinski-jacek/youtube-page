@@ -1,5 +1,5 @@
 import { app } from './firebase';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Nav from './components/Nav';
@@ -22,6 +22,40 @@ const App = () => {
 		}
 		setMenuIsThin((prevState) => !prevState);
 	};
+
+	useEffect(() => {
+		if (document.getElementById('content-display').offsetWidth <= 1140) {
+			document.documentElement.style.setProperty('--menu-width', '70px');
+			setMenuIsThin(true);
+		}
+		window.addEventListener('resize', () => {
+			console.log(document.getElementById('content-display').offsetWidth);
+			if (
+				document.getElementById('content-display').offsetWidth <=
+					1140 &&
+				!menuIsThin
+			) {
+				document.documentElement.style.setProperty(
+					'--menu-width',
+					'70px'
+				);
+				setMenuIsThin(true);
+			}
+			if (
+				document.getElementById('content-display').offsetWidth >=
+					1320 &&
+				menuIsThin
+			) {
+				document.documentElement.style.setProperty(
+					'--menu-width',
+					'240px'
+				);
+				setMenuIsThin(false);
+			}
+		});
+
+		return () => window.removeEventListener('resize');
+	}, []);
 
 	const handleInput = (e) => {
 		const { value } = e.target;
@@ -46,6 +80,7 @@ const App = () => {
 						handle={handleInput}
 					/>
 					<Menu isThin={menuIsThin} />
+
 					<Content loadVideo={loadVideo} />
 				</Route>
 				<Route exact path='/watch=([\w-]{11,})'>
