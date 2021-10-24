@@ -50,10 +50,9 @@ const App = () => {
 	}, []);
 
 	useEffect(() => {
+		const contentWidth = document.getElementById('content-display');
 		const handleMenuResize = () => {
-			const contentWidth =
-				document.getElementById('content-display').offsetWidth;
-			if (contentWidth <= 1156) {
+			if (contentWidth.offsetWidth <= 1156) {
 				document.documentElement.style.setProperty(
 					'--menu-width',
 					'72px'
@@ -61,7 +60,7 @@ const App = () => {
 				setReplaceMenu(true);
 				setMenuIsThin(true);
 			}
-			if (contentWidth >= 1325 && !menuSetByUser) {
+			if (contentWidth.offsetWidth >= 1325 && !menuSetByUser) {
 				document.documentElement.style.setProperty(
 					'--menu-width',
 					'240px'
@@ -72,9 +71,10 @@ const App = () => {
 			}
 		};
 
-		window.addEventListener('resize', handleMenuResize);
+		contentWidth.addEventListener('resize', handleMenuResize);
 
-		return () => window.removeEventListener('resize', handleMenuResize);
+		return () =>
+			contentWidth.removeEventListener('resize', handleMenuResize);
 	}, [menuIsThin, menuSetByUser]);
 
 	return (
