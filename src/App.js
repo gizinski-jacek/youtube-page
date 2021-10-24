@@ -11,7 +11,8 @@ import Video from './components/Video';
 const App = () => {
 	const [menuSetByUser, setMenuSetByUser] = useState(false);
 	const [menuIsThin, setMenuIsThin] = useState(false);
-	const [menuIsCollapsed, setMenuIsCollapsed] = useState(true);
+	const [menuIsHidden, setMenuIsHidden] = useState(true);
+	const [replaceMenu, setReplaceMenu] = useState(false);
 	const [searchInput, setSearchInput] = useState();
 	const [loadedVideoData, setLoadedVideoData] = useState();
 
@@ -19,7 +20,7 @@ const App = () => {
 		if (menuIsThin) {
 			document.documentElement.style.setProperty('--menu-width', '240px');
 		} else {
-			document.documentElement.style.setProperty('--menu-width', '70px');
+			document.documentElement.style.setProperty('--menu-width', '72px');
 		}
 		setMenuIsThin((prevState) => !prevState);
 		setMenuSetByUser(true);
@@ -28,8 +29,9 @@ const App = () => {
 	useEffect(() => {
 		const contentWidth =
 			document.getElementById('content-display').offsetWidth;
-		if (contentWidth <= 1150) {
-			document.documentElement.style.setProperty('--menu-width', '70px');
+		if (contentWidth <= 1156) {
+			document.documentElement.style.setProperty('--menu-width', '72px');
+			setReplaceMenu(true);
 			setMenuIsThin(true);
 		}
 	}, []);
@@ -38,18 +40,21 @@ const App = () => {
 		const handleMenuResize = () => {
 			const contentWidth =
 				document.getElementById('content-display').offsetWidth;
-			if (contentWidth <= 1150 && !menuIsThin) {
+			if (contentWidth <= 1156) {
 				document.documentElement.style.setProperty(
 					'--menu-width',
-					'70px'
+					'72px'
 				);
+				setReplaceMenu(true);
 				setMenuIsThin(true);
 			}
-			if (contentWidth >= 1321 && menuIsThin && !menuSetByUser) {
+			if (contentWidth >= 1325 && !menuSetByUser) {
 				document.documentElement.style.setProperty(
 					'--menu-width',
 					'240px'
 				);
+				setReplaceMenu(false);
+				setMenuIsHidden(true);
 				setMenuIsThin(false);
 			}
 		};
@@ -57,7 +62,7 @@ const App = () => {
 		window.addEventListener('resize', handleMenuResize);
 
 		return () => window.removeEventListener('resize', handleMenuResize);
-	}, [menuIsThin]);
+	}, [menuIsThin, menuSetByUser]);
 
 	const handleInput = (e) => {
 		const { value } = e.target;
@@ -65,7 +70,7 @@ const App = () => {
 	};
 
 	const toggleMenuVisibility = () => {
-		setMenuIsCollapsed((prevState) => !prevState);
+		setMenuIsHidden((prevState) => !prevState);
 	};
 
 	const loadVideo = (vidData) => {
@@ -77,12 +82,17 @@ const App = () => {
 			<Switch>
 				<Route exact path='/'>
 					<Nav
-						toggleWidth={toggleMenuWidth}
+						hamAction={
+							replaceMenu ? toggleMenuVisibility : toggleMenuWidth
+						}
 						input={searchInput}
 						handle={handleInput}
 					/>
 					<Menu isThin={menuIsThin} />
-
+					<MenuVideo
+						isHidden={menuIsHidden}
+						toggleMenuVisibility={toggleMenuVisibility}
+					/>
 					<Content loadVideo={loadVideo} />
 				</Route>
 				<Route exact path='/watch=([\w-]{11,})'>
@@ -92,11 +102,11 @@ const App = () => {
 						handle={handleInput}
 					/>
 					<MenuVideo
-						isCollapsed={menuIsCollapsed}
+						isHidden={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}
 					/>
 					<Video
-						isFaded={menuIsCollapsed}
+						isFaded={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}
 						loadedData={loadedVideoData}
 					/>
