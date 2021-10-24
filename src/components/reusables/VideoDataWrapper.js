@@ -8,7 +8,7 @@ const VideoDataWrapper = ({ video, loadVideo, stats, channel }) => {
 	};
 
 	return (
-		<div className='content-card'>
+		<div className='video-card'>
 			<Link
 				to={`watch=${video.videoData.id.videoId}`}
 				className='whole-card-link'

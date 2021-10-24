@@ -21,7 +21,7 @@ const CommentDataWrapper = (data) => {
 						{data.snippet.topLevelComment.snippet.publishedAt}
 					</h5>
 				</span>
-				<p className='comment-content'>
+				<p className='comment-contents'>
 					{data.snippet.topLevelComment.snippet.textOriginal}
 				</p>
 				<span className='comment-engagement'>
