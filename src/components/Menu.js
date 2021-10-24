@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import SignInBtn from './utils/SignInBtn';
+import SignInBtn from './reusables/SignInBtn';
 
 const Menu = ({ isThin }) => {
 	return (

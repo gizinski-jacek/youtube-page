@@ -5,7 +5,7 @@ import getRandomVideosFromFirestore from './utils/getRandomVideosFromFirestore';
 import getYTTrendingVideos from './utils/getYTTrendingVideos';
 import getYTVideoStatistics from './utils/getYTVideoStatistics';
 import getYTChannelData from './utils/getYTChannelData';
-import ContentCardWrapper from './utils/ContentCardWrapper';
+import ContentCardWrapper from './reusables/ContentCardWrapper';
 
 const Content = ({ loadVideo }) => {
 	const [showLoadBox, setShowLoadBox] = useState(true);
