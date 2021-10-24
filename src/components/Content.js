@@ -7,7 +7,7 @@ import getYTVideoStatistics from './utils/getYTVideoStatistics';
 import getYTChannelData from './utils/getYTChannelData';
 import ContentCardWrapper from './reusables/ContentCardWrapper';
 
-const Content = ({ loadVideo }) => {
+const Content = ({ isHidden, toggleVisibility, loadVideo }) => {
 	const [showLoadBox, setShowLoadBox] = useState(true);
 	const [mainContentDisplay, setMainContentDisplay] = useState();
 	const [trendingContentDisplay, setTrendingContentDisplay] = useState();
@@ -117,6 +117,10 @@ const Content = ({ loadVideo }) => {
 
 	return (
 		<div id='content-container'>
+			<div
+				className={`cover-fade ${isHidden ? 'is-hidden' : ''}`}
+				onClick={toggleVisibility}
+			/>
 			<div id='category-filter'>
 				<ul>
 					<NavLink activeClassName='active' exact to='/'>
