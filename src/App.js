@@ -5,7 +5,7 @@ import './App.css';
 import Nav from './components/Nav';
 import Menu from './components/Menu';
 import MenuVideo from './components/MenuVideo';
-import Content from './components/Content';
+import Main from './components/Main';
 import Video from './components/Video';
 
 const App = () => {
@@ -93,7 +93,7 @@ const App = () => {
 						isHidden={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}
 					/>
-					<Content
+					<Main
 						isHidden={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}
 						loadVideo={loadVideo}
