@@ -10,7 +10,7 @@ import getYTVideoStatistics from './utils/getYTVideoStatistics';
 import getYTChannelData from './utils/getYTChannelData';
 import getYTChannelStatistics from './utils/getYTChannelStatistics';
 
-const Video = ({ isFaded, toggleMenu, loadedData }) => {
+const Video = ({ isHidden, toggleVisibility, loadedData }) => {
 	const [showLoadBox, setShowLoadBox] = useState(true);
 	const [currentVideoData, setCurrentVideoData] = useState(loadedData);
 	const [channelStats, setChannelStats] = useState();
@@ -424,9 +424,9 @@ const Video = ({ isFaded, toggleMenu, loadedData }) => {
 	return (
 		<div id='video-page'>
 			<div
-				className={`cover-fade ${isFaded ? 'is-hidden' : ''}`}
-				onClick={toggleMenu}
-			></div>
+				className={`cover-fade ${isHidden ? 'is-hidden' : ''}`}
+				onClick={toggleVisibility}
+			/>
 			<div id='video-column-container'>
 				{currentVideoContent}
 				<div className='comments-container'>{currentVideoComments}</div>
