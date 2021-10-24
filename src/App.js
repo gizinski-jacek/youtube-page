@@ -91,13 +91,17 @@ const App = () => {
 					<Menu isThin={menuIsThin} />
 					<MenuVideo
 						isHidden={menuIsHidden}
-						toggleMenuVisibility={toggleMenuVisibility}
+						toggleVisibility={toggleMenuVisibility}
 					/>
-					<Content loadVideo={loadVideo} />
+					<Content
+						isHidden={menuIsHidden}
+						toggleVisibility={toggleMenuVisibility}
+						loadVideo={loadVideo}
+					/>
 				</Route>
 				<Route exact path='/watch=([\w-]{11,})'>
 					<Nav
-						toggleVisibility={toggleMenuVisibility}
+						hamAction={toggleMenuVisibility}
 						input={searchInput}
 						handle={handleInput}
 					/>
@@ -106,7 +110,7 @@ const App = () => {
 						toggleVisibility={toggleMenuVisibility}
 					/>
 					<Video
-						isFaded={menuIsHidden}
+						isHidden={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}
 						loadedData={loadedVideoData}
 					/>
