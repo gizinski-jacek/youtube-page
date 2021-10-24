@@ -424,7 +424,7 @@ const Video = ({ isFaded, toggleMenu, loadedData }) => {
 	return (
 		<div id='video-page'>
 			<div
-				className={`cover-fade ${isFaded ? 'isCollapsed' : ''}`}
+				className={`cover-fade ${isFaded ? 'is-hidden' : ''}`}
 				onClick={toggleMenu}
 			></div>
 			<div id='video-column-container'>
