@@ -1,11 +1,11 @@
 import { Link, NavLink } from 'react-router-dom';
 import SignInBtn from './utils/SignInBtn';
 
-const MenuVideo = ({ isCollapsed, toggleVisibility }) => {
+const MenuVideo = ({ isHidden, toggleMenuVisibility }) => {
 	return (
 		<>
-			<div className={`menu-top ${isCollapsed ? 'isCollapsed' : ''}`}>
-				<div className='ham-menu' onClick={toggleVisibility}>
+			<div className={`menu-top ${isHidden ? 'is-hidden' : ''}`}>
+				<div className='ham-menu' onClick={toggleMenuVisibility}>
 					<svg focusable='false'>
 						<path d='M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z'></path>
 					</svg>
@@ -33,7 +33,7 @@ const MenuVideo = ({ isCollapsed, toggleVisibility }) => {
 					</Link>
 				</div>
 			</div>
-			<div id='menu-video' className={isCollapsed ? 'isCollapsed' : ''}>
+			<div id='menu-video' className={isHidden ? 'is-hidden' : ''}>
 				<div className='section'>
 					<ul>
 						<NavLink exact to='/' activeClassName='active'>
