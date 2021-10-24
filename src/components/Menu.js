@@ -3,7 +3,7 @@ import SignInBtn from './utils/SignInBtn';
 
 const Menu = ({ isThin }) => {
 	return (
-		<div id='menu' className={isThin ? 'isThin' : ''}>
+		<div id='menu' className={isThin ? 'is-thin' : ''}>
 			<div className='section'>
 				<ul>
 					<NavLink exact to='/' activeClassName='active'>
