@@ -26,6 +26,19 @@ const App = () => {
 		setMenuSetByUser(true);
 	};
 
+	const handleInput = (e) => {
+		const { value } = e.target;
+		setSearchInput(value);
+	};
+
+	const toggleMenuVisibility = () => {
+		setMenuIsHidden((prevState) => !prevState);
+	};
+
+	const loadVideo = (vidData) => {
+		setLoadedVideoData(vidData);
+	};
+
 	useEffect(() => {
 		const contentWidth =
 			document.getElementById('content-display').offsetWidth;
@@ -63,19 +76,6 @@ const App = () => {
 
 		return () => window.removeEventListener('resize', handleMenuResize);
 	}, [menuIsThin, menuSetByUser]);
-
-	const handleInput = (e) => {
-		const { value } = e.target;
-		setSearchInput(value);
-	};
-
-	const toggleMenuVisibility = () => {
-		setMenuIsHidden((prevState) => !prevState);
-	};
-
-	const loadVideo = (vidData) => {
-		setLoadedVideoData(vidData);
-	};
 
 	return (
 		<BrowserRouter>
