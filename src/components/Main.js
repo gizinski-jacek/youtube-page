@@ -35,7 +35,7 @@ const Main = ({ isHidden, toggleVisibility, loadVideo }) => {
 
 	const createGridContents = async (data) => {
 		try {
-			const content = await Promise.all(
+			const contents = await Promise.all(
 				data.map(async (video, index) => {
 					const videoStats = getYTVideoStatistics(
 						video.videoData.id.videoId,
@@ -68,14 +68,14 @@ const Main = ({ isHidden, toggleVisibility, loadVideo }) => {
 					}
 				})
 			);
-			return content;
+			return contents;
 		} catch (error) {
-			console.log(`Promise all for grid content error: ${error}`);
+			console.log(`Promise all for grid contents error: ${error}`);
 		}
 	};
 
 	return (
-		<div id='content-container'>
+		<div id='contents-container'>
 			<div
 				className={`cover-fade ${isHidden ? 'is-hidden' : ''}`}
 				onClick={toggleVisibility}
@@ -103,10 +103,10 @@ const Main = ({ isHidden, toggleVisibility, loadVideo }) => {
 					<li>New to you</li>
 				</ul>
 			</div>
-			<div id='content-display'>
+			<div id='main-contents'>
 				{mainGridContents}
 				<div
-					id='trending-content-display'
+					id='trending-contents'
 					// 'fit-content' doesn't work here (?)
 					style={{ maxHeight: expandedTrending ? '' : '380px' }}
 				>
