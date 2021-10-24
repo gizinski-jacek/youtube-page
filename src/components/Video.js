@@ -15,8 +15,8 @@ const Video = ({ isHidden, toggleVisibility, loadedData }) => {
 	const [currentVideoData, setCurrentVideoData] = useState(loadedData);
 	const [channelStats, setChannelStats] = useState();
 	const [videoCommentsData, setVideoCommentsData] = useState();
-	const [newCommentContent, setNewCommentContent] = useState();
 	const [relatedContent, setRelatedContent] = useState();
+	const [newCommentContent, setNewCommentContent] = useState();
 
 	const moreMenu = () => {
 		console.log('reminder');

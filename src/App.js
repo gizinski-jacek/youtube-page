@@ -13,8 +13,8 @@ const App = () => {
 	const [menuIsThin, setMenuIsThin] = useState(false);
 	const [menuIsHidden, setMenuIsHidden] = useState(true);
 	const [replaceMenu, setReplaceMenu] = useState(false);
-	const [searchInput, setSearchInput] = useState();
 	const [loadedVideoData, setLoadedVideoData] = useState();
+	const [searchInput, setSearchInput] = useState();
 
 	const toggleMenuWidth = () => {
 		if (menuIsThin) {
