@@ -7,33 +7,33 @@ import getYTVideoStatistics from './utils/getYTVideoStatistics';
 import getYTChannelData from './utils/getYTChannelData';
 import VideoDataWrapper from './reusables/VideoDataWrapper';
 
-const Content = ({ isHidden, toggleVisibility, loadVideo }) => {
+const Main = ({ isHidden, toggleVisibility, loadVideo }) => {
 	const [showLoadBox, setShowLoadBox] = useState(true);
-	const [mainContentDisplay, setMainContentDisplay] = useState();
-	const [trendingContentDisplay, setTrendingContentDisplay] = useState();
-	const [visible, setVisible] = useState(false);
-	const [expanded, setExpanded] = useState(false);
+	const [mainGridContents, setGridContents] = useState();
+	const [trendingGridContents, setTrendingGridContents] = useState();
+	const [visibleArrow, setVisibleArrow] = useState(false);
+	const [expandedTrending, setExpandedTrending] = useState(false);
 
 	const handleLoad = async () => {
 		const trendingVideos = await getYTTrendingVideos(12, myAPIKey);
-		createTrendingDisplayContent(trendingVideos);
+		setTrendingGridContents(await createGridContents(trendingVideos));
 		setShowLoadBox(false);
-		setVisible(true);
+		setVisibleArrow(true);
 	};
 
-	const expandDisplay = () => {
-		setExpanded(true);
-		setVisible(false);
+	const expandContents = () => {
+		setExpandedTrending(true);
+		setVisibleArrow(false);
 	};
 
 	useEffect(() => {
 		(async () => {
 			const randomVideos = await getRandomVideosFromFirestore(24);
-			createMainDisplayContent(randomVideos);
+			setGridContents(await createGridContents(randomVideos));
 		})();
 	}, []);
 
-	const createMainDisplayContent = async (data) => {
+	const createGridContents = async (data) => {
 		try {
 			const content = await Promise.all(
 				data.map(async (video, index) => {
@@ -63,55 +63,14 @@ const Content = ({ isHidden, toggleVisibility, loadVideo }) => {
 						}
 					} catch (error) {
 						console.log(
-							`Promise all for main video statistics and channel data error: ${error}`
+							`Promise all for video statistics and channel data error: ${error}`
 						);
 					}
 				})
 			);
-			setMainContentDisplay(content);
+			return content;
 		} catch (error) {
-			console.log(`Promise all for main content error: ${error}`);
-		}
-	};
-
-	const createTrendingDisplayContent = async (data) => {
-		try {
-			const content = await Promise.all(
-				data.map(async (video, index) => {
-					const videoStats = getYTVideoStatistics(
-						video.videoData.id.videoId,
-						myAPIKey
-					);
-					const channelData = getYTChannelData(
-						video.videoData.snippet.channelId,
-						myAPIKey
-					);
-					try {
-						const [stats, channel] = await Promise.all([
-							videoStats,
-							channelData,
-						]);
-						if (stats && channel) {
-							return (
-								<VideoDataWrapper
-									key={index}
-									video={video}
-									loadVideo={loadVideo}
-									stats={stats}
-									channel={channel}
-								/>
-							);
-						}
-					} catch (error) {
-						console.log(
-							`Promise all for trending video statistics and channel data error: ${error}`
-						);
-					}
-				})
-			);
-			setTrendingContentDisplay(content);
-		} catch (error) {
-			console.log(`Promise all for trending content error: ${error}`);
+			console.log(`Promise all for grid content error: ${error}`);
 		}
 	};
 
@@ -145,11 +104,11 @@ const Content = ({ isHidden, toggleVisibility, loadVideo }) => {
 				</ul>
 			</div>
 			<div id='content-display'>
-				{mainContentDisplay}
+				{mainGridContents}
 				<div
 					id='trending-content-display'
 					// 'fit-content' doesn't work here (?)
-					style={{ maxHeight: expanded ? '' : '380px' }}
+					style={{ maxHeight: expandedTrending ? '' : '380px' }}
 				>
 					<h2 className='trending-tag'>Trending</h2>
 					<div
@@ -169,12 +128,14 @@ const Content = ({ isHidden, toggleVisibility, loadVideo }) => {
 							Load Videos
 						</button>
 					</div>
-					{trendingContentDisplay}
+					{trendingGridContents}
 					<div
 						className='expand-trending-btn'
-						style={{ visibility: visible ? 'visible' : 'hidden' }}
+						style={{
+							visibility: visibleArrow ? 'visible' : 'hidden',
+						}}
 					>
-						<svg focusable='false' onClick={expandDisplay}>
+						<svg focusable='false' onClick={expandContents}>
 							<path d='M12,15.7L5.6,9.4l0.7-0.7l5.6,5.6l5.6-5.6l0.7,0.7L12,15.7z'></path>
 						</svg>
 					</div>
@@ -184,4 +145,4 @@ const Content = ({ isHidden, toggleVisibility, loadVideo }) => {
 	);
 };
 
-export default Content;
+export default Main;
