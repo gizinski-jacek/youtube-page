@@ -5,7 +5,7 @@ import getRandomVideosFromFirestore from './utils/getRandomVideosFromFirestore';
 import getYTTrendingVideos from './utils/getYTTrendingVideos';
 import getYTVideoStatistics from './utils/getYTVideoStatistics';
 import getYTChannelData from './utils/getYTChannelData';
-import ContentCardWrapper from './reusables/ContentCardWrapper';
+import VideoDataWrapper from './reusables/VideoDataWrapper';
 
 const Content = ({ isHidden, toggleVisibility, loadVideo }) => {
 	const [showLoadBox, setShowLoadBox] = useState(true);
@@ -52,7 +52,7 @@ const Content = ({ isHidden, toggleVisibility, loadVideo }) => {
 						]);
 						if (stats && channel) {
 							return (
-								<ContentCardWrapper
+								<VideoDataWrapper
 									key={index}
 									video={video}
 									loadVideo={loadVideo}
@@ -93,7 +93,7 @@ const Content = ({ isHidden, toggleVisibility, loadVideo }) => {
 						]);
 						if (stats && channel) {
 							return (
-								<ContentCardWrapper
+								<VideoDataWrapper
 									key={index}
 									video={video}
 									loadVideo={loadVideo}
