@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import countFormatter from './countFormatter';
-import dateFormatter from './dateFormatter';
+import countFormatter from '../utils/countFormatter';
+import dateFormatter from '../utils/dateFormatter';
 
 const ContentCardWrapper = ({ video, loadVideo, stats, channel }) => {
 	const moreMenu = () => {
