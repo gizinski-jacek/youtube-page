@@ -127,16 +127,24 @@ svg,
 
 #voice-search {
 	cursor: pointer;
-	background-color: var(--gray-very-high-transp-border);
+	background-color: var(--gray-high-transp-border);
+	border: none;
 	border-radius: 50%;
 	margin-left: 8px;
 	padding: 8px;
 }
 
-.end > div {
+.end > * {
 	padding: 8px;
 	margin-right: 8px;
 	cursor: pointer;
+}
+
+#user-apps,
+#user-settings,
+.user-account {
+	background: none;
+	border: none;
 }
 
 .sign-in {
