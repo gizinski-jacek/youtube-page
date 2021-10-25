@@ -7,7 +7,7 @@ import getVideoData from './utils/getVideoData';
 import getVideoStatistics from './utils/getVideoStatistics';
 import getChannelData from './utils/getChannelData';
 import getRelatedVideos from './utils/getRelatedVideos';
-import PlayerContainer from './reusables/PlayerContainer';
+import VideoPlayerContainer from './reusables/VideoPlayerContainer';
 import StatisticsContainer from './reusables/StatisticsContainer';
 import CommentsContainer from './reusables/CommentsContainer';
 import RelatedContentsWrapper from './reusables/RelatedContentsWrapper';
@@ -97,7 +97,7 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 			<div id='video-column-container'>
 				<div id='video-main-container'>
 					{videoData ? (
-						<PlayerContainer
+						<VideoPlayerContainer
 							videoId={videoData.video.videoData.id.videoId}
 						/>
 					) : null}
