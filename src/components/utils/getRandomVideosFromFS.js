@@ -1,6 +1,6 @@
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
-const getRandomVideosFromFirestore = async (number) => {
+const getRandomVideosFromFS = async (number) => {
 	const data = await getDocs(
 		collection(getFirestore(), 'mainVideosDatabase')
 	);
@@ -22,4 +22,4 @@ const getRandomVideosFromFirestore = async (number) => {
 	return mainArray;
 };
 
-export default getRandomVideosFromFirestore;
+export default getRandomVideosFromFS;
