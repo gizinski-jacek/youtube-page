@@ -909,12 +909,13 @@ iframe {
 	border-bottom: 1px solid var(--gray-med-transp-border);
 }
 
-.comments-controls {
+.new-comment {
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 24px;
 }
 
-.comments-top {
+.comments-controls {
 	display: flex;
 	flex-direction: row;
 }
@@ -934,7 +935,7 @@ iframe {
 	text-transform: uppercase;
 }
 
-.add-comment {
+.new-comment-contents {
 	display: flex;
 	flex-direction: row;
 }
@@ -955,12 +956,12 @@ iframe {
 	border: none;
 	border-bottom: 1px solid var(--gray-med-transp-border);
 	flex: 1;
+	outline: none;
 }
 
-.comments-container {
+.comments-section {
 	display: flex;
 	flex-direction: column;
-	margin-top: 24px;
 }
 
 .comment-main {
