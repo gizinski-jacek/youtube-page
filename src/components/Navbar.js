@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import SignInBtn from './reusables/SignInBtn';
 
-const Nav = ({ hamAction, input, handle }) => {
+const Navbar = ({ hamAction, input, handle }) => {
 	return (
 		<div id='navbar'>
 			<div className='start'>
@@ -70,4 +70,4 @@ const Nav = ({ hamAction, input, handle }) => {
 	);
 };
 
-export default Nav;
+export default Navbar;
