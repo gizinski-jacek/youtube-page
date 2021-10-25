@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import SignInBtn from './reusables/SignInBtn';
 
-const MenuVideo = ({ isHidden, toggleVisibility }) => {
+const MenuSliding = ({ isHidden, toggleVisibility }) => {
 	return (
 		<>
 			<div className={`menu-top ${isHidden ? 'is-hidden' : ''}`}>
@@ -33,7 +33,7 @@ const MenuVideo = ({ isHidden, toggleVisibility }) => {
 					</Link>
 				</div>
 			</div>
-			<div id='menu-video' className={isHidden ? 'is-hidden' : ''}>
+			<div id='menu-sliding' className={isHidden ? 'is-hidden' : ''}>
 				<div className='section'>
 					<ul>
 						<NavLink exact to='/' activeClassName='active'>
@@ -207,4 +207,4 @@ const MenuVideo = ({ isHidden, toggleVisibility }) => {
 	);
 };
 
-export default MenuVideo;
+export default MenuSliding;
