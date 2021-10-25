@@ -12,7 +12,7 @@ import StatisticsContainer from './reusables/StatisticsContainer';
 import CommentsContainer from './reusables/CommentsContainer';
 import RelatedContentsWrapper from './reusables/RelatedContentsWrapper';
 
-const VideoPlayer = ({ isHidden, toggleVisibility, loadedData }) => {
+const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 	const [showLoadBox, setShowLoadBox] = useState(true);
 	const [videoData, setVideoData] = useState(loadedData);
 	const [statsData, setStatsData] = useState();
@@ -159,4 +159,4 @@ const VideoPlayer = ({ isHidden, toggleVisibility, loadedData }) => {
 	);
 };
 
-export default VideoPlayer;
+export default VideoPage;
