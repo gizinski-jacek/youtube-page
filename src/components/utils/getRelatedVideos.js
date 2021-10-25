@@ -1,4 +1,4 @@
-const getYTRelatedVideos = async (videoId, APIKey) => {
+const getRelatedVideos = async (videoId, APIKey) => {
 	try {
 		const response = await fetch(
 			`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&order=relevance&relatedToVideoId=${videoId}&type=video&key=${APIKey}`
@@ -7,10 +7,11 @@ const getYTRelatedVideos = async (videoId, APIKey) => {
 		const array = data.items.map((item) => {
 			return { videoData: item };
 		});
+		console.log(array);
 		return array;
 	} catch (error) {
 		console.log(`Related videos data fetch error: ${error}`);
 	}
 };
 
-export default getYTRelatedVideos;
+export default getRelatedVideos;

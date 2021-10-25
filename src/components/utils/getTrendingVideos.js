@@ -1,4 +1,4 @@
-const getYTTrendingVideos = async (number, APIKey) => {
+const getTrendingVideos = async (number, APIKey) => {
 	try {
 		const response = await fetch(
 			`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=${number}&key=${APIKey}`
@@ -18,4 +18,4 @@ const getYTTrendingVideos = async (number, APIKey) => {
 	}
 };
 
-export default getYTTrendingVideos;
+export default getTrendingVideos;

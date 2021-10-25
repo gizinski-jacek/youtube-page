@@ -1,4 +1,4 @@
-const getYTChannelStatistics = async (channelId, APIKey) => {
+const getChannelStatistics = async (channelId, APIKey) => {
 	try {
 		const response = await fetch(
 			`https://youtube.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${APIKey}`
@@ -10,4 +10,4 @@ const getYTChannelStatistics = async (channelId, APIKey) => {
 	}
 };
 
-export default getYTChannelStatistics;
+export default getChannelStatistics;

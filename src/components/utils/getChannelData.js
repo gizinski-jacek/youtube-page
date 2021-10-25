@@ -1,4 +1,4 @@
-const getYTChannelData = async (channelId, APIKey) => {
+const getChannelData = async (channelId, APIKey) => {
 	try {
 		const response = await fetch(
 			`https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${APIKey}`
@@ -10,4 +10,4 @@ const getYTChannelData = async (channelId, APIKey) => {
 	}
 };
 
-export default getYTChannelData;
+export default getChannelData;

@@ -1,4 +1,4 @@
-const getYTVideoData = async (videoId, APIKey) => {
+const getVideoData = async (videoId, APIKey) => {
 	try {
 		const response = await fetch(
 			`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${APIKey}`
@@ -10,4 +10,4 @@ const getYTVideoData = async (videoId, APIKey) => {
 	}
 };
 
-export default getYTVideoData;
+export default getVideoData;

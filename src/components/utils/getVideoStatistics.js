@@ -1,4 +1,4 @@
-const getYTVideoStatistics = async (videoId, APIKey) => {
+const getVideoStatistics = async (videoId, APIKey) => {
 	try {
 		const response = await fetch(
 			`https://youtube.googleapis.com/youtube/v3/videos?part=statistics&id=${videoId}&key=${APIKey}`
@@ -10,4 +10,4 @@ const getYTVideoStatistics = async (videoId, APIKey) => {
 	}
 };
 
-export default getYTVideoStatistics;
+export default getVideoStatistics;
