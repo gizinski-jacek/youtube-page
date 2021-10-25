@@ -1,4 +1,4 @@
-const getVideoCommentsData = async (videoId, APIKey) => {
+const getCommentsData = async (videoId, APIKey) => {
 	try {
 		const response = await fetch(
 			`https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&order=relevance&videoId=${videoId}&key=${APIKey}`
@@ -9,4 +9,4 @@ const getVideoCommentsData = async (videoId, APIKey) => {
 		console.log(`Comments data fetch error: ${error}`);
 	}
 };
-export default getVideoCommentsData;
+export default getCommentsData;
