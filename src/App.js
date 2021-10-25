@@ -5,8 +5,8 @@ import './App.css';
 import Navbar from './components/Navbar';
 import MenuCollapsing from './components/MenuCollapsing';
 import MenuSliding from './components/MenuSliding';
-import Main from './components/Main';
-import Video from './components/Video';
+import MainPage from './components/MainPage';
+import VideoPage from './components/VideoPage';
 
 const App = () => {
 	const [menuSetByUser, setMenuSetByUser] = useState(false);
@@ -14,7 +14,7 @@ const App = () => {
 	const [menuIsHidden, setMenuIsHidden] = useState(true);
 	const [replaceMenu, setReplaceMenu] = useState(false);
 	const [loadedVideoData, setLoadedVideoData] = useState();
-	const [searchInput, setSearchInput] = useState();
+	const [searchValue, setSearchValue] = useState();
 
 	const toggleMenuWidth = () => {
 		if (menuIsThin) {
@@ -28,7 +28,7 @@ const App = () => {
 
 	const handleInput = (e) => {
 		const { value } = e.target;
-		setSearchInput(value);
+		setSearchValue(value);
 	};
 
 	const toggleMenuVisibility = () => {
@@ -85,7 +85,7 @@ const App = () => {
 						hamAction={
 							replaceMenu ? toggleMenuVisibility : toggleMenuWidth
 						}
-						input={searchInput}
+						input={searchValue}
 						handle={handleInput}
 					/>
 					<MenuCollapsing isThin={menuIsThin} />
@@ -93,7 +93,7 @@ const App = () => {
 						isHidden={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}
 					/>
-					<Main
+					<MainPage
 						isHidden={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}
 						loadVideo={loadVideo}
@@ -102,14 +102,14 @@ const App = () => {
 				<Route exact path='/watch=([\w-]{11,})'>
 					<Navbar
 						hamAction={toggleMenuVisibility}
-						input={searchInput}
+						input={searchValue}
 						handle={handleInput}
 					/>
 					<MenuSliding
 						isHidden={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}
 					/>
-					<Video
+					<VideoPage
 						isHidden={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}
 						loadedData={loadedVideoData}
