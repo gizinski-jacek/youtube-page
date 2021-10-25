@@ -3,20 +3,22 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import getRandomVideosFromFirestore from './utils/getRandomVideosFromFirestore';
 import getYTTrendingVideos from './utils/getYTTrendingVideos';
-import getYTVideoStatistics from './utils/getYTVideoStatistics';
-import getYTChannelData from './utils/getYTChannelData';
-import VideoDataWrapper from './reusables/VideoDataWrapper';
+import GridContentsWrapper from './reusables/GridContentsWrapper';
 
 const Main = ({ isHidden, toggleVisibility, loadVideo }) => {
 	const [showLoadBox, setShowLoadBox] = useState(true);
+	const [mainData, setMainData] = useState();
 	const [mainGridContents, setGridContents] = useState();
+	const [trendingData, setTrendingData] = useState();
 	const [trendingGridContents, setTrendingGridContents] = useState();
 	const [visibleArrow, setVisibleArrow] = useState(false);
 	const [expandedTrending, setExpandedTrending] = useState(false);
 
 	const handleLoad = async () => {
-		const trendingVideos = await getYTTrendingVideos(12, myAPIKey);
-		setTrendingGridContents(await createGridContents(trendingVideos));
+		const data = await getYTTrendingVideos(12, myAPIKey);
+		setTrendingData(data);
+		const contents = await GridContentsWrapper(data);
+		setTrendingGridContents(contents);
 		setShowLoadBox(false);
 		setVisibleArrow(true);
 	};
@@ -28,51 +30,12 @@ const Main = ({ isHidden, toggleVisibility, loadVideo }) => {
 
 	useEffect(() => {
 		(async () => {
-			const randomVideos = await getRandomVideosFromFirestore(24);
-			setGridContents(await createGridContents(randomVideos));
+			const data = await getRandomVideosFromFirestore(24);
+			setMainData(data);
+			const contents = await GridContentsWrapper(data, loadVideo);
+			setGridContents(contents);
 		})();
 	}, []);
-
-	const createGridContents = async (data) => {
-		try {
-			const contents = await Promise.all(
-				data.map(async (video, index) => {
-					const videoStats = getYTVideoStatistics(
-						video.videoData.id.videoId,
-						myAPIKey
-					);
-					const channelData = getYTChannelData(
-						video.videoData.snippet.channelId,
-						myAPIKey
-					);
-					try {
-						const [stats, channel] = await Promise.all([
-							videoStats,
-							channelData,
-						]);
-						if (stats && channel) {
-							return (
-								<VideoDataWrapper
-									key={index}
-									video={video}
-									loadVideo={loadVideo}
-									stats={stats}
-									channel={channel}
-								/>
-							);
-						}
-					} catch (error) {
-						console.log(
-							`Promise all for video statistics and channel data error: ${error}`
-						);
-					}
-				})
-			);
-			return contents;
-		} catch (error) {
-			console.log(`Promise all for grid contents error: ${error}`);
-		}
-	};
 
 	return (
 		<div id='contents-container'>
