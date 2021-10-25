@@ -1,22 +1,23 @@
 import { myAPIKey } from '../firebase';
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import getRandomVideosFromFirestore from './utils/getRandomVideosFromFirestore';
-import getYTTrendingVideos from './utils/getYTTrendingVideos';
+import getRandomVideosFromFS from './utils/getRandomVideosFromFS';
+import getTrendingVideos from './utils/getTrendingVideos';
 import GridContentsWrapper from './reusables/GridContentsWrapper';
 
-const Main = ({ isHidden, toggleVisibility, loadVideo }) => {
-	const [showLoadBox, setShowLoadBox] = useState(true);
+const MainPage = ({ isHidden, toggleVisibility, loadVideo }) => {
 	const [mainData, setMainData] = useState();
 	const [mainGridContents, setGridContents] = useState();
 	const [trendingData, setTrendingData] = useState();
 	const [trendingGridContents, setTrendingGridContents] = useState();
-	const [visibleArrow, setVisibleArrow] = useState(false);
+	const [showLoadBox, setShowLoadBox] = useState(true);
 	const [expandedTrending, setExpandedTrending] = useState(false);
+	const [visibleArrow, setVisibleArrow] = useState(false);
 
 	const handleLoad = async () => {
-		const data = await getYTTrendingVideos(12, myAPIKey);
+		const data = await getTrendingVideos(12, myAPIKey);
 		setTrendingData(data);
+		// Shouldn't store this in state but I don't know proper way to do this right now.
 		const contents = await GridContentsWrapper(data);
 		setTrendingGridContents(contents);
 		setShowLoadBox(false);
@@ -30,9 +31,10 @@ const Main = ({ isHidden, toggleVisibility, loadVideo }) => {
 
 	useEffect(() => {
 		(async () => {
-			const data = await getRandomVideosFromFirestore(24);
+			const data = await getRandomVideosFromFS(24);
 			setMainData(data);
 			const contents = await GridContentsWrapper(data, loadVideo);
+			// Shouldn't store this in state but I don't know proper way to do this right now.
 			setGridContents(contents);
 		})();
 	}, []);
@@ -70,7 +72,7 @@ const Main = ({ isHidden, toggleVisibility, loadVideo }) => {
 				{mainGridContents}
 				<div
 					id='trending-contents'
-					// 'fit-content' doesn't work here (?)
+					// Fit-content doesn't work here (?). Have to use empty value and set fit-content in css.
 					style={{ maxHeight: expandedTrending ? '' : '380px' }}
 				>
 					<h2 className='trending-tag'>Trending</h2>
@@ -108,4 +110,4 @@ const Main = ({ isHidden, toggleVisibility, loadVideo }) => {
 	);
 };
 
-export default Main;
+export default MainPage;
