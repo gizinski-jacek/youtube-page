@@ -2,9 +2,9 @@ import { app } from './firebase';
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.css';
-import Nav from './components/Nav';
-import Menu from './components/Menu';
-import MenuVideo from './components/MenuVideo';
+import Navbar from './components/Navbar';
+import MenuCollapsing from './components/MenuCollapsing';
+import MenuSliding from './components/MenuSliding';
 import Main from './components/Main';
 import Video from './components/Video';
 
@@ -81,15 +81,15 @@ const App = () => {
 		<BrowserRouter>
 			<Switch>
 				<Route exact path='/'>
-					<Nav
+					<Navbar
 						hamAction={
 							replaceMenu ? toggleMenuVisibility : toggleMenuWidth
 						}
 						input={searchInput}
 						handle={handleInput}
 					/>
-					<Menu isThin={menuIsThin} />
-					<MenuVideo
+					<MenuCollapsing isThin={menuIsThin} />
+					<MenuSliding
 						isHidden={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}
 					/>
@@ -100,12 +100,12 @@ const App = () => {
 					/>
 				</Route>
 				<Route exact path='/watch=([\w-]{11,})'>
-					<Nav
+					<Navbar
 						hamAction={toggleMenuVisibility}
 						input={searchInput}
 						handle={handleInput}
 					/>
-					<MenuVideo
+					<MenuSliding
 						isHidden={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}
 					/>
