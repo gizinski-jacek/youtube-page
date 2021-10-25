@@ -1,17 +1,17 @@
 import { myAPIKey } from '../../firebase';
-import getYTVideoStatistics from '../utils/getYTVideoStatistics';
-import getYTChannelData from '../utils/getYTChannelData';
+import getVideoStatistics from '../utils/getVideoStatistics';
+import getChannelData from '../utils/getChannelData';
 import VideoDataWrapper from './VideoDataWrapper';
 
 const GridContentsWrapper = async (data, loadVideo) => {
 	try {
 		return await Promise.all(
 			data.map(async (video, index) => {
-				const videoStats = getYTVideoStatistics(
+				const videoStats = getVideoStatistics(
 					video.videoData.id.videoId,
 					myAPIKey
 				);
-				const channelData = getYTChannelData(
+				const channelData = getChannelData(
 					video.videoData.snippet.channelId,
 					myAPIKey
 				);
@@ -25,9 +25,9 @@ const GridContentsWrapper = async (data, loadVideo) => {
 							<VideoDataWrapper
 								key={index}
 								video={video}
-								loadVideo={loadVideo}
 								stats={stats}
 								channel={channel}
+								loadVideo={loadVideo}
 							/>
 						);
 					}
