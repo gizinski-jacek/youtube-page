@@ -1,6 +1,6 @@
 import countFormatter from '../utils/countFormatter';
 
-const CommentDataWrapper = (data) => {
+const CommentDataWrapper = ({ data }) => {
 	return (
 		<div key={data.id} className='comment-main'>
 			<img
