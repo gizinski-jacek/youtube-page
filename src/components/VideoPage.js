@@ -64,29 +64,30 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 				);
 			})();
 		} else {
-			// Looking for a way to fetch all video data on refresh/on direct link load so the
-			// video page doesn't crash. Right now throws below error. Looking for a solution.
-			//
-			// Warning: Can't perform a React state update on an unmounted component.
-			// This is a no-op, but it indicates a memory leak in your application.
-			// To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
-			//
 			(async () => {
 				const vidId = window.location.pathname.slice(7);
 				const vidData = await getVideoData(vidId, myAPIKey);
-				const vidStats = await getVideoStatistics(vidId);
+				const vidStats = await getVideoStatistics(vidId, myAPIKey);
 				const chanData = await getChannelData(
-					vidData[0].snippet.channelId
+					vidData[0].snippet.channelId,
+					myAPIKey
 				);
 				setVideoData({
-					video: vidData,
+					video: {
+						videoData: {
+							...vidData[0],
+							id: {
+								videoId: vidData[0].id,
+								kind: vidData[0].kind,
+							},
+						},
+					},
 					stats: vidStats,
 					channel: chanData,
 				});
-				console.log({ vidData, vidStats, chanData });
 			})();
 		}
-	}, []);
+	}, [videoData]);
 
 	return (
 		<div id='video-page'>
