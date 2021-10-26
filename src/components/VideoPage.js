@@ -19,7 +19,6 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 	const [commentsData, setCommentsData] = useState();
 	const [newCommentValue, setNewCommentValue] = useState();
 	const [relatedData, setRelatedData] = useState();
-	const [relatedContents, setRelatedContents] = useState();
 
 	const handleInput = (e) => {
 		const { value } = e.target;
@@ -27,21 +26,36 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 	};
 
 	const loadVideo = (vidData) => {
-		setRelatedContents(null);
 		setRelatedData(null);
 		setShowLoadBox(true);
 		setVideoData(vidData);
 	};
 
 	const handleLoad = async () => {
-		const data = await getRelatedVideos(
-			videoData.video.videoData.id.videoId,
-			myAPIKey
-		);
-		setRelatedData(data);
-		const contents = RelatedContentsWrapper(data, loadVideo);
-		// Shouldn't store this in state but I don't know proper way to do this right now.
-		setRelatedContents(contents);
+		try {
+			const data = await getRelatedVideos(
+				videoData.video.videoData.id.videoId,
+				myAPIKey
+			);
+			const array = await Promise.all(
+				data.map(async (video) => {
+					const [statsData, channelData] = await Promise.all([
+						getVideoStatistics(
+							video.videoData.id.videoId,
+							myAPIKey
+						),
+						getChannelData(
+							video.videoData.snippet.channelId,
+							myAPIKey
+						),
+					]);
+					return { video, statsData, channelData };
+				})
+			);
+			setRelatedData(array);
+		} catch (error) {
+			console.log(`Related data fetch error: ${error}`);
+		}
 		setShowLoadBox(false);
 	};
 
@@ -161,7 +175,12 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 					className='related-links'
 					style={{ visibility: showLoadBox ? 'hidden' : 'visible' }}
 				>
-					{relatedContents}
+					{relatedData ? (
+						<RelatedContentsWrapper
+							data={relatedData}
+							loadVideo={loadVideo}
+						/>
+					) : null}
 				</div>
 			</div>
 		</div>
