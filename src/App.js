@@ -40,9 +40,8 @@ const App = () => {
 	};
 
 	useEffect(() => {
-		const contentsWidth =
-			document.getElementById('main-contents').offsetWidth;
-		if (contentsWidth <= 1156) {
+		const container = document.getElementById('main-contents');
+		if (container.offsetWidth <= 1156) {
 			document.documentElement.style.setProperty('--menu-width', '72px');
 			setReplaceMenu(true);
 			setMenuIsThin(true);
@@ -50,9 +49,9 @@ const App = () => {
 	}, []);
 
 	useEffect(() => {
-		const contentsWidth = document.getElementById('main-contents');
-		const handleMenuResize = () => {
-			if (contentsWidth.offsetWidth <= 1156) {
+		const container = document.getElementById('main-contents');
+		const watchForResize = () => {
+			if (container.offsetWidth <= 1156) {
 				document.documentElement.style.setProperty(
 					'--menu-width',
 					'72px'
@@ -60,7 +59,7 @@ const App = () => {
 				setReplaceMenu(true);
 				setMenuIsThin(true);
 			}
-			if (contentsWidth.offsetWidth >= 1325 && !menuSetByUser) {
+			if (container.offsetWidth >= 1325 && !menuSetByUser) {
 				document.documentElement.style.setProperty(
 					'--menu-width',
 					'240px'
@@ -71,10 +70,8 @@ const App = () => {
 			}
 		};
 
-		contentsWidth.addEventListener('resize', handleMenuResize);
-
-		return () =>
-			contentsWidth.removeEventListener('resize', handleMenuResize);
+		container.addEventListener('resize', watchForResize);
+		return () => container.removeEventListener('resize', watchForResize);
 	}, [menuIsThin, menuSetByUser]);
 
 	return (
