@@ -37,7 +37,7 @@ const MainPage = ({ isHidden, toggleVisibility, loadVideo }) => {
 			// Shouldn't store this in state but I don't know proper way to do this right now.
 			setGridContents(contents);
 		})();
-	}, []);
+	}, [loadVideo]);
 
 	return (
 		<div id='contents-container'>
