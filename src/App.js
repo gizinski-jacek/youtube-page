@@ -49,6 +49,8 @@ const App = () => {
 	}, []);
 
 	useEffect(() => {
+		// Throws an error if you refresh VideoPage since component with container is not mounted.
+		// Page structure might be just plain wrong to make this work easily. Hmm.
 		const container = document.getElementById('main-contents');
 		const watchForResize = () => {
 			if (container.offsetWidth <= 1156) {
