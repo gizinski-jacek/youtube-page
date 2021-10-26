@@ -65,26 +65,34 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 			})();
 		} else {
 			(async () => {
-				const vidId = window.location.pathname.slice(7);
-				const vidData = await getVideoData(vidId, myAPIKey);
-				const vidStats = await getVideoStatistics(vidId, myAPIKey);
-				const chanData = await getChannelData(
-					vidData[0].snippet.channelId,
-					myAPIKey
-				);
-				setVideoData({
-					video: {
-						videoData: {
-							...vidData[0],
-							id: {
-								videoId: vidData[0].id,
-								kind: vidData[0].kind,
+				try {
+					const vidId = window.location.pathname.slice(7);
+					const [vidData, vidStats] = await Promise.all([
+						await getVideoData(vidId, myAPIKey),
+						await getVideoStatistics(vidId, myAPIKey),
+					]);
+					const chanData = await getChannelData(
+						vidData[0].snippet.channelId,
+						myAPIKey
+					);
+					setVideoData({
+						video: {
+							videoData: {
+								...vidData[0],
+								id: {
+									videoId: vidData[0].id,
+									kind: vidData[0].kind,
+								},
 							},
 						},
-					},
-					stats: vidStats,
-					channel: chanData,
-				});
+						stats: vidStats,
+						channel: chanData,
+					});
+				} catch (error) {
+					console.log(
+						`Promise all for video page data error: ${error}`
+					);
+				}
 			})();
 		}
 	}, [videoData]);
