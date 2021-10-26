@@ -15,29 +15,8 @@ const MainPage = ({ isHidden, toggleVisibility, loadVideo }) => {
 	const [visibleArrow, setVisibleArrow] = useState(false);
 
 	const handleLoad = async () => {
-		const data = await getTrendingVideos(12, myAPIKey);
-		const array = await Promise.all(
-			data.map(async (video) => {
-				const [statsData, channelData] = await Promise.all([
-					getVideoStatistics(video.videoData.id.videoId, myAPIKey),
-					getChannelData(video.videoData.snippet.channelId, myAPIKey),
-				]);
-				return { video, statsData, channelData };
-			})
-		);
-		setTrendingData(array);
-		setShowLoadBox(false);
-		setVisibleArrow(true);
-	};
-
-	const expandContents = () => {
-		setExpandedTrending(true);
-		setVisibleArrow(false);
-	};
-
-	useEffect(() => {
-		(async () => {
-			const data = await getRandomVideosFromFS(24);
+		try {
+			const data = await getTrendingVideos(12, myAPIKey);
 			const array = await Promise.all(
 				data.map(async (video) => {
 					const [statsData, channelData] = await Promise.all([
@@ -53,7 +32,42 @@ const MainPage = ({ isHidden, toggleVisibility, loadVideo }) => {
 					return { video, statsData, channelData };
 				})
 			);
-			setMainData(array);
+			setTrendingData(array);
+		} catch (error) {
+			console.log(`Trending data fetch error: ${error}`);
+		}
+		setShowLoadBox(false);
+		setVisibleArrow(true);
+	};
+
+	const expandContents = () => {
+		setExpandedTrending(true);
+		setVisibleArrow(false);
+	};
+
+	useEffect(() => {
+		(async () => {
+			try {
+				const data = await getRandomVideosFromFS(24);
+				const array = await Promise.all(
+					data.map(async (video) => {
+						const [statsData, channelData] = await Promise.all([
+							getVideoStatistics(
+								video.videoData.id.videoId,
+								myAPIKey
+							),
+							getChannelData(
+								video.videoData.snippet.channelId,
+								myAPIKey
+							),
+						]);
+						return { video, statsData, channelData };
+					})
+				);
+				setMainData(array);
+			} catch (error) {
+				console.log(`Main data fetch error: ${error}`);
+			}
 		})();
 	}, []);
 
