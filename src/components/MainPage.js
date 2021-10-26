@@ -2,24 +2,30 @@ import { myAPIKey } from '../firebase';
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import getRandomVideosFromFS from './utils/getRandomVideosFromFS';
+import getVideoStatistics from './utils/getVideoStatistics';
+import getChannelData from './utils/getChannelData';
 import getTrendingVideos from './utils/getTrendingVideos';
 import GridContentsWrapper from './reusables/GridContentsWrapper';
 
 const MainPage = ({ isHidden, toggleVisibility, loadVideo }) => {
 	const [mainData, setMainData] = useState();
-	const [mainGridContents, setGridContents] = useState();
 	const [trendingData, setTrendingData] = useState();
-	const [trendingGridContents, setTrendingGridContents] = useState();
 	const [showLoadBox, setShowLoadBox] = useState(true);
 	const [expandedTrending, setExpandedTrending] = useState(false);
 	const [visibleArrow, setVisibleArrow] = useState(false);
 
 	const handleLoad = async () => {
 		const data = await getTrendingVideos(12, myAPIKey);
-		setTrendingData(data);
-		// Shouldn't store this in state but I don't know proper way to do this right now.
-		const contents = await GridContentsWrapper(data);
-		setTrendingGridContents(contents);
+		const array = await Promise.all(
+			data.map(async (video) => {
+				const [statsData, channelData] = await Promise.all([
+					getVideoStatistics(video.videoData.id.videoId, myAPIKey),
+					getChannelData(video.videoData.snippet.channelId, myAPIKey),
+				]);
+				return { video, statsData, channelData };
+			})
+		);
+		setTrendingData(array);
 		setShowLoadBox(false);
 		setVisibleArrow(true);
 	};
@@ -32,12 +38,24 @@ const MainPage = ({ isHidden, toggleVisibility, loadVideo }) => {
 	useEffect(() => {
 		(async () => {
 			const data = await getRandomVideosFromFS(24);
-			setMainData(data);
-			const contents = await GridContentsWrapper(data, loadVideo);
-			// Shouldn't store this in state but I don't know proper way to do this right now.
-			setGridContents(contents);
+			const array = await Promise.all(
+				data.map(async (video) => {
+					const [statsData, channelData] = await Promise.all([
+						getVideoStatistics(
+							video.videoData.id.videoId,
+							myAPIKey
+						),
+						getChannelData(
+							video.videoData.snippet.channelId,
+							myAPIKey
+						),
+					]);
+					return { video, statsData, channelData };
+				})
+			);
+			setMainData(array);
 		})();
-	}, [loadVideo]);
+	}, []);
 
 	return (
 		<div id='contents-container'>
@@ -69,7 +87,12 @@ const MainPage = ({ isHidden, toggleVisibility, loadVideo }) => {
 				</ul>
 			</div>
 			<div id='main-contents'>
-				{mainGridContents}
+				{mainData ? (
+					<GridContentsWrapper
+						data={mainData}
+						loadVideo={loadVideo}
+					/>
+				) : null}
 				<div
 					id='trending-contents'
 					// Fit-content doesn't work here (?). Have to use empty value and set fit-content in css.
@@ -93,7 +116,12 @@ const MainPage = ({ isHidden, toggleVisibility, loadVideo }) => {
 							Load Videos
 						</button>
 					</div>
-					{trendingGridContents}
+					{trendingData ? (
+						<GridContentsWrapper
+							data={trendingData}
+							loadVideo={loadVideo}
+						/>
+					) : null}
 					<div
 						className='expand-trending-btn'
 						style={{
