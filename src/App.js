@@ -1,5 +1,5 @@
 import { app } from './firebase';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -7,12 +7,17 @@ import MenuCollapsing from './components/MenuCollapsing';
 import MenuSliding from './components/MenuSliding';
 import MainPage from './components/MainPage';
 import VideoPage from './components/VideoPage';
+import {
+	addDoc,
+	collection,
+	getFirestore,
+	serverTimestamp,
+} from '@firebase/firestore';
 
 const App = () => {
 	const [menuSetByUser, setMenuSetByUser] = useState(false);
 	const [menuIsThin, setMenuIsThin] = useState(false);
 	const [menuIsHidden, setMenuIsHidden] = useState(true);
-	const [replaceMenu, setReplaceMenu] = useState(false);
 	const [loadedVideoData, setLoadedVideoData] = useState();
 	const [searchValue, setSearchValue] = useState();
 
@@ -39,50 +44,15 @@ const App = () => {
 		setLoadedVideoData(vidData);
 	};
 
-	useEffect(() => {
-		const container = document.getElementById('main-contents');
-		if (container.offsetWidth <= 1156) {
-			document.documentElement.style.setProperty('--menu-width', '72px');
-			setReplaceMenu(true);
-			setMenuIsThin(true);
-		}
-	}, []);
-
-	useEffect(() => {
-		// Throws an error if you refresh VideoPage since component with container is not mounted.
-		// Page structure might be just plain wrong to make this work easily. Hmm.
-		const container = document.getElementById('main-contents');
-		const watchForResize = () => {
-			if (container.offsetWidth <= 1156) {
-				document.documentElement.style.setProperty(
-					'--menu-width',
-					'72px'
-				);
-				setReplaceMenu(true);
-				setMenuIsThin(true);
-			}
-			if (container.offsetWidth >= 1325 && !menuSetByUser) {
-				document.documentElement.style.setProperty(
-					'--menu-width',
-					'240px'
-				);
-				setReplaceMenu(false);
-				setMenuIsHidden(true);
-				setMenuIsThin(false);
-			}
-		};
-
-		container.addEventListener('resize', watchForResize);
-		return () => container.removeEventListener('resize', watchForResize);
-	}, [menuIsThin, menuSetByUser]);
-
 	return (
 		<BrowserRouter>
 			<Switch>
 				<Route exact path='/'>
 					<Navbar
 						hamAction={
-							replaceMenu ? toggleMenuVisibility : toggleMenuWidth
+							menuIsThin && !menuSetByUser
+								? toggleMenuVisibility
+								: toggleMenuWidth
 						}
 						input={searchValue}
 						handle={handleInput}
@@ -93,7 +63,10 @@ const App = () => {
 						toggleVisibility={toggleMenuVisibility}
 					/>
 					<MainPage
-						isHidden={menuIsHidden}
+						setMenuIsThin={setMenuIsThin}
+						setMenuIsHidden={setMenuIsHidden}
+						menuIsHidden={menuIsHidden}
+						menuSetByUser={menuSetByUser}
 						toggleVisibility={toggleMenuVisibility}
 						loadVideo={loadVideo}
 					/>
