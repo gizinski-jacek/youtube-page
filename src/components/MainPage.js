@@ -84,7 +84,7 @@ const MainPage = ({
 			document.documentElement.style.setProperty('--menu-width', '72px');
 			setMenuIsThin(true);
 		}
-	}, []);
+	}, [setMenuIsThin]);
 
 	useEffect(() => {
 		const container = document.getElementById('main-contents');
@@ -106,9 +106,10 @@ const MainPage = ({
 			}
 		};
 
-		container.addEventListener('resize', watchForResize);
-		return () => container.removeEventListener('resize', watchForResize);
-	}, [menuIsThin, menuSetByUser]);
+		window.addEventListener('resize', watchForResize);
+
+		return () => window.removeEventListener('resize', watchForResize);
+	}, [menuSetByUser, setMenuIsThin, setMenuIsHidden]);
 
 	return (
 		<div id='contents-container'>
