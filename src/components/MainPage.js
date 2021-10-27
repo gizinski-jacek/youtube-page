@@ -77,7 +77,11 @@ const MainPage = ({
 	useEffect(() => {
 		const container = document.getElementById('main-contents');
 		const watchForResize = () => {
-			if (container.offsetWidth <= 1156) {
+			if (container.offsetWidth <= 800) {
+				document.documentElement.style.setProperty('--menu-width', '0');
+				setMenuIsThin(true);
+			}
+			if (container.offsetWidth <= 1156 && container.offsetWidth >= 873) {
 				document.documentElement.style.setProperty(
 					'--menu-width',
 					'72px'
