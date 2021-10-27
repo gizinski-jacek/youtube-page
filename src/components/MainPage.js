@@ -17,29 +17,8 @@ const MainPage = ({
 }) => {
 	const [mainData, setMainData] = useState();
 	const [trendingData, setTrendingData] = useState();
-	const [showLoadBox, setShowLoadBox] = useState(true);
 	const [expandedTrending, setExpandedTrending] = useState(false);
-	const [visibleArrow, setVisibleArrow] = useState(false);
-
-	const handleLoad = async () => {
-		try {
-			const data = await getTrendingVideos(12, myAPIKey);
-			const array = await Promise.all(
-				data.map(async (video) => {
-					const [statsData, channelData] = await Promise.all([
-						getVideoStatistics(video.id.videoId, myAPIKey),
-						getChannelData(video.snippet.channelId, myAPIKey),
-					]);
-					return { video, statsData, channelData };
-				})
-			);
-			setTrendingData(array);
-		} catch (error) {
-			console.log(`Trending data fetch error: ${error}`);
-		}
-		setShowLoadBox(false);
-		setVisibleArrow(true);
-	};
+	const [visibleArrow, setVisibleArrow] = useState(true);
 
 	const expandContents = () => {
 		setExpandedTrending(true);
@@ -49,9 +28,13 @@ const MainPage = ({
 	useEffect(() => {
 		(async () => {
 			try {
-				const data = await getRandomVideosFromFS(24);
-				const array = await Promise.all(
-					data.map(async (video) => {
+				const [mainDatabase, trendingDatabase] = await Promise.all([
+					getRandomVideosFromFS(24),
+					getTrendingVideos(12, myAPIKey),
+				]);
+
+				const mainArray = await Promise.all(
+					mainDatabase.map(async (video) => {
 						const [statsData, channelData] = await Promise.all([
 							getVideoStatistics(video.id.videoId, myAPIKey),
 							getChannelData(video.snippet.channelId, myAPIKey),
@@ -59,9 +42,26 @@ const MainPage = ({
 						return { video, statsData, channelData };
 					})
 				);
-				setMainData(array);
+
+				const trendingArray = await Promise.all(
+					trendingDatabase.map(async (video) => {
+						const [statsData, channelData] = await Promise.all([
+							getVideoStatistics(video.id.videoId, myAPIKey),
+							getChannelData(video.snippet.channelId, myAPIKey),
+						]);
+						return { video, statsData, channelData };
+					})
+				);
+
+				const [main, trending] = await Promise.all([
+					mainArray,
+					trendingArray,
+				]);
+
+				setMainData(main);
+				setTrendingData(trending);
 			} catch (error) {
-				console.log(`Main data fetch error: ${error}`);
+				console.log(`Main page content data fetch error: ${error}`);
 			}
 		})();
 	}, []);
@@ -141,23 +141,6 @@ const MainPage = ({
 					style={{ maxHeight: expandedTrending ? '' : '380px' }}
 				>
 					<h2 className='trending-tag'>Trending</h2>
-					<div
-						className='load-trending-videos'
-						style={{ display: showLoadBox ? 'flex' : 'none' }}
-					>
-						<h3>
-							Press the button to load trending videos. This
-							action uses a lot of API tokens and after few uses
-							will reach the daily quota which will result in no
-							videos being loaded anymore.
-						</h3>
-						<button
-							id='load-trending-videos-btn'
-							onClick={handleLoad}
-						>
-							Load Videos
-						</button>
-					</div>
 					{trendingData ? (
 						<GridContentsWrapper
 							data={trendingData}
