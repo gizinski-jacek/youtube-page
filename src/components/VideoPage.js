@@ -76,7 +76,6 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 						await getVideoData(vidId, myAPIKey),
 						await getVideoStatistics(vidId, myAPIKey),
 					]);
-					console.log(vidData);
 					const chanData = await getChannelData(
 						vidData[0].snippet.channelId,
 						myAPIKey
