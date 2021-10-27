@@ -7,7 +7,14 @@ import getChannelData from './utils/getChannelData';
 import getTrendingVideos from './utils/getTrendingVideos';
 import GridContentsWrapper from './reusables/GridContentsWrapper';
 
-const MainPage = ({ isHidden, toggleVisibility, loadVideo }) => {
+const MainPage = ({
+	setMenuIsThin,
+	setMenuIsHidden,
+	menuIsHidden,
+	menuSetByUser,
+	toggleVisibility,
+	loadVideo,
+}) => {
 	const [mainData, setMainData] = useState();
 	const [trendingData, setTrendingData] = useState();
 	const [showLoadBox, setShowLoadBox] = useState(true);
@@ -71,10 +78,42 @@ const MainPage = ({ isHidden, toggleVisibility, loadVideo }) => {
 		})();
 	}, []);
 
+	useEffect(() => {
+		const container = document.getElementById('main-contents');
+		if (container.offsetWidth <= 1156) {
+			document.documentElement.style.setProperty('--menu-width', '72px');
+			setMenuIsThin(true);
+		}
+	}, []);
+
+	useEffect(() => {
+		const container = document.getElementById('main-contents');
+		const watchForResize = () => {
+			if (container.offsetWidth <= 1156) {
+				document.documentElement.style.setProperty(
+					'--menu-width',
+					'72px'
+				);
+				setMenuIsThin(true);
+			}
+			if (container.offsetWidth >= 1325 && !menuSetByUser) {
+				document.documentElement.style.setProperty(
+					'--menu-width',
+					'240px'
+				);
+				setMenuIsHidden(true);
+				setMenuIsThin(false);
+			}
+		};
+
+		container.addEventListener('resize', watchForResize);
+		return () => container.removeEventListener('resize', watchForResize);
+	}, [menuIsThin, menuSetByUser]);
+
 	return (
 		<div id='contents-container'>
 			<div
-				className={`cover-fade ${isHidden ? 'is-hidden' : ''}`}
+				className={`cover-fade ${menuIsHidden ? 'is-hidden' : ''}`}
 				onClick={toggleVisibility}
 			/>
 			<div id='category-filter'>
