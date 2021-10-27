@@ -7,12 +7,6 @@ import MenuCollapsing from './components/MenuCollapsing';
 import MenuSliding from './components/MenuSliding';
 import MainPage from './components/MainPage';
 import VideoPage from './components/VideoPage';
-import {
-	addDoc,
-	collection,
-	getFirestore,
-	serverTimestamp,
-} from '@firebase/firestore';
 
 const App = () => {
 	const [menuSetByUser, setMenuSetByUser] = useState(false);
