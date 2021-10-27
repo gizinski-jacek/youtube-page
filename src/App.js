@@ -22,7 +22,7 @@ const App = () => {
 			document.documentElement.style.setProperty('--menu-width', '72px');
 		}
 		setMenuIsThin((prevState) => !prevState);
-		setMenuSetByUser(true);
+		setMenuSetByUser((prevState) => !prevState);
 	};
 
 	const handleInput = (e) => {
