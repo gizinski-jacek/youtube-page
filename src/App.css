@@ -338,6 +338,8 @@ a #menu-collapsing.is-thin {
 	height: 100%;
 	margin-top: calc(2 * var(--navbar-height));
 	margin-left: var(--menu-width);
+	min-height: calc(100vh - 2 * (var(--navbar-height)));
+	background-color: var(--gray-very-high-transp-border);
 }
 
 #category-filter {
@@ -393,7 +395,6 @@ a #menu-collapsing.is-thin {
 	grid-gap: 16px;
 	display: grid;
 	grid-template-columns: repeat(4, minmax(260px, 1fr));
-	background-color: var(--gray-very-high-transp-border);
 	grid-auto-flow: row;
 	grid-auto-columns: 500px;
 }
@@ -469,6 +470,7 @@ h6 {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	margin: 0 8px;
 	margin-bottom: 24px;
 	padding: 24px;
 	font-weight: 600;
