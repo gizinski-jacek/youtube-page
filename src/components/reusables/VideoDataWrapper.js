@@ -6,18 +6,18 @@ const VideoDataWrapper = ({ video, stats, channel, loadVideo }) => {
 	return (
 		<div className='video-card'>
 			<Link
-				to={`watch=${video.videoData.id.videoId}`}
+				to={`watch=${video.id.videoId}`}
 				className='whole-card-link'
 				onClick={() => loadVideo({ video, stats, channel })}
 			/>
 			<img
 				className='card-thumbnail'
-				src={video.videoData.snippet.thumbnails.medium.url}
+				src={video.snippet.thumbnails.medium.url}
 				alt='Video thumbnail'
 			/>
 			<div className='card-details'>
 				<a
-					href={`https://www.youtube.com/channel/${video.videoData.snippet.channelId}`}
+					href={`https://www.youtube.com/channel/${video.snippet.channelId}`}
 					className='channel-picture-link'
 				>
 					<img
@@ -30,15 +30,13 @@ const VideoDataWrapper = ({ video, stats, channel, loadVideo }) => {
 					/>
 				</a>
 				<div className='metadata'>
-					<h3 className='video-title'>
-						{video.videoData.snippet.title}
-					</h3>
+					<h3 className='video-title'>{video.snippet.title}</h3>
 					<a
-						href={`https://www.youtube.com/channel/${video.videoData.snippet.channelId}`}
+						href={`https://www.youtube.com/channel/${video.snippet.channelId}`}
 						className='channel-name-link'
 					>
 						<h3 className='channel-name'>
-							{video.videoData.snippet.channelTitle}
+							{video.snippet.channelTitle}
 						</h3>
 					</a>
 					<span>
@@ -46,7 +44,7 @@ const VideoDataWrapper = ({ video, stats, channel, loadVideo }) => {
 							{countFormatter(stats?.viewCount, 1)}
 						</h4>
 						<h4 className='upload-date'>
-							{dateFormatter(video.videoData.snippet.publishedAt)}
+							{dateFormatter(video.snippet.publishedAt)}
 						</h4>
 					</span>
 				</div>

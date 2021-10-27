@@ -6,7 +6,7 @@ const RelatedDataWrapper = ({ video, stats, channel, loadVideo }) => {
 	return (
 		<div className='related-card'>
 			<Link
-				to={`watch=${video.videoData.id.videoId}`}
+				to={`watch=${video.id.videoId}`}
 				className='related-card-thumbnail-link'
 				onClick={() =>
 					loadVideo({
@@ -18,13 +18,13 @@ const RelatedDataWrapper = ({ video, stats, channel, loadVideo }) => {
 			>
 				<img
 					className='related-card-thumbnail'
-					src={video.videoData.snippet.thumbnails.medium.url}
+					src={video.snippet.thumbnails.medium.url}
 					alt='Video thumbnail'
 				/>
 			</Link>
 			<div className='related-card-details'>
 				<Link
-					to={`watch=${video.videoData.id.videoId}`}
+					to={`watch=${video.id.videoId}`}
 					className='related-metadata-link'
 					onClick={() =>
 						loadVideo({
@@ -36,19 +36,17 @@ const RelatedDataWrapper = ({ video, stats, channel, loadVideo }) => {
 				>
 					<div className='related-metadata'>
 						<h3 className='related-video-title'>
-							{video.videoData.snippet.title}
+							{video.snippet.title}
 						</h3>
 						<h4 className='related-channel-name'>
-							{video.videoData.snippet.channelTitle}
+							{video.snippet.channelTitle}
 						</h4>
 						<span>
 							<h4 className='related-total-views'>
 								{countFormatter(stats.viewCount, 1)}
 							</h4>
 							<h4 className='related-upload-date'>
-								{dateFormatter(
-									video.videoData.snippet.publishedAt
-								)}
+								{dateFormatter(video.snippet.publishedAt)}
 							</h4>
 						</span>
 						<h5>New</h5>

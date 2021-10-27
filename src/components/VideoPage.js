@@ -34,20 +34,14 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 	const handleLoad = async () => {
 		try {
 			const data = await getRelatedVideos(
-				videoData.video.videoData.id.videoId,
+				videoData.video.id.videoId,
 				myAPIKey
 			);
 			const array = await Promise.all(
 				data.map(async (video) => {
 					const [statsData, channelData] = await Promise.all([
-						getVideoStatistics(
-							video.videoData.id.videoId,
-							myAPIKey
-						),
-						getChannelData(
-							video.videoData.snippet.channelId,
-							myAPIKey
-						),
+						getVideoStatistics(video.id.videoId, myAPIKey),
+						getChannelData(video.snippet.channelId, myAPIKey),
 					]);
 					return { video, statsData, channelData };
 				})
@@ -64,17 +58,14 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 			(async () => {
 				setStatsData(
 					await getChannelStatistics(
-						videoData.video.videoData.snippet.channelId,
+						videoData.video.snippet.channelId,
 						myAPIKey
 					)
 				);
 			})();
 			(async () => {
 				setCommentsData(
-					await getCommentsData(
-						videoData.video.videoData.id.videoId,
-						myAPIKey
-					)
+					await getCommentsData(videoData.video.id.videoId, myAPIKey)
 				);
 			})();
 		} else {
@@ -85,18 +76,17 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 						await getVideoData(vidId, myAPIKey),
 						await getVideoStatistics(vidId, myAPIKey),
 					]);
+					console.log(vidData);
 					const chanData = await getChannelData(
 						vidData[0].snippet.channelId,
 						myAPIKey
 					);
 					setVideoData({
 						video: {
-							videoData: {
-								...vidData[0],
-								id: {
-									videoId: vidData[0].id,
-									kind: vidData[0].kind,
-								},
+							...vidData[0],
+							id: {
+								videoId: vidData[0].id,
+								kind: vidData[0].kind,
 							},
 						},
 						stats: vidStats,
@@ -121,7 +111,7 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 				<div id='video-main-container'>
 					{videoData ? (
 						<VideoPlayerContainer
-							videoId={videoData.video.videoData.id.videoId}
+							videoId={videoData.video.id.videoId}
 						/>
 					) : null}
 					{videoData && statsData ? (

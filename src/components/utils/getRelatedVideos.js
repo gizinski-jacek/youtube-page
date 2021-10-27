@@ -5,9 +5,8 @@ const getRelatedVideos = async (videoId, APIKey) => {
 		);
 		const data = await response.json();
 		const array = data.items.map((item) => {
-			return { videoData: item };
+			return item;
 		});
-		console.log(array);
 		return array;
 	} catch (error) {
 		console.log(`Related videos data fetch error: ${error}`);

@@ -27,14 +27,8 @@ const MainPage = ({
 			const array = await Promise.all(
 				data.map(async (video) => {
 					const [statsData, channelData] = await Promise.all([
-						getVideoStatistics(
-							video.videoData.id.videoId,
-							myAPIKey
-						),
-						getChannelData(
-							video.videoData.snippet.channelId,
-							myAPIKey
-						),
+						getVideoStatistics(video.id.videoId, myAPIKey),
+						getChannelData(video.snippet.channelId, myAPIKey),
 					]);
 					return { video, statsData, channelData };
 				})
@@ -59,14 +53,8 @@ const MainPage = ({
 				const array = await Promise.all(
 					data.map(async (video) => {
 						const [statsData, channelData] = await Promise.all([
-							getVideoStatistics(
-								video.videoData.id.videoId,
-								myAPIKey
-							),
-							getChannelData(
-								video.videoData.snippet.channelId,
-								myAPIKey
-							),
+							getVideoStatistics(video.id.videoId, myAPIKey),
+							getChannelData(video.snippet.channelId, myAPIKey),
 						]);
 						return { video, statsData, channelData };
 					})

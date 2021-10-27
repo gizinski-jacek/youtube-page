@@ -4,9 +4,7 @@ import countFormatter from '../utils/countFormatter';
 const StatisticsContainer = ({ videoData, statsData }) => {
 	return videoData && statsData ? (
 		<div className='video-metadata'>
-			<h2 className='video-title'>
-				{videoData.video.videoData.snippet.title}
-			</h2>
+			<h2 className='video-title'>{videoData.video.snippet.title}</h2>
 			<div className='video-engagement'>
 				<span>
 					<h4 className='video-total-views'>
@@ -16,7 +14,7 @@ const StatisticsContainer = ({ videoData, statsData }) => {
 					</h4>
 					<h4 className='video-upload-date'>
 						{new Date(
-							videoData.video.videoData.snippet.publishedAt
+							videoData.video.snippet.publishedAt
 						).toLocaleDateString(undefined, {
 							year: 'numeric',
 							month: 'short',
@@ -90,14 +88,14 @@ const StatisticsContainer = ({ videoData, statsData }) => {
 				<div className='video-channel-data'>
 					<div className='video-channel-details'>
 						<Link
-							to={`https://www.youtube.com/channel/${videoData.video.videoData.snippet.channelId}`}
+							to={`https://www.youtube.com/channel/${videoData.video.snippet.channelId}`}
 							className='video-channel-picture-link'
 						>
 							<img
 								className='video-channel-picture'
 								src={
-									videoData.video.videoData.snippet.thumbnails
-										.medium.url ||
+									videoData.video.snippet.thumbnails.medium
+										.url ||
 									`https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fprofile_placeholder.png?alt=media&token=d1bc2f1c-9c82-4f41-b255-1bf9413fa641`
 								}
 								alt=''
@@ -105,7 +103,7 @@ const StatisticsContainer = ({ videoData, statsData }) => {
 						</Link>
 						<div>
 							<Link
-								to={`https://www.youtube.com/channel/${videoData.video.videoData.snippet.channelId}`}
+								to={`https://www.youtube.com/channel/${videoData.video.snippet.channelId}`}
 								className='video-channel-name-link'
 							>
 								<h3 className='video-channel-name'>
@@ -125,7 +123,7 @@ const StatisticsContainer = ({ videoData, statsData }) => {
 					<button id='video-channel-subscribe'>Subscribe</button>
 				</div>
 				<p className='video-description'>
-					{videoData.video.videoData.snippet.description}
+					{videoData.video.snippet.description}
 				</p>
 			</div>
 		</div>
