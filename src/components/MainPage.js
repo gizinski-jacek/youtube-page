@@ -68,7 +68,11 @@ const MainPage = ({
 
 	useEffect(() => {
 		const container = document.getElementById('main-contents');
-		if (container.offsetWidth <= 1156) {
+		if (container.offsetWidth <= 785) {
+			document.documentElement.style.setProperty('--menu-width', '0');
+			setMenuIsThin(true);
+		}
+		if (container.offsetWidth <= 1156 && container.offsetWidth >= 858) {
 			document.documentElement.style.setProperty('--menu-width', '72px');
 			setMenuIsThin(true);
 		}
@@ -77,24 +81,25 @@ const MainPage = ({
 	useEffect(() => {
 		const container = document.getElementById('main-contents');
 		const watchForResize = () => {
-			if (container.offsetWidth <= 800) {
+			console.log(container.offsetWidth);
+			if (container.offsetWidth <= 785) {
 				document.documentElement.style.setProperty('--menu-width', '0');
 				setMenuIsThin(true);
 			}
-			if (container.offsetWidth <= 1156 && container.offsetWidth >= 873) {
+			if (container.offsetWidth <= 1151 && container.offsetWidth >= 858) {
 				document.documentElement.style.setProperty(
 					'--menu-width',
 					'72px'
 				);
 				setMenuIsThin(true);
 			}
-			if (container.offsetWidth >= 1325 && !menuSetByUser) {
+			if (container.offsetWidth >= 1320 && !menuSetByUser) {
 				document.documentElement.style.setProperty(
 					'--menu-width',
 					'240px'
 				);
-				setMenuIsHidden(true);
 				setMenuIsThin(false);
+				setMenuIsHidden(true);
 			}
 		};
 
