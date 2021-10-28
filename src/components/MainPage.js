@@ -194,29 +194,31 @@ const MainPage = ({
 						loadVideo={loadVideo}
 					/>
 				) : null}
-				<div
-					id='trending-contents'
-					// Fit-content doesn't work here (?). Have to use empty value and set fit-content in css.
-					style={{ maxHeight: expandedTrending ? '' : '380px' }}
-				>
-					<h1 className='trending-tag'>Trending</h1>
-					{trendingData ? (
+				{trendingData ? (
+					<div
+						id='trending-contents'
+						// Fit-content doesn't work here (?). Have to use empty value and set fit-content in css.
+						style={{ maxHeight: expandedTrending ? '' : '380px' }}
+					>
+						<h1 className='trending-tag'>Trending</h1>
+
 						<GridContentsWrapper
 							data={trendingData}
 							loadVideo={loadVideo}
 						/>
-					) : null}
-					<div
-						className='expand-trending-btn'
-						style={{
-							visibility: visibleArrow ? 'visible' : 'hidden',
-						}}
-					>
-						<svg focusable='false' onClick={expandContents}>
-							<path d='M12,15.7L5.6,9.4l0.7-0.7l5.6,5.6l5.6-5.6l0.7,0.7L12,15.7z'></path>
-						</svg>
+
+						<div
+							className='expand-trending-btn'
+							style={{
+								visibility: visibleArrow ? 'visible' : 'hidden',
+							}}
+						>
+							<svg focusable='false' onClick={expandContents}>
+								<path d='M12,15.7L5.6,9.4l0.7-0.7l5.6,5.6l5.6-5.6l0.7,0.7L12,15.7z'></path>
+							</svg>
+						</div>
 					</div>
-				</div>
+				) : null}
 			</div>
 		</div>
 	);
