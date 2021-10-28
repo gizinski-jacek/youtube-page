@@ -144,7 +144,7 @@ const MainPage = ({
 					// Fit-content doesn't work here (?). Have to use empty value and set fit-content in css.
 					style={{ maxHeight: expandedTrending ? '' : '380px' }}
 				>
-					<h2 className='trending-tag'>Trending</h2>
+					<h1 className='trending-tag'>Trending</h1>
 					{trendingData ? (
 						<GridContentsWrapper
 							data={trendingData}
