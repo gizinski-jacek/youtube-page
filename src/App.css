@@ -314,12 +314,6 @@ svg,
 
 /* Collapsing menu styling  */
 
-a #menu-collapsing.is-thin {
-	font-size: 1rem;
-	width: var(--menu-width);
-	overflow-y: hidden;
-}
-
 #menu-collapsing.is-thin li {
 	display: flex;
 	flex-direction: column;
@@ -367,6 +361,7 @@ a #menu-collapsing.is-thin {
 }
 
 #contents-container {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	height: 100%;
@@ -628,39 +623,21 @@ a #menu-collapsing.is-thin {
 
 /* Collapsing menu styling  */
 
-.menu-top {
-	display: flex;
-	flex-direction: row;
-	position: fixed;
-	box-sizing: border-box;
-	justify-content: flex-start;
-	align-items: center;
-	top: 0;
-	left: 0;
-	width: 240px;
-	height: var(--navbar-height);
-	background-color: rgb(255, 255, 255);
-	padding: 0 24px;
-}
-
 #menu-sliding {
 	top: var(--navbar-height);
 }
 
-#menu-sliding,
-.menu-top {
+#menu-sliding {
 	transition: 0.2s ease;
 }
 
-#menu-sliding,
-.menu-top {
+#menu-sliding {
 	width: 240px;
 	z-index: 200;
 	transform: translateX(0px);
 }
 
-#menu-sliding.is-hidden,
-.menu-top.is-hidden {
+#menu-sliding.is-hidden {
 	transform: translateX(-240px);
 }
 
@@ -687,7 +664,7 @@ a #menu-collapsing.is-thin {
 	grid-area: video;
 	display: flex;
 	flex-direction: column;
-	margin: 24px 12px 24px 24px;
+	margin: 24px;
 	flex: 1;
 	min-width: 212px;
 	max-width: 1060px;
@@ -952,7 +929,7 @@ iframe {
 #comments-section-container {
 	grid-area: comments;
 	flex: 1;
-	margin: 24px 12px 24px 24px;
+	margin: 24px;
 }
 
 .comments-section {
@@ -1038,7 +1015,8 @@ iframe {
 /* Related videos container styling */
 
 #related-videos-container {
-	margin: 24px 24px 24px 12px;
+	margin: 24px;
+	margin-left: 0;
 	flex: 1;
 	max-width: 400px;
 	height: fit-content;
