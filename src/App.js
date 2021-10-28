@@ -1,4 +1,4 @@
-import { app } from './firebase';
+import { app, myAPIKey } from './firebase';
 import { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.css';
@@ -7,13 +7,21 @@ import MenuCollapsing from './components/MenuCollapsing';
 import MenuSliding from './components/MenuSliding';
 import MainPage from './components/MainPage';
 import VideoPage from './components/VideoPage';
+import searchForVideo from './components/utils/searchForVideo';
 
 const App = () => {
 	const [menuSetByUser, setMenuSetByUser] = useState(false);
 	const [menuIsThin, setMenuIsThin] = useState(false);
 	const [menuIsHidden, setMenuIsHidden] = useState(true);
 	const [loadedVideoData, setLoadedVideoData] = useState();
-	const [searchValue, setSearchValue] = useState();
+	const [inputValue, setInputValue] = useState('');
+	const [searchResults, setSearchResults] = useState();
+
+	const handleQuery = async ({ key, type }) => {
+		if (type === 'click' || (type === 'keypress' && key === 'Enter')) {
+			setSearchResults(await searchForVideo(inputValue, myAPIKey));
+		}
+	};
 
 	const toggleMenuWidth = () => {
 		if (menuIsThin) {
@@ -25,9 +33,8 @@ const App = () => {
 		setMenuSetByUser((prevState) => !prevState);
 	};
 
-	const handleInput = (e) => {
-		const { value } = e.target;
-		setSearchValue(value);
+	const handleChange = ({ target: { value } }) => {
+		setInputValue(value);
 	};
 
 	const toggleMenuVisibility = () => {
@@ -48,8 +55,9 @@ const App = () => {
 								? toggleMenuVisibility
 								: toggleMenuWidth
 						}
-						input={searchValue}
-						handle={handleInput}
+						inputValue={inputValue}
+						handleChange={handleChange}
+						handleQuery={handleQuery}
 					/>
 					<MenuCollapsing isThin={menuIsThin} />
 					<MenuSliding
@@ -63,13 +71,15 @@ const App = () => {
 						menuSetByUser={menuSetByUser}
 						toggleVisibility={toggleMenuVisibility}
 						loadVideo={loadVideo}
+						searchResults={searchResults}
 					/>
 				</Route>
 				<Route exact path='/watch=([\w-]{11,})'>
 					<Navbar
 						hamAction={toggleMenuVisibility}
-						input={searchValue}
-						handle={handleInput}
+						inputValue={inputValue}
+						handleChange={handleChange}
+						handleQuery={handleQuery}
 					/>
 					<MenuSliding
 						isHidden={menuIsHidden}
