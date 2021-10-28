@@ -106,40 +106,30 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 				className={`cover-fade ${isHidden ? 'is-hidden' : ''}`}
 				onClick={toggleVisibility}
 			/>
-			<div id='video-column-container'>
-				<div id='video-main-container'>
-					{videoData ? (
-						<VideoPlayerContainer
-							videoId={videoData.video.id.videoId}
-						/>
-					) : null}
-					{videoData && statsData ? (
-						<StatisticsContainer
-							videoData={videoData}
-							statsData={statsData}
-						/>
-					) : null}
-					{videoData && commentsData ? (
-						<CommentsContainer
-							videoData={videoData}
-							newCommentValue={newCommentValue}
-							handleInput={handleInput}
-							commentsData={commentsData}
-						/>
-					) : null}
-				</div>
+			<div id='video-main-container'>
+				{videoData ? (
+					<VideoPlayerContainer
+						videoId={videoData.video.id.videoId}
+					/>
+				) : null}
+				{videoData && statsData ? (
+					<StatisticsContainer
+						videoData={videoData}
+						statsData={statsData}
+					/>
+				) : null}
 			</div>
-			<div id='related-videos'>
+			<div id='related-videos-container'>
 				<div
 					className='load-related-videos'
 					style={{ display: showLoadBox ? 'flex' : 'none' }}
 				>
-					<h3>
+					<h2>
 						Press the button to load related videos. This action
 						uses a lot of API tokens and after few uses will reach
 						the daily quota which will result in no videos being
 						loaded anymore.
-					</h3>
+					</h2>
 					<button id='load-related-videos-btn' onClick={handleLoad}>
 						Load Videos
 					</button>
@@ -171,6 +161,16 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 						/>
 					) : null}
 				</div>
+			</div>
+			<div id='comments-section-container'>
+				{videoData && commentsData ? (
+					<CommentsContainer
+						videoData={videoData}
+						newCommentValue={newCommentValue}
+						handleInput={handleInput}
+						commentsData={commentsData}
+					/>
+				) : null}
 			</div>
 		</div>
 	);
