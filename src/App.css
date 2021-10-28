@@ -183,7 +183,7 @@ svg,
 	margin: 0 8px 0 0 !important;
 }
 
-/* Side menu elements styling  */
+/* Menu elements styling  */
 
 [id*='menu'] {
 	position: fixed;
@@ -621,7 +621,7 @@ svg,
 
 /* Video page styling  */
 
-/* Collapsing menu styling  */
+/* Sliding menu styling  */
 
 #menu-sliding {
 	top: var(--navbar-height);
