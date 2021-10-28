@@ -424,6 +424,24 @@ a #menu-collapsing.is-thin {
 	border-color: rgb(0, 0, 0);
 }
 
+#search-result-contents {
+	margin-bottom: 40px;
+	grid-gap: 16px;
+	display: grid;
+	grid-template-columns: repeat(4, minmax(260px, 1fr));
+	grid-column: 1/-1;
+	grid-row: 1/2;
+	border-bottom: 4px solid var(--gray-medium-transparency);
+	max-height: fit-content;
+	box-sizing: border-box;
+}
+
+.search-result-tag {
+	margin: 24px 0 8px 8px;
+	font-weight: 600;
+	grid-column: 1/-1;
+}
+
 #main-contents {
 	padding: 24px;
 	grid-gap: 16px;
