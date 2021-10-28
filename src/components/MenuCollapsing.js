@@ -1,9 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import SignInBtn from './reusables/SignInBtn';
 
-const MenuCollapsing = ({ isThin }) => {
+const MenuCollapsing = ({ isThin, isHidden }) => {
 	return (
-		<div id='menu-collapsing' className={isThin ? 'is-thin' : ''}>
+		<div
+			id={isHidden === undefined ? 'menu-collapsing' : 'menu-sliding'}
+			className={`${isThin ? 'is-thin' : ''}${
+				isHidden ? 'is-hidden' : ''
+			}`}
+		>
 			<div className='section'>
 				<ul>
 					<NavLink exact to='/' activeClassName='active'>
