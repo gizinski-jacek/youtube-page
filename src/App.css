@@ -343,7 +343,59 @@ svg,
 
 /* Main grid elements styling  */
 
-.cover-fade {
+.main-page-loading {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: calc(100vh - 2 * var(--navbar-height));
+	width: 100%;
+	background-color: var(--dark-gray-footer);
+	color: rgb(225, 0, 0);
+	z-index: 25;
+	box-sizing: border-box;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.video-page-loading {
+	grid-column: 1/-1;
+	grid-row: 1/-1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--dark-gray-footer);
+	color: rgb(225, 0, 0);
+	z-index: 25;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.main-page-loading h1,
+.video-page-loading h1 {
+	text-align: justify;
+	text-align-last: center;
+	width: 40%;
+	line-height: 2.5rem;
+	margin: 4px 0;
+}
+
+.loading-icon {
+	display: block;
+	height: fit-content;
+	width: fit-content;
+	margin-bottom: 40px;
+}
+
+.loading-icon svg {
+	height: 40px;
+	width: 40px;
+	transform: scale(2);
+}
+
+.fade-cover {
 	height: 100%;
 	width: 100%;
 	position: absolute;
@@ -355,7 +407,7 @@ svg,
 	transition: 0.1s ease;
 }
 
-.cover-fade.is-hidden {
+.fade-cover.is-hidden {
 	opacity: 0;
 	z-index: -100;
 }
@@ -438,6 +490,7 @@ svg,
 }
 
 #main-contents {
+	position: relative;
 	padding: 24px;
 	grid-gap: 16px;
 	display: grid;
