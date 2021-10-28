@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
-import MenuCollapsing from './components/MenuCollapsing';
+import Menu from './components/Menu';
 import MainPage from './components/MainPage';
 import VideoPage from './components/VideoPage';
 import searchForVideo from './components/utils/searchForVideo';
@@ -58,8 +58,8 @@ const App = () => {
 						handleChange={handleChange}
 						handleQuery={handleQuery}
 					/>
-					<MenuCollapsing isThin={menuIsThin} />
-					<MenuCollapsing isHidden={menuIsHidden} />
+					<Menu isThin={menuIsThin} />
+					<Menu isHidden={menuIsHidden} />
 					<MainPage
 						setMenuIsThin={setMenuIsThin}
 						setMenuIsHidden={setMenuIsHidden}
@@ -77,7 +77,7 @@ const App = () => {
 						handleChange={handleChange}
 						handleQuery={handleQuery}
 					/>
-					<MenuCollapsing isHidden={menuIsHidden} />
+					<Menu isHidden={menuIsHidden} />
 					<VideoPage
 						isHidden={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}

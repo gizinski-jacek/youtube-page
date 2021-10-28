@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import SignInBtn from './reusables/SignInBtn';
 
-const MenuCollapsing = ({ isThin, isHidden }) => {
+const Menu = ({ isThin, isHidden }) => {
 	return (
 		<div
 			id={isHidden === undefined ? 'menu-collapsing' : 'menu-sliding'}
@@ -181,4 +181,4 @@ const MenuCollapsing = ({ isThin, isHidden }) => {
 	);
 };
 
-export default MenuCollapsing;
+export default Menu;
