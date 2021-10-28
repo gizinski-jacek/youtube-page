@@ -343,22 +343,7 @@ svg,
 
 /* Main grid elements styling  */
 
-.main-page-loading {
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	height: calc(100vh - 2 * var(--navbar-height));
-	width: 100%;
-	background-color: var(--dark-gray-footer);
-	color: rgb(225, 0, 0);
-	z-index: 25;
-	box-sizing: border-box;
-	font-weight: 600;
-	text-transform: uppercase;
-}
-
+.main-page-loading,
 .video-page-loading {
 	grid-column: 1/-1;
 	grid-row: 1/-1;
@@ -366,11 +351,15 @@ svg,
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background-color: var(--dark-gray-footer);
-	color: rgb(225, 0, 0);
+	background-color: rgba(0, 0, 0, 0.5);
+	color: rgb(255, 0, 0);
 	z-index: 25;
 	font-weight: 600;
 	text-transform: uppercase;
+}
+
+.main-page-loading {
+	height: calc(100vh - 48px - 2 * var(--navbar-height));
 }
 
 .main-page-loading h1,
