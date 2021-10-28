@@ -14,9 +14,11 @@ const MainPage = ({
 	menuSetByUser,
 	toggleVisibility,
 	loadVideo,
+	searchResults,
 }) => {
 	const [mainData, setMainData] = useState();
 	const [trendingData, setTrendingData] = useState();
+	const [searchData, setSearchData] = useState();
 	const [expandedTrending, setExpandedTrending] = useState(false);
 	const [visibleArrow, setVisibleArrow] = useState(true);
 
@@ -24,6 +26,31 @@ const MainPage = ({
 		setExpandedTrending(true);
 		setVisibleArrow(false);
 	};
+
+	useEffect(() => {
+		if (searchResults) {
+			(async () => {
+				console.log(searchResults);
+				try {
+					const mainArray = await Promise.all(
+						searchResults.map(async (video) => {
+							const [statsData, channelData] = await Promise.all([
+								getVideoStatistics(video.id.videoId, myAPIKey),
+								getChannelData(
+									video.snippet.channelId,
+									myAPIKey
+								),
+							]);
+							return { video, statsData, channelData };
+						})
+					);
+					setSearchData(mainArray);
+				} catch (error) {
+					console.log(error);
+				}
+			})();
+		}
+	}, [searchResults]);
 
 	useEffect(() => {
 		(async () => {
@@ -137,6 +164,15 @@ const MainPage = ({
 				</ul>
 			</div>
 			<div id='main-contents'>
+				{searchData ? (
+					<div id='search-result-contents'>
+						<h1 className='search-result-tag'>Search Results</h1>
+						<GridContentsWrapper
+							data={searchData}
+							loadVideo={loadVideo}
+						/>
+					</div>
+				) : null}
 				{mainData ? (
 					<GridContentsWrapper
 						data={mainData}
