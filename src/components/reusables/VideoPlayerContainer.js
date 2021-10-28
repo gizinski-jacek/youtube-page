@@ -1,7 +1,7 @@
 const VideoPlayerContainer = ({ videoId }) => {
 	return (
-		<div className='video'>
-			<div className='video-wrapper'>
+		<div className='video-player-wrapper'>
+			<div className='video-player'>
 				<iframe
 					src={`https://www.youtube-nocookie.com/embed/${videoId}`}
 					title='YouTube video player'
