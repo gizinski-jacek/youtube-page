@@ -3,13 +3,13 @@ const CommentsControls = ({ data, value, handleInput }) => {
 		<div className='new-comment'>
 			<span className='comments-controls'>
 				<div className='comments-count'>
-					<h3>{`${data.stats.commentCount} Comments`}</h3>
+					<h2>{`${data.stats.commentCount} Comments`}</h2>
 				</div>
 				<div className='comments-sort'>
 					<svg focusable='false'>
 						<path d='M21,6H3V5h18V6z M15,11H3v1h12V11z M9,17H3v1h6V17z'></path>
 					</svg>
-					<h3>Sort By</h3>
+					<h2>Sort By</h2>
 				</div>
 			</span>
 			<div className='new-comment-contents'>

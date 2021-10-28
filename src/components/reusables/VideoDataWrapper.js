@@ -30,25 +30,25 @@ const VideoDataWrapper = ({ video, stats, channel, loadVideo }) => {
 					/>
 				</a>
 				<div className='metadata'>
-					<h3 className='video-title'>{video.snippet.title}</h3>
+					<h2 className='video-title'>{video.snippet.title}</h2>
 					<a
 						href={`https://www.youtube.com/channel/${video.snippet.channelId}`}
 						className='channel-name-link'
 					>
-						<h3 className='channel-name'>
+						<h2 className='channel-name'>
 							{video.snippet.channelTitle}
-						</h3>
+						</h2>
 					</a>
 					<span>
-						<h4 className='total-views'>
+						<h3 className='total-views'>
 							{countFormatter(stats?.viewCount, 1)}
-						</h4>
-						<h4 className='upload-date'>
+						</h3>
+						<h3 className='upload-date'>
 							{dateFormatter(video.snippet.publishedAt)}
-						</h4>
+						</h3>
 					</span>
 				</div>
-				<div className='trending-card-more'>
+				<div className='video-card-more-btn'>
 					<svg focusable='false'>
 						<path d='M12,16.5c0.83,0,1.5,0.67,1.5,1.5s-0.67,1.5-1.5,1.5s-1.5-0.67-1.5-1.5S11.17,16.5,12,16.5z M10.5,12 c0,0.83,0.67,1.5,1.5,1.5s1.5-0.67,1.5-1.5s-0.67-1.5-1.5-1.5S10.5,11.17,10.5,12z M10.5,6c0,0.83,0.67,1.5,1.5,1.5 s1.5-0.67,1.5-1.5S12.83,4.5,12,4.5S10.5,5.17,10.5,6z'></path>
 					</svg>

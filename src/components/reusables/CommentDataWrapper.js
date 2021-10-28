@@ -14,12 +14,12 @@ const CommentDataWrapper = ({ data }) => {
 			/>
 			<div className='comment-metadata'>
 				<span className='comment-header'>
-					<h4 className='comment-user-display-name'>
+					<h3 className='comment-user-display-name'>
 						{data.snippet.topLevelComment.snippet.authorDisplayName}
-					</h4>
-					<h5 className='comment-post-date'>
+					</h3>
+					<h4 className='comment-post-date'>
 						{data.snippet.topLevelComment.snippet.publishedAt}
-					</h5>
+					</h4>
 				</span>
 				<p className='comment-contents'>
 					{data.snippet.topLevelComment.snippet.textOriginal}
@@ -29,12 +29,12 @@ const CommentDataWrapper = ({ data }) => {
 						<svg focusable='false'>
 							<path d='M12.42,14A1.54,1.54,0,0,0,14,12.87l1-4.24C15.12,7.76,15,7,14,7H10l1.48-3.54A1.17,1.17,0,0,0,10.24,2a1.49,1.49,0,0,0-1.08.46L5,7H1v7ZM9.89,3.14A.48.48,0,0,1,10.24,3a.29.29,0,0,1,.23.09S9,6.61,9,6.61L8.46,8H14c0,.08-1,4.65-1,4.65a.58.58,0,0,1-.58.35H6V7.39ZM2,8H5v5H2Z'></path>
 						</svg>
-						<h4>
+						<h3>
 							{countFormatter(
 								data.snippet.topLevelComment.snippet.likeCount,
 								0
 							)}
-						</h4>
+						</h3>
 					</div>
 					<div className='comment-dislike-count'>
 						<svg focusable='false'>
