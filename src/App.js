@@ -4,7 +4,6 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import MenuCollapsing from './components/MenuCollapsing';
-import MenuSliding from './components/MenuSliding';
 import MainPage from './components/MainPage';
 import VideoPage from './components/VideoPage';
 import searchForVideo from './components/utils/searchForVideo';
@@ -60,10 +59,7 @@ const App = () => {
 						handleQuery={handleQuery}
 					/>
 					<MenuCollapsing isThin={menuIsThin} />
-					<MenuSliding
-						isHidden={menuIsHidden}
-						toggleVisibility={toggleMenuVisibility}
-					/>
+					<MenuCollapsing isHidden={menuIsHidden} />
 					<MainPage
 						setMenuIsThin={setMenuIsThin}
 						setMenuIsHidden={setMenuIsHidden}
@@ -81,10 +77,7 @@ const App = () => {
 						handleChange={handleChange}
 						handleQuery={handleQuery}
 					/>
-					<MenuSliding
-						isHidden={menuIsHidden}
-						toggleVisibility={toggleMenuVisibility}
-					/>
+					<MenuCollapsing isHidden={menuIsHidden} />
 					<VideoPage
 						isHidden={menuIsHidden}
 						toggleVisibility={toggleMenuVisibility}
