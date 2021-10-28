@@ -10,6 +10,7 @@ import VideoPlayerContainer from './reusables/VideoPlayerContainer';
 import StatisticsContainer from './reusables/StatisticsContainer';
 import CommentsContainer from './reusables/CommentsContainer';
 import RelatedVideosContainer from './reusables/RelatedVideosContainer';
+import LoadingIcon from './reusables/LoadingIcon';
 
 const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 	const [showLoadBox, setShowLoadBox] = useState(true);
@@ -101,8 +102,22 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 
 	return (
 		<div id='video-page'>
+			{!videoData ? (
+				<div className='video-page-loading'>
+					<LoadingIcon />
+					<h1>Loading data.</h1>
+					<h1>
+						If this persist for longer than few seconds try
+						refreshing the page.
+					</h1>
+					<h1>
+						If that still doesn't help it means app ran out of API
+						tokens, try again in 24 hours.
+					</h1>
+				</div>
+			) : null}
 			<div
-				className={`cover-fade ${isHidden ? 'is-hidden' : ''}`}
+				className={`fade-cover ${isHidden ? 'is-hidden' : ''}`}
 				onClick={toggleVisibility}
 			/>
 			<div id='video-main-container'>
@@ -118,12 +133,14 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 					/>
 				) : null}
 			</div>
-			<RelatedVideosContainer
-				showLoadBox={showLoadBox}
-				handleLoad={handleLoad}
-				relatedData={relatedData}
-				loadVideo={loadVideo}
-			/>
+			{videoData ? (
+				<RelatedVideosContainer
+					showLoadBox={showLoadBox}
+					handleLoad={handleLoad}
+					relatedData={relatedData}
+					loadVideo={loadVideo}
+				/>
+			) : null}
 			<div id='comments-section-container'>
 				{videoData && commentsData ? (
 					<CommentsContainer

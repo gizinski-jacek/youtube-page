@@ -6,6 +6,7 @@ import getVideoStatistics from './utils/getVideoStatistics';
 import getChannelData from './utils/getChannelData';
 import getTrendingVideos from './utils/getTrendingVideos';
 import GridContentsWrapper from './reusables/GridContentsWrapper';
+import LoadingIcon from './reusables/LoadingIcon';
 
 const MainPage = ({
 	setMenuIsThin,
@@ -137,7 +138,7 @@ const MainPage = ({
 	return (
 		<div id='contents-container'>
 			<div
-				className={`cover-fade ${menuIsHidden ? 'is-hidden' : ''}`}
+				className={`fade-cover ${menuIsHidden ? 'is-hidden' : ''}`}
 				onClick={toggleVisibility}
 			/>
 			<div id='category-filter'>
@@ -164,6 +165,20 @@ const MainPage = ({
 				</ul>
 			</div>
 			<div id='main-contents'>
+				{!mainData ? (
+					<div className='main-page-loading'>
+						<LoadingIcon />
+						<h1>Loading data.</h1>
+						<h1>
+							If this persist for longer than few seconds try
+							refreshing the page.
+						</h1>
+						<h1>
+							If that still doesn't help it means app ran out of
+							API tokens, try again in 24 hours.
+						</h1>
+					</div>
+				) : null}
 				{searchData ? (
 					<div id='search-result-contents'>
 						<h1 className='search-result-tag'>Search Results</h1>
