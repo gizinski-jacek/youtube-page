@@ -6,7 +6,7 @@ const CommentsControls = ({ data, value, handleInput }) => {
 					<h2>{`${data.stats.commentCount} Comments`}</h2>
 				</div>
 				<div className='comments-sort'>
-					<svg focusable='false'>
+					<svg focusable='false' viewBox='0 0 24 24'>
 						<path d='M21,6H3V5h18V6z M15,11H3v1h12V11z M9,17H3v1h6V17z'></path>
 					</svg>
 					<h2>Sort By</h2>

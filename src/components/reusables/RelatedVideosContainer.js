@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import LoadingIcon from './LoadingIcon';
 import RelatedContentsWrapper from './RelatedContentsWrapper';
 
 const RelatedVideosContainer = ({
@@ -38,6 +39,20 @@ const RelatedVideosContainer = ({
 					<li>Recently uploaded</li>
 				</ul>
 			</div>
+			{!relatedData && !showLoadBox ? (
+				<div className='video-page-loading'>
+					<LoadingIcon />
+					<h1>Loading data.</h1>
+					<h1>
+						If this persist for longer than few seconds try
+						refreshing the page.
+					</h1>
+					<h1>
+						If that still doesn't help it means app ran out of API
+						tokens, try again in 24 hours.
+					</h1>
+				</div>
+			) : null}
 			<div
 				className='related-links'
 				style={{ visibility: showLoadBox ? 'hidden' : 'visible' }}
