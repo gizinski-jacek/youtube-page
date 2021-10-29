@@ -12,7 +12,7 @@ const VideoDataWrapper = ({ video, stats, channel, loadVideo }) => {
 			/>
 			<img
 				className='card-thumbnail'
-				src={video.snippet.thumbnails.medium.url}
+				src={video.snippet.thumbnails.high.url}
 				alt='Video thumbnail'
 			/>
 			<div className='card-details'>

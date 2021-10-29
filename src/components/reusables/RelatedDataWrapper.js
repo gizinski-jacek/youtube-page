@@ -18,7 +18,7 @@ const RelatedDataWrapper = ({ video, stats, channel, loadVideo }) => {
 			>
 				<img
 					className='related-card-thumbnail'
-					src={video.snippet.thumbnails.medium.url}
+					src={video.snippet.thumbnails.high.url}
 					alt='Video thumbnail'
 				/>
 			</Link>
