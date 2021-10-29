@@ -17,11 +17,6 @@ html {
 	scrollbar-color: var(--dark-gray-footer) var(--gray-very-high-transparency);
 }
 
-#root {
-	display: block;
-	width: 100%;
-}
-
 a {
 	cursor: auto;
 	text-decoration: none;
@@ -44,10 +39,13 @@ h4 {
 	font-size: 1rem;
 }
 
-svg,
-[id*='menu'] img {
+svg {
 	user-select: none;
 	display: block;
+}
+
+[id*='menu'] svg,
+[id*='menu'] img {
 	height: 24px;
 	width: 24px;
 }
@@ -76,6 +74,13 @@ svg,
 	justify-content: flex-start;
 	align-items: center;
 	background-color: var(--white-low-transparency);
+}
+
+.start svg,
+.center svg,
+.end svg {
+	width: 24px;
+	height: 24px;
 }
 
 .start {
@@ -180,6 +185,8 @@ svg,
 }
 
 .sign-in svg {
+	width: 24px;
+	height: 24px;
 	margin: 0 8px 0 0 !important;
 }
 
@@ -344,18 +351,29 @@ svg,
 /* Main grid elements styling  */
 
 .main-page-loading,
-.video-page-loading {
-	grid-column: 1/-1;
-	grid-row: 1/-1;
+.video-page-loading,
+.video-related-loading {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background-color: rgba(0, 0, 0, 0.5);
-	color: rgb(255, 0, 0);
+	background-color: rgb(125, 125, 125);
+	color: rgb(255, 255, 255);
 	z-index: 25;
 	font-weight: 600;
 	text-transform: uppercase;
+}
+
+.main-page-loading,
+.video-page-loading {
+	grid-column: 1/-1;
+	grid-row: 1/-1;
+}
+
+.video-related-loading {
+	padding: 16px;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .main-page-loading {
@@ -363,25 +381,28 @@ svg,
 }
 
 .main-page-loading h1,
-.video-page-loading h1 {
+.video-page-loading h1,
+.video-related-loading h2 {
 	text-align: justify;
 	text-align-last: center;
-	width: 40%;
 	line-height: 2.5rem;
-	margin: 4px 0;
+	margin: 8px;
+}
+
+.video-related-loading h2 {
+	line-height: 2rem;
 }
 
 .loading-icon {
-	display: block;
-	height: fit-content;
-	width: fit-content;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	margin-bottom: 40px;
 }
 
 .loading-icon svg {
-	height: 40px;
-	width: 40px;
-	transform: scale(2);
+	height: 80px;
+	width: 80px;
 }
 
 .fade-cover {
@@ -657,6 +678,11 @@ svg,
 	visibility: hidden;
 }
 
+.video-card-more-btn svg {
+	width: 24px;
+	height: 24px;
+}
+
 .video-card:hover .video-card-more-btn {
 	visibility: visible;
 }
@@ -759,12 +785,14 @@ iframe {
 	padding: 12px 0;
 }
 
-.video-engagement > * {
+.video-engagement-start,
+.video-engagement-end {
 	display: flex;
 	flex-direction: row;
 }
 
-.video-engagement > * > * {
+.video-engagement-start > *,
+.video-engagement-end > * {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -775,34 +803,26 @@ iframe {
 	white-space: nowrap;
 }
 
-.video-engagement > span {
+.video-engagement-start {
 	color: var(--dark-gray-footer);
 }
 
-.video-likes,
-.video-dislikes {
+.video-engagement-start > * {
 	cursor: pointer;
 }
-
-.video-share,
-.video-save,
-.video-more {
+.video-engagement-end > * {
 	cursor: pointer;
 	margin-left: 24px;
 	text-transform: uppercase;
 }
 
-.video-engagement > span > :first-child::after {
+.video-engagement-start > :first-child::after {
 	content: '\A';
 	width: 3px;
 	height: 3px;
 	margin: 0 4px;
 	border-radius: 50%;
 	background-color: var(--dark-gray-footer);
-}
-
-.video-engagement h3 {
-	user-select: text;
 }
 
 .video-votes {
@@ -820,7 +840,12 @@ iframe {
 }
 
 .video-engagement svg {
-	padding-right: 4px;
+	width: 24px;
+	height: 24px;
+}
+
+.video-engagement-end h2 {
+	padding-left: 4px;
 }
 
 .video-likes {
@@ -938,6 +963,11 @@ iframe {
 	padding-right: 24px;
 }
 
+.comments-sort svg {
+	width: 24px;
+	height: 24px;
+}
+
 .comments-sort > * {
 	padding: 0 6px;
 	font-weight: 600;
@@ -1027,12 +1057,9 @@ iframe {
 	align-items: center;
 }
 
-.comment-engagement svg {
-	display: block;
-	height: 16px;
-	width: 16px;
-	padding: 12px 8px;
-	padding-left: 0;
+.comment-engagement h3 {
+	margin: 12px 8px;
+	margin-right: 0;
 }
 
 .comment-like-count {
@@ -1047,6 +1074,12 @@ iframe {
 	margin-right: 16px;
 }
 
+.comment-like-count svg,
+.comment-dislike-count svg {
+	height: 16px;
+	width: 16px;
+}
+
 .comment-reply-btn {
 	font-weight: 600;
 	text-transform: uppercase;
@@ -1057,11 +1090,12 @@ iframe {
 /* Related videos container styling */
 
 #related-videos-container {
+	display: flex;
+	flex-direction: column;
 	margin: 24px;
 	margin-left: 0;
 	flex: 1;
 	max-width: 400px;
-	height: fit-content;
 	position: relative;
 	grid-area: related;
 }
@@ -1163,7 +1197,6 @@ iframe {
 }
 
 .related-card-thumbnail img {
-	display: block;
 	width: 100%;
 }
 
