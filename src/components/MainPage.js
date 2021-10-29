@@ -31,7 +31,6 @@ const MainPage = ({
 	useEffect(() => {
 		if (searchResults) {
 			(async () => {
-				console.log(searchResults);
 				try {
 					const mainArray = await Promise.all(
 						searchResults.map(async (video) => {
@@ -47,7 +46,7 @@ const MainPage = ({
 					);
 					setSearchData(mainArray);
 				} catch (error) {
-					console.log(error);
+					console.log(`Search results error: ${error}`);
 				}
 			})();
 		}
@@ -201,12 +200,10 @@ const MainPage = ({
 						style={{ maxHeight: expandedTrending ? '' : '380px' }}
 					>
 						<h1 className='trending-tag'>Trending</h1>
-
 						<GridContentsWrapper
 							data={trendingData}
 							loadVideo={loadVideo}
 						/>
-
 						<div
 							className='expand-trending-btn'
 							style={{
