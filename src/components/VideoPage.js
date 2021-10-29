@@ -13,6 +13,7 @@ import RelatedVideosContainer from './reusables/RelatedVideosContainer';
 import LoadingIcon from './reusables/LoadingIcon';
 
 const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
+	const [browserIsWide, setBrowserIsWide] = useState(false);
 	const [showLoadBox, setShowLoadBox] = useState(true);
 	const [videoData, setVideoData] = useState(loadedData);
 	const [statsData, setStatsData] = useState();
@@ -100,6 +101,32 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 		}
 	}, [videoData]);
 
+	useEffect(() => {
+		const container = document.getElementById('video-page');
+		if (container.offsetWidth <= 1025) {
+			setBrowserIsWide(true);
+		}
+		if (container.offsetWidth >= 1026) {
+			setBrowserIsWide(false);
+		}
+	}, []);
+
+	useEffect(() => {
+		const container = document.getElementById('video-page');
+		const watchForResize = () => {
+			if (container.offsetWidth <= 1025) {
+				setBrowserIsWide(true);
+			}
+			if (container.offsetWidth >= 1026) {
+				setBrowserIsWide(false);
+			}
+		};
+
+		window.addEventListener('resize', watchForResize);
+
+		return () => window.removeEventListener('resize', watchForResize);
+	}, []);
+
 	return (
 		<div id='video-page'>
 			{!videoData ? (
@@ -120,37 +147,49 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 				className={`fade-cover ${isHidden ? 'is-hidden' : ''}`}
 				onClick={toggleVisibility}
 			/>
-			<div id='video-main-container'>
-				{videoData ? (
-					<VideoPlayerContainer
-						videoId={videoData.video.id.videoId}
-					/>
-				) : null}
-				{videoData && statsData ? (
-					<StatisticsContainer
-						videoData={videoData}
-						statsData={statsData}
-					/>
-				) : null}
-			</div>
 			{videoData ? (
-				<RelatedVideosContainer
-					showLoadBox={showLoadBox}
-					handleLoad={handleLoad}
-					relatedData={relatedData}
-					loadVideo={loadVideo}
-				/>
+				<>
+					<div id='video-main-container'>
+						<VideoPlayerContainer
+							videoId={videoData.video.id.videoId}
+						/>
+						{statsData ? (
+							<StatisticsContainer
+								videoData={videoData}
+								statsData={statsData}
+							/>
+						) : null}
+						{browserIsWide ? (
+							videoData && statsData ? (
+								<RelatedVideosContainer
+									showLoadBox={showLoadBox}
+									handleLoad={handleLoad}
+									relatedData={relatedData}
+									loadVideo={loadVideo}
+								/>
+							) : null
+						) : null}
+						<div id='comments-section-container'>
+							{commentsData ? (
+								<CommentsContainer
+									videoData={videoData}
+									newCommentValue={newCommentValue}
+									handleInput={handleInput}
+									commentsData={commentsData}
+								/>
+							) : null}
+						</div>
+					</div>
+					{browserIsWide ? null : videoData && statsData ? (
+						<RelatedVideosContainer
+							showLoadBox={showLoadBox}
+							handleLoad={handleLoad}
+							relatedData={relatedData}
+							loadVideo={loadVideo}
+						/>
+					) : null}
+				</>
 			) : null}
-			<div id='comments-section-container'>
-				{videoData && commentsData ? (
-					<CommentsContainer
-						videoData={videoData}
-						newCommentValue={newCommentValue}
-						handleInput={handleInput}
-						commentsData={commentsData}
-					/>
-				) : null}
-			</div>
 		</div>
 	);
 };
