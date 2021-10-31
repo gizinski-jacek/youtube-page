@@ -533,8 +533,14 @@ svg {
 
 .video-card {
 	position: relative;
-	margin: 0 0px 20px 0px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
 	max-width: 360px;
+}
+
+#trending-contents .video-card {
+	margin-bottom: 40px;
 }
 
 .whole-card-link {
@@ -553,17 +559,12 @@ svg {
 	grid-column: 1/-1;
 }
 
-#trending-contents .video-card {
-	display: flex;
-	flex-direction: column;
-	font-size: 1.5rem;
-	margin: 0 0px 48px 0px;
-}
-
+/* NEEDS FIXING */
 .expand-trending-btn {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
+	padding: 12px 0;
 	display: flex;
 	justify-content: center;
 }
@@ -575,8 +576,6 @@ svg {
 .expand-trending-btn svg {
 	height: 24px;
 	width: 24px;
-	margin: 4px;
-	cursor: pointer;
 }
 
 .card-thumbnail {
@@ -710,7 +709,7 @@ svg {
 #menu-sliding {
 	width: 240px;
 	z-index: 200;
-	transform: translateX(0px);
+	transform: translateX(0);
 }
 
 #menu-sliding.is-hidden {
