@@ -99,7 +99,7 @@ const MainPage = ({
 			document.documentElement.style.setProperty('--menu-width', '0');
 			setMenuIsThin(true);
 		}
-		if (container.offsetWidth <= 1156 && container.offsetWidth >= 858) {
+		if (container.offsetWidth <= 1151 && container.offsetWidth >= 858) {
 			document.documentElement.style.setProperty('--menu-width', '72px');
 			setMenuIsThin(true);
 		}
@@ -204,17 +204,15 @@ const MainPage = ({
 							data={trendingData}
 							loadVideo={loadVideo}
 						/>
+
 						<div
 							className='expand-trending-btn'
 							style={{
 								visibility: visibleArrow ? 'visible' : 'hidden',
 							}}
+							onClick={expandContents}
 						>
-							<svg
-								focusable='false'
-								viewBox='0 0 24 24'
-								onClick={expandContents}
-							>
+							<svg focusable='false' viewBox='0 0 24 24'>
 								<path d='M12,15.7L5.6,9.4l0.7-0.7l5.6,5.6l5.6-5.6l0.7,0.7L12,15.7z'></path>
 							</svg>
 						</div>
