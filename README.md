@@ -1,4 +1,4 @@
-# YouTube Front and Video
+# YouTube Front & Video Pages
 
 Building YouTube Front and Video pages to polish my skills after going through The Odin Project's HTML course on embedding images and videos, tables, lists, forms and CSS course on positioning, floats, flexbox, grid, backgrounds and gradients.
 
@@ -66,7 +66,7 @@ heroku open
 ## Features
 
 - Responsive UI
-- Fetching trending videos using Youtube API
+- Fetching trending videos with Youtube API
 - Searching videos using Youtube search API
 - Watching videos and reading the comments
 - Fetching videos related to currently watched one
