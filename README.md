@@ -22,7 +22,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Getting Started
 
-In the project root directory run the app in development mode with:
+Install all dependancies by running:
+
+```bash
+npm install
+```
+
+In the project root directory run the app with:
 
 ```bash
 npm start
