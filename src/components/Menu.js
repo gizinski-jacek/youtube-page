@@ -5,9 +5,7 @@ const Menu = ({ isThin, isHidden }) => {
 	return (
 		<div
 			id={isHidden === undefined ? 'menu-collapsing' : 'menu-sliding'}
-			className={`${isThin ? 'is-thin' : ''}${
-				isHidden ? 'is-hidden' : ''
-			}`}
+			className={`${isThin ? 'is-thin' : ''}${isHidden ? 'is-hidden' : ''}`}
 		>
 			<div className='section'>
 				<ul>
