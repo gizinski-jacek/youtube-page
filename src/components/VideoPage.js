@@ -1,4 +1,3 @@
-import { myAPIKey } from '../firebase';
 import { useEffect, useState } from 'react';
 import getChannelStatistics from './utils/getChannelStatistics';
 import getCommentsData from './utils/getCommentsData';
@@ -36,13 +35,16 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 		try {
 			const data = await getRelatedVideos(
 				videoData.video.id.videoId,
-				myAPIKey
+				process.env.REACT_APP_API_KEY
 			);
 			const array = await Promise.all(
 				data.map(async (video) => {
 					const [statsData, channelData] = await Promise.all([
-						getVideoStatistics(video.id.videoId, myAPIKey),
-						getChannelData(video.snippet.channelId, myAPIKey),
+						getVideoStatistics(video.id.videoId, process.env.REACT_APP_API_KEY),
+						getChannelData(
+							video.snippet.channelId,
+							process.env.REACT_APP_API_KEY
+						),
 					]);
 					return { video, statsData, channelData };
 				})
@@ -60,13 +62,16 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 				setStatsData(
 					await getChannelStatistics(
 						videoData.video.snippet.channelId,
-						myAPIKey
+						process.env.REACT_APP_API_KEY
 					)
 				);
 			})();
 			(async () => {
 				setCommentsData(
-					await getCommentsData(videoData.video.id.videoId, myAPIKey)
+					await getCommentsData(
+						videoData.video.id.videoId,
+						process.env.REACT_APP_API_KEY
+					)
 				);
 			})();
 		} else {
@@ -74,12 +79,12 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 				try {
 					const vidId = window.location.pathname.slice(7);
 					const [vidData, vidStats] = await Promise.all([
-						await getVideoData(vidId, myAPIKey),
-						await getVideoStatistics(vidId, myAPIKey),
+						await getVideoData(vidId, process.env.REACT_APP_API_KEY),
+						await getVideoStatistics(vidId, process.env.REACT_APP_API_KEY),
 					]);
 					const chanData = await getChannelData(
 						vidData[0].snippet.channelId,
-						myAPIKey
+						process.env.REACT_APP_API_KEY
 					);
 					setVideoData({
 						video: {
@@ -93,9 +98,7 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 						channel: chanData,
 					});
 				} catch (error) {
-					console.log(
-						`Promise all for video page data error: ${error}`
-					);
+					console.log(`Promise all for video page data error: ${error}`);
 				}
 			})();
 		}
@@ -134,12 +137,11 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 					<LoadingIcon />
 					<h1>Loading data.</h1>
 					<h1>
-						If this persist for longer than few seconds try
-						refreshing the page.
+						If this persist for longer than few seconds try refreshing the page.
 					</h1>
 					<h1>
-						If that still doesn't help it means app ran out of API
-						tokens, try again in 24 hours.
+						If that still doesn't help it means app ran out of API tokens, try
+						again in 24 hours.
 					</h1>
 				</div>
 			) : null}
@@ -150,9 +152,7 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 			{videoData ? (
 				<>
 					<div id='video-main-container'>
-						<VideoPlayerContainer
-							videoId={videoData.video.id.videoId}
-						/>
+						<VideoPlayerContainer videoId={videoData.video.id.videoId} />
 						{statsData ? (
 							<StatisticsContainer
 								videoData={videoData}

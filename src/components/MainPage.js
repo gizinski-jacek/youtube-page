@@ -1,4 +1,3 @@
-import { myAPIKey } from '../firebase';
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import getRandomVideosFromFS from './utils/getRandomVideosFromFS';
@@ -35,10 +34,13 @@ const MainPage = ({
 					const mainArray = await Promise.all(
 						searchResults.map(async (video) => {
 							const [statsData, channelData] = await Promise.all([
-								getVideoStatistics(video.id.videoId, myAPIKey),
+								getVideoStatistics(
+									video.id.videoId,
+									process.env.REACT_APP_API_KEY
+								),
 								getChannelData(
 									video.snippet.channelId,
-									myAPIKey
+									process.env.REACT_APP_API_KEY
 								),
 							]);
 							return { video, statsData, channelData };
@@ -57,14 +59,20 @@ const MainPage = ({
 			try {
 				const [mainDatabase, trendingDatabase] = await Promise.all([
 					getRandomVideosFromFS(24),
-					getTrendingVideos(12, myAPIKey),
+					getTrendingVideos(12, process.env.REACT_APP_API_KEY),
 				]);
 
 				const mainArray = await Promise.all(
 					mainDatabase.map(async (video) => {
 						const [statsData, channelData] = await Promise.all([
-							getVideoStatistics(video.id.videoId, myAPIKey),
-							getChannelData(video.snippet.channelId, myAPIKey),
+							getVideoStatistics(
+								video.id.videoId,
+								process.env.REACT_APP_API_KEY
+							),
+							getChannelData(
+								video.snippet.channelId,
+								process.env.REACT_APP_API_KEY
+							),
 						]);
 						return { video, statsData, channelData };
 					})
@@ -73,17 +81,20 @@ const MainPage = ({
 				const trendingArray = await Promise.all(
 					trendingDatabase.map(async (video) => {
 						const [statsData, channelData] = await Promise.all([
-							getVideoStatistics(video.id.videoId, myAPIKey),
-							getChannelData(video.snippet.channelId, myAPIKey),
+							getVideoStatistics(
+								video.id.videoId,
+								process.env.REACT_APP_API_KEY
+							),
+							getChannelData(
+								video.snippet.channelId,
+								process.env.REACT_APP_API_KEY
+							),
 						]);
 						return { video, statsData, channelData };
 					})
 				);
 
-				const [main, trending] = await Promise.all([
-					mainArray,
-					trendingArray,
-				]);
+				const [main, trending] = await Promise.all([mainArray, trendingArray]);
 
 				setMainData(main);
 				setTrendingData(trending);
@@ -113,17 +124,11 @@ const MainPage = ({
 				setMenuIsThin(true);
 			}
 			if (container.offsetWidth <= 1151 && container.offsetWidth >= 858) {
-				document.documentElement.style.setProperty(
-					'--menu-width',
-					'72px'
-				);
+				document.documentElement.style.setProperty('--menu-width', '72px');
 				setMenuIsThin(true);
 			}
 			if (container.offsetWidth >= 1320 && !menuSetByUser) {
-				document.documentElement.style.setProperty(
-					'--menu-width',
-					'240px'
-				);
+				document.documentElement.style.setProperty('--menu-width', '240px');
 				setMenuIsThin(false);
 				setMenuIsHidden(true);
 			}
@@ -169,29 +174,23 @@ const MainPage = ({
 						<LoadingIcon />
 						<h1>Loading data.</h1>
 						<h1>
-							If this persist for longer than few seconds try
-							refreshing the page.
+							If this persist for longer than few seconds try refreshing the
+							page.
 						</h1>
 						<h1>
-							If that still doesn't help it means app ran out of
-							API tokens, try again in 24 hours.
+							If that still doesn't help it means app ran out of API tokens, try
+							again in 24 hours.
 						</h1>
 					</div>
 				) : null}
 				{searchData ? (
 					<div id='search-result-contents'>
 						<h1 className='search-result-tag'>Search Results</h1>
-						<GridContentsWrapper
-							data={searchData}
-							loadVideo={loadVideo}
-						/>
+						<GridContentsWrapper data={searchData} loadVideo={loadVideo} />
 					</div>
 				) : null}
 				{mainData ? (
-					<GridContentsWrapper
-						data={mainData}
-						loadVideo={loadVideo}
-					/>
+					<GridContentsWrapper data={mainData} loadVideo={loadVideo} />
 				) : null}
 				{trendingData ? (
 					<div
@@ -200,10 +199,7 @@ const MainPage = ({
 						style={{ maxHeight: expandedTrending ? '' : '425px' }}
 					>
 						<h1 className='trending-tag'>Trending</h1>
-						<GridContentsWrapper
-							data={trendingData}
-							loadVideo={loadVideo}
-						/>
+						<GridContentsWrapper data={trendingData} loadVideo={loadVideo} />
 
 						<div
 							className='expand-trending-btn'

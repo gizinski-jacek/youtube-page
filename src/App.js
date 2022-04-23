@@ -1,4 +1,4 @@
-import { app, myAPIKey } from './firebase';
+import { app } from './firebase';
 import { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.css';
@@ -18,7 +18,9 @@ const App = () => {
 
 	const handleQuery = async ({ key, type }) => {
 		if (type === 'click' || (type === 'keypress' && key === 'Enter')) {
-			setSearchResults(await searchForVideo(inputValue, myAPIKey));
+			setSearchResults(
+				await searchForVideo(inputValue, process.env.REACT_APP_API_KEY)
+			);
 		}
 	};
 
