@@ -14,9 +14,9 @@ Building YouTube Front and Video pages to polish my skills after going through T
 
 # Github & Live
 
-Github repo can be found [here](https://github.com/gizinski-jacek/youtube-page)
+Github repo can be found [here](https://github.com/gizinski-jacek/youtube-page).
 
-This repo is live on [Heroku](https://youtube-page-102934.herokuapp.com)
+This repo is live on [Heroku](https://youtube-page-102934.herokuapp.com).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
