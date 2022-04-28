@@ -57,12 +57,11 @@ svg {
 	width: 100%;
 	top: 0;
 	left: 0;
-	background-color: transparent;
 	height: var(--navbar-height);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: var(--white-low-transparency);
+	background-color: rgb(255, 255, 255);
 	z-index: 250;
 }
 
