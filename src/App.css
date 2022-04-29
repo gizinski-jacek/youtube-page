@@ -18,7 +18,6 @@ html {
 }
 
 a {
-	cursor: auto;
 	text-decoration: none;
 	color: rgb(0, 0, 0);
 }
@@ -318,6 +317,33 @@ svg {
 	padding: 8px 0 16px 0;
 }
 
+.my-footer {
+	width: 100%;
+	text-align: center;
+	background-color: var(--dark-gray-footer);
+}
+
+.my-footer a {
+	font-weight: 600;
+	color: var(--white-low-transparency);
+	padding: 4px;
+	float: left;
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+}
+
+.my-footer svg {
+	width: unset;
+	height: unset;
+	margin: 0 8px;
+	box-sizing: content-box;
+	border-radius: 50%;
+	padding: 1px;
+	background-color: var(--white-low-transparency);
+	fill: rgb(0, 0, 0);
+}
+
 /* Collapsing menu styling  */
 
 #menu-collapsing.is-thin li {
@@ -343,7 +369,8 @@ svg {
 #menu-collapsing.is-thin .best-of-yt,
 #menu-collapsing.is-thin .browse-channels,
 #menu-collapsing.is-thin .more-from-yt,
-#menu-collapsing.is-thin .footer {
+#menu-collapsing.is-thin .footer,
+#menu-collapsing.is-thin .my-footer a {
 	display: none;
 }
 
