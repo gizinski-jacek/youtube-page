@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import Footer from './Footer';
 import SignInBtn from './reusables/SignInBtn';
 
 const Menu = ({ isThin, isHidden }) => {
@@ -175,6 +176,7 @@ const Menu = ({ isThin, isHidden }) => {
 					<div>&#169; 2021 Google LLC</div>
 				</div>
 			</section>
+			<Footer />
 		</div>
 	);
 };
