@@ -268,12 +268,21 @@ svg {
 
 .browse-channels {
 	border-bottom: 1px solid var(--gray-low-transparency);
-	display: flex;
-	align-items: center;
-	padding: 4px 16px;
 }
 
-.browse-channels svg {
+.browse-channels div {
+	display: flex;
+	align-items: center;
+	margin: 8px 0;
+	padding: 0 16px;
+	cursor: pointer;
+}
+
+.browse-channels div:hover {
+	background-color: var(--gray-low-transparency);
+}
+
+.browse-channels div svg {
 	margin: 8px;
 	margin-right: 24px;
 	padding: 8px 0;
