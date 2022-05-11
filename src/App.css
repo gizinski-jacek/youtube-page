@@ -17,6 +17,21 @@ html {
 	scrollbar-color: var(--dark-gray-footer) var(--gray-very-high-transparency);
 }
 
+::-webkit-scrollbar {
+	height: 4px;
+	width: 4px;
+	background: var(--gray-very-high-transparency);
+}
+
+::-webkit-scrollbar-thumb {
+	visibility: hidden;
+	background: var(--gray-low-transparency);
+}
+
+:hover::-webkit-scrollbar-thumb {
+	visibility: visible;
+}
+
 a {
 	text-decoration: none;
 	color: rgb(0, 0, 0);
