@@ -24,9 +24,9 @@ const VideoDataWrapper = ({ video, stats, channel, loadVideo }) => {
 						className='channel-picture'
 						src={
 							channel.thumbnails.default.url ||
-							`https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fprofile_placeholder.png?alt=media&token=d1bc2f1c-9c82-4f41-b255-1bf9413fa641`
+							'./images/profile_placeholder.png'
 						}
-						alt=''
+						alt='Channel pic'
 					/>
 				</a>
 				<div className='metadata'>
@@ -35,9 +35,7 @@ const VideoDataWrapper = ({ video, stats, channel, loadVideo }) => {
 						href={`https://www.youtube.com/channel/${video.snippet.channelId}`}
 						className='channel-name-link'
 					>
-						<h2 className='channel-name'>
-							{video.snippet.channelTitle}
-						</h2>
+						<h2 className='channel-name'>{video.snippet.channelTitle}</h2>
 					</a>
 					<span>
 						<h3 className='total-views'>

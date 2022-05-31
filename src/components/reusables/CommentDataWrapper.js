@@ -6,11 +6,10 @@ const CommentDataWrapper = ({ data }) => {
 			<img
 				className='comment-user-picture'
 				src={
-					data.snippet.topLevelComment.snippet
-						.authorProfileImageUrl ||
-					`https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fprofile_placeholder.png?alt=media&token=d1bc2f1c-9c82-4f41-b255-1bf9413fa641`
+					data.snippet.topLevelComment.snippet.authorProfileImageUrl ||
+					'./images/profile_placeholder.png'
 				}
-				alt='Video thumbnail'
+				alt='User pic'
 			/>
 			<div className='comment-metadata'>
 				<span className='comment-header'>

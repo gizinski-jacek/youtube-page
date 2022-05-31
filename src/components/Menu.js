@@ -56,52 +56,31 @@ const Menu = ({ isThin, isHidden }) => {
 				<h2 className='section-title'>Best of YouTube</h2>
 				<ul>
 					<li>
-						<img
-							alt=''
-							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-music.jpg?alt=media&token=7beb340a-11df-4582-95be-2d00cc0d5b54'
-						/>
+						<img src='./images/channels-music.jpg' alt='Music icon' />
 						<h2>Music</h2>
 					</li>
 					<li>
-						<img
-							alt=''
-							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-sport.jpg?alt=media&token=a990479b-1b03-4c31-b2a8-e7309211f3ba'
-						/>
+						<img src='./images/channels-sport.jpg' alt='Sport icon' />
 						<h2>Sport</h2>
 					</li>
 					<li>
-						<img
-							alt=''
-							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-360-videos.jpg?alt=media&token=8c1f9e6f-ae8d-422f-81de-e1c103575876'
-						/>
+						<img src='./images/channels-gaming.jpg' alt='Gaming icon' />
 						<h2>Gaming</h2>
 					</li>
 					<li>
-						<img
-							alt=''
-							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-movies.jpg?alt=media&token=6745bc3b-33e5-44c6-9826-9c39be61d134'
-						/>
+						<img src='./images/channels-movies.jpg' alt='Movies icon' />
 						<h2>Movies</h2>
 					</li>
 					<li>
-						<img
-							alt=''
-							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-news.jpg?alt=media&token=0661b49f-1428-4464-bbf2-69caa89548a4'
-						/>
+						<img src='./images/channels-news.jpg' alt='News icon' />
 						<h2>News</h2>
 					</li>
 					<li>
-						<img
-							alt=''
-							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-live.jpg?alt=media&token=618c7c03-f4a4-472b-85c5-e40016ca5167'
-						/>
+						<img src='./images/channels-live.jpg' alt='Live icon' />
 						<h2>Live</h2>
 					</li>
 					<li>
-						<img
-							alt=''
-							src='https://firebasestorage.googleapis.com/v0/b/youtube-clone-328013.appspot.com/o/assets%2Fimages%2Fchannels-360-videos.jpg?alt=media&token=8c1f9e6f-ae8d-422f-81de-e1c103575876'
-						/>
+						<img src='./images/channels-360-videos.jpg' alt='360 video icon' />
 						<h2>360&#176; Video</h2>
 					</li>
 				</ul>
