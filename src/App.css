@@ -146,6 +146,37 @@ svg {
 	border: 1px solid var(--blue-sign-in-color);
 }
 
+.clear_btn {
+	border: 0 solid var(--gray-low-transparency);
+	border-width: 1px 1px 1px 0;
+	background-color: var(--gray-very-high-transparency);
+	cursor: pointer;
+	padding: 19px;
+	position: relative;
+	box-sizing: border-box;
+	transition: 0.2s ease;
+}
+
+.clear_btn span::before,
+.clear_btn span::after {
+	content: '';
+	position: absolute;
+	top: 9px;
+	left: 18px;
+	width: 2px;
+	height: 20px;
+	background-color: rgb(0, 0, 0);
+	transform: rotate(-45deg);
+}
+
+.clear_btn span::after {
+	transform: rotate(45deg);
+}
+
+.clear_btn:hover {
+	background-color: var(--gray-medium-transparency);
+}
+
 #mag-glass {
 	cursor: pointer;
 	height: 100%;
@@ -156,6 +187,11 @@ svg {
 	border: 0 solid var(--gray-low-transparency);
 	border-width: 1px 1px 1px 0;
 	background-color: var(--gray-very-high-transparency);
+	transition: 0.2s ease;
+}
+
+#mag-glass:hover {
+	background-color: var(--gray-medium-transparency);
 }
 
 #voice-search {
@@ -165,6 +201,11 @@ svg {
 	border-radius: 50%;
 	margin-left: 8px;
 	padding: 8px;
+	transition: 0.2s ease;
+}
+
+#voice-search:hover {
+	background-color: var(--gray-medium-transparency);
 }
 
 .end > * {
