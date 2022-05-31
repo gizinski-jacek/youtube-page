@@ -1,4 +1,4 @@
-import { app } from './firebase';
+import './firebase';
 import { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.css';
@@ -14,7 +14,7 @@ const App = () => {
 	const [menuIsHidden, setMenuIsHidden] = useState(true);
 	const [loadedVideoData, setLoadedVideoData] = useState();
 	const [inputValue, setInputValue] = useState('');
-	const [searchResults, setSearchResults] = useState();
+	const [searchResults, setSearchResults] = useState(null);
 
 	const handleQuery = async ({ key, type }) => {
 		if (type === 'click' || (type === 'keypress' && key === 'Enter')) {
@@ -22,6 +22,11 @@ const App = () => {
 				await searchForVideo(inputValue, process.env.REACT_APP_API_KEY)
 			);
 		}
+	};
+
+	const clearSearch = () => {
+		setInputValue('');
+		setSearchResults(null);
 	};
 
 	const toggleMenuWidth = () => {
@@ -59,6 +64,7 @@ const App = () => {
 						inputValue={inputValue}
 						handleChange={handleChange}
 						handleQuery={handleQuery}
+						clearSearch={clearSearch}
 					/>
 					<Menu isThin={menuIsThin} />
 					<Menu isHidden={menuIsHidden} />
