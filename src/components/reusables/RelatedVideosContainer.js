@@ -15,11 +15,11 @@ const RelatedVideosContainer = ({
 				style={{ display: showLoadBox ? 'flex' : 'none' }}
 			>
 				<h2>
-					Press the button to load related videos. This action uses a
-					lot of API tokens and after few uses will reach the daily
-					quota which will result in no videos being loaded anymore.
+					Press the button to load related videos. This action uses a lot of API
+					tokens and might quickly reach the daily API quota resulting in no
+					more videos being loaded.
 				</h2>
-				<button id='load-related-videos-btn' onClick={handleLoad}>
+				<button type='button' id='load-related-videos-btn' onClick={handleLoad}>
 					Load Videos
 				</button>
 			</div>
@@ -44,12 +44,12 @@ const RelatedVideosContainer = ({
 					<LoadingIcon />
 					<h2>Loading data.</h2>
 					<h2>
-						If this persist for longer than few seconds try
-						refreshing the page.
+						If the content does not load after few seconds try refreshing the
+						page.
 					</h2>
 					<h2>
-						If that still doesn't help it means app ran out of API
-						tokens, try again in 24 hours.
+						If the issue still persists the app might have ran out of API
+						tokens. Please try again in 24 hours.
 					</h2>
 				</div>
 			) : null}
@@ -58,10 +58,7 @@ const RelatedVideosContainer = ({
 				style={{ visibility: showLoadBox ? 'hidden' : 'visible' }}
 			>
 				{relatedData ? (
-					<RelatedContentsWrapper
-						data={relatedData}
-						loadVideo={loadVideo}
-					/>
+					<RelatedContentsWrapper data={relatedData} loadVideo={loadVideo} />
 				) : null}
 			</div>
 		</div>

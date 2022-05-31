@@ -137,11 +137,12 @@ const VideoPage = ({ isHidden, toggleVisibility, loadedData }) => {
 					<LoadingIcon />
 					<h1>Loading data.</h1>
 					<h1>
-						If this persist for longer than few seconds try refreshing the page.
+						If the content does not load after few seconds try refreshing the
+						page.
 					</h1>
 					<h1>
-						If that still doesn't help it means app ran out of API tokens, try
-						again in 24 hours.
+						If the issue still persists the app might have ran out of API
+						tokens. Please try again in 24 hours.
 					</h1>
 				</div>
 			) : null}
