@@ -1,6 +1,6 @@
-# YouTube Front & Video Pages
+# YouTube Front & Video Page
 
-Building YouTube Front and Video pages to polish my skills after going through The Odin Project's HTML course on embedding images and videos, tables, lists, forms and CSS course on positioning, floats, flexbox, grid, backgrounds and gradients.
+Building YouTube Front and Video page to polish my skills after going through The Odin Project's HTML course on embedding images and videos, tables, lists, forms and CSS course on positioning, floats, flexbox, grid, backgrounds and gradients.
 
 ## Table of contents
 
