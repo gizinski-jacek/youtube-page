@@ -18,7 +18,7 @@ Building YouTube Front and Video page to polish my skills after going through Th
 
 Github repo can be found [here](https://github.com/gizinski-jacek/youtube-page).
 
-Live demo can be found on [Heroku](https://youtube-page-102934.herokuapp.com).
+Live demo can be found on [Render](https://youtube-page.onrender.com).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
