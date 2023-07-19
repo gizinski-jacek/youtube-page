@@ -4,13 +4,15 @@ Building YouTube Front and Video page to polish my skills after going through Th
 
 ## Table of contents
 
-- [Github & Live](#github--live)
-- [Getting Started](#getting-started)
-- [React](#react)
-- [Deploy](#deploy)
-- [Features](#features)
-- [Status](#status)
-- [Contact](#contact)
+- [YouTube Front \& Video Page](#youtube-front--video-page)
+  - [Table of contents](#table-of-contents)
+- [Github \& Live](#github--live)
+  - [Getting Started](#getting-started)
+  - [React](#react)
+  - [Deploy](#deploy)
+  - [Features](#features)
+  - [Status](#status)
+  - [Contact](#contact)
 
 # Github & Live
 
@@ -42,6 +44,12 @@ Build the app for production to the `build` folder with:
 
 ```bash
 npm run build
+```
+
+Don't forget to add **.env** file with these environmental variables for the app:
+
+```
+REACT_APP_API_KEY
 ```
 
 It correctly bundles React in production mode and optimizes the build for the best performance.\
