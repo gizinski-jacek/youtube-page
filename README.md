@@ -46,7 +46,7 @@ Build the app for production to the `build` folder with:
 npm run build
 ```
 
-Don't forget to add **.env** file with these environmental variables for the app:
+Don't forget to add **.env** file with these environment variables for the app:
 
 ```
 REACT_APP_API_KEY
