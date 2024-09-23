@@ -383,24 +383,22 @@ svg {
 }
 
 .my-footer {
-	width: 100%;
-	text-align: center;
+	margin-top: auto;
+	display: flex;
+	justify-content: center;
 	background-color: var(--dark-gray-footer);
 }
 
 .my-footer a {
-	font-weight: 600;
+	display: block;
 	color: var(--white-low-transparency);
 	padding: 4px;
-	float: left;
-	display: flex;
-	align-items: center;
-	text-decoration: none;
 }
 
 .my-footer svg {
-	width: unset;
-	height: unset;
+	display: block;
+	width: 18px;
+	height: 18px;
 	margin: 0 8px;
 	box-sizing: content-box;
 	border-radius: 50%;
